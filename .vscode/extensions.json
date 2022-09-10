@@ -1,0 +1,13 @@
+{
+    "recommendations": [
+        "juanblanco.solidity",
+        "streetsidesoftware.code-spell-checker",
+        "editorconfig.editorconfig",
+        "dbaeumer.vscode-eslint",
+        "wix.vscode-import-cost",
+        "esbenp.prettier-vscode",
+        "austenc.tailwind-docs",
+        "gruntfuggly.todo-tree",
+        "bradlc.vscode-tailwindcss"
+    ]
+}

@@ -1,0 +1,43 @@
+NOTES.private.md
+
+# ENVIRONMENT
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# DEPENDENCIES
+/node_modules
+node_modules
+node_modules/
+/.pnp
+.pnp.js
+.npm
+
+# SYSTEM
+.DS_Store
+*.pem
+
+# LINTING
+.eslintcache
+
+# LOGS
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TESTING
+coverage
+
+# TYPESCRIPT
+*.tsbuildinfo
+
+# REDIS
+*.rdb
+dump.rdb
+
+# OLD STUFF
+__deprecated__

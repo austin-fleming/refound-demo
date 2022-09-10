@@ -1,0 +1,42 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.prettier": true
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+  ],
+  "[solidity]": {
+    "editor.defaultFormatter": "NomicFoundation.hardhat-solidity"
+  },
+  "cSpell.words": [
+    "Alfajores",
+    "Blocktext",
+    "casestudies",
+    "Casestudy",
+    "Celo",
+    "cloin",
+    "Datetime",
+    "Exif",
+    "Falsyable",
+    "Lqip",
+    "Postgrest",
+    "sonarjs",
+    "supabase",
+    "sveltejs",
+    "tailwindcss",
+    "timestamptz",
+    "Usecase",
+    "Usecases",
+    "VITE"
+  ],
+  "[sql]": {
+    "editor.defaultFormatter": "bradymholt.pgformatter"
+  },
+  "[go]": {
+    "editor.defaultFormatter": "golang.go"
+  }
+}

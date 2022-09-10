@@ -1,0 +1,36 @@
+@import "./base/base.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: "primary-family";
+        src: url(/fonts/primary-Regular.woff2) format("woff2");
+        font-style: normal;
+        font-weight: normal;
+        font-display: block;
+    }
+    @font-face {
+        font-family: "primary-family";
+        src: url(/fonts/primary-Italic.woff2) format("woff2");
+        font-style: italic;
+        font-weight: normal;
+        font-display: block;
+    }
+    @font-face {
+        src: url(/fonts/primary-Bold.woff2) format("woff2");
+        font-family: "primary-family";
+        font-style: normal;
+        font-weight: bold;
+        font-display: block;
+    }
+    @font-face {
+        src: url(/fonts/primary-BoldItalic.woff2) format("woff2");
+        font-family: "primary-family";
+        font-style: italic;
+        font-weight: bold;
+        font-display: block;
+    }
+}

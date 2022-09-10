@@ -1,0 +1,14 @@
+{
+  "name": "@repo/onchain",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@celo/contractkit": "^2.1.0",
+    "@openzeppelin/contracts": "^4.7.3",
+    "dotenv": "^16.0.2",
+    "onchain": "^1.1.0",
+    "web3": "1.3.6"
+  }
+}
