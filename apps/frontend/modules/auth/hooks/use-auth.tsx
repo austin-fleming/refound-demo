@@ -5,7 +5,6 @@ import { useState } from "react";
 import { createContext, useContext } from "react";
 import { CeloProvider, useCelo, Alfajores } from "@celo/react-celo";
 import { toast } from "@services/toast/toast";
-import { SignUpGuard } from "./sign-up-guard";
 
 type AuthState = {
 	walletAddress: Nullable<string>;
@@ -94,9 +93,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 				},
 			}}
 		>
-			<InnerProvider>
-				{children}
-			</InnerProvider>
+			<InnerProvider>{children}</InnerProvider>
 		</CeloProvider>
 	);
 };

@@ -1,11 +1,9 @@
-
 import { RefoundIcon } from "@components/icons/refound-icon";
 import NextLink from "next/link";
 import { BottomNav } from "./bottom-nav/bottom-nav";
 import { SideMenu } from "./side-menu";
 
 export const Header = () => {
-
 	return (
 		<header>
 			<div
@@ -20,7 +18,7 @@ export const Header = () => {
 				<h1 className="font-normal leading-none text-[1em]">refound</h1>
 			</div>
 
-			<BottomNav/>
+			<BottomNav />
 
 			<SideMenu />
 		</header>

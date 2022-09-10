@@ -1,4 +1,4 @@
-import { PoolCard } from "@components/pools/pool-card";
+import { PoolCard } from "@modules/posts/components/pool-card";
 import { useProfileContext } from "@modules/api/profile-context";
 import { useEffect } from "react";
 
