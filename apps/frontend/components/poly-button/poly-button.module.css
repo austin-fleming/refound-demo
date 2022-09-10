@@ -1,0 +1,30 @@
+.btn {
+    @apply px-[1.25em] py-[0.5em] leading-none font-normal capitalize rounded-[0.28em] flex flex-row gap-[1em] justify-between items-center;
+}
+
+.fullWidth {
+    @apply w-full;
+}
+
+.sizeSm {
+    @apply text-xs;
+}
+.sizeBase {
+    @apply text-sm;
+}
+.sizeLg {
+    @apply text-base;
+}
+
+.colorPrimary {
+    @apply text-background bg-slate-900 hover:bg-slate-700;
+}
+.colorSecondary {
+    @apply text-slate-900 bg-slate-300 hover:bg-slate-200;
+}
+.colorInverted {
+    @apply text-slate-900 bg-background;
+}
+.colorAccent {
+    @apply bg-red-900 text-background;
+}

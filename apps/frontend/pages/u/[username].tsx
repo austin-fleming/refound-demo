@@ -1,4 +1,4 @@
-import { ProfilePage } from "@components/profile/profile-page";
+import { ProfilePage } from "@modules/profile/views/profile-page/profile-page";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";

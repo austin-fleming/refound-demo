@@ -1,0 +1,12 @@
+.navButton {
+    @apply flex flex-col justify-center items-center w-full text-sm text-center border-t-2 border-transparent border-solid hover:border-black py-[0.4em] hover:text-slate-900;
+}
+.navButton--current {
+    @apply text-slate-900;
+}
+.navButton__label {
+    @apply text-[0.9em];
+}
+.navButton__icon {
+    @apply h-[2em] w-[2em];
+}

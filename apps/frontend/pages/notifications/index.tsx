@@ -1,4 +1,4 @@
-import { NotificationsPage } from "@components/notifications/notifications-page";
+import { NotificationsPage } from "@modules/account/views/notifications-page";
 import type { NextPage } from "next";
 
 const Notifications: NextPage = () => {

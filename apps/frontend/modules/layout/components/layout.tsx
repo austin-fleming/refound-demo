@@ -2,7 +2,7 @@ import Head from "next/head";
 import type { ReactNode } from "react";
 import { AccessibleShortcut } from "./accessible-shortcut";
 import { Header } from "./header";
-import { LayoutContextProvider } from "./layout-provider";
+import { LayoutContextProvider } from "../hooks/use-layout";
 
 export const Layout = ({ children }: { children: ReactNode }) => {
 	return (

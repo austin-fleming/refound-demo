@@ -1,4 +1,4 @@
-import { useAuth } from "@modules/auth/auth.context";
+import { useAuth } from "@modules/auth/hooks/use-auth";
 
 export const AccountPage = () => {
 	const { isLoggedIn, walletAddress } = useAuth();

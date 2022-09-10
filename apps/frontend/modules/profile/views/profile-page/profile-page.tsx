@@ -16,6 +16,7 @@ import { ArticlesTab } from "./tabs/articles-tab";
 import { PhotosTab } from "./tabs/photos-tab";
 import { PoolsTab } from "./tabs/pools-tab";
 import { SubscriberFeedTab } from "./tabs/subscriber-feed-tab";
+import { PolyButton } from "@components/poly-button/poly-button";
 
 type TabName = "about" | "articles" | "photos" | "pools" | "subscriberFeed";
 
@@ -86,14 +87,8 @@ const Inner = ({ username }: { username: string }) => {
 					<h1 className="text-2xl">@{profileData.username}</h1>
 
 					<div className="flex flex-col items-start w-full gap-2">
-						<button className="text-sm leading-none bg-slate-900 text-slate-50 px-[1.25em] w-full text-left rounded-[0.25em] py-[0.7em] flex flex-row justify-between items-center">
-							Send a Bonus
-							<RightArrowIcon className="h-[1em]" />
-						</button>
-						<button className="text-sm leading-none bg-slate-200 text-slate-900 px-[1.25em] w-full text-left rounded-[0.25em] py-[0.7em]  flex flex-row justify-between items-center">
-							Message
-							<RightArrowIcon className="h-[1em]" />
-						</button>
+						<PolyButton label='Send a Bonus' as='button' icon='rightArrow' fullWidth/>
+						<PolyButton label='Message' color='secondary' as='button' icon='rightArrow' fullWidth/>
 					</div>
 				</div>
 			</section>

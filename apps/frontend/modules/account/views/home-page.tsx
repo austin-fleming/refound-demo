@@ -1,5 +1,6 @@
 import { useCelo, Alfajores } from "@celo/react-celo";
-import { useAuth } from "@modules/auth/auth.context";
+import { PolyButton } from "@components/poly-button/poly-button";
+import { useAuth } from "@modules/auth/hooks/use-auth";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -11,9 +12,9 @@ export const HomePage = () => {
 			<h1>Home</h1>
 			<div>Is Logged In: {isLoggedIn ? "true" : "false"}</div>
 			{walletAddress ? (
-				<button onClick={logOut}>Disconnect</button>
+				<PolyButton as='button' onClick={logOut} label={'Disconnect'}/>
 			) : (
-				<button onClick={logIn}>Connect</button>
+				<PolyButton as='button' onClick={logIn} label='Connect'/>
 			)}
 		</section>
 	);

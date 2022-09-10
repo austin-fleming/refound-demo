@@ -6,15 +6,21 @@ import type { TextPost } from "./text-post";
 import type { Pool } from "./pools";
 import { poolsMocks } from "./pools.mocks";
 import { textPostMocks } from "./text-post.mocks";
+import type { Account } from "./account";
+import { accountMocks } from "./account.mocks";
 
 export type DiscoverFeedItem = Photograph | TextPost | Pool;
 
 interface IDiscoverService {
-	getDiscoverItems: () => Promise<Result<Array<DiscoverFeedItem>>>;
+	getPopular: () => Promise<Result<Array<DiscoverFeedItem>>>;
+	getPhotographs: () => Promise<Result<Photograph[]>>;
+	getTextPosts: () => Promise<Result<TextPost[]>>;
+	getPools: () => Promise<Result<Pool[]>>;
+	getCreators: () => Promise<Result<Account[]>>;
 }
 
 const makeInMemoryDiscoverService = (): IDiscoverService => ({
-	getDiscoverItems: async () => {
+	getPopular: async () => {
 		const allContent = [...poolsMocks, ...photographMocks, ...textPostMocks];
 
 		// randomly shuffle mocks
@@ -27,6 +33,18 @@ const makeInMemoryDiscoverService = (): IDiscoverService => ({
 
 		return result.ok(allContent);
 	},
+	getPhotographs: async () => {
+		return result.ok(photographMocks)
+	},
+	getTextPosts: async () => {
+		return result.ok(textPostMocks)
+	},
+	getPools: async () => {
+		return result.ok(poolsMocks)
+	},
+	getCreators: async () => {
+		return result.ok(accountMocks)
+	}
 });
 
 export const discoverService = makeInMemoryDiscoverService();
