@@ -30,10 +30,6 @@ export const CreatePage = () => {
 
 	const submitContent = async (event:any) => {
 		event.preventDefault();
-	
-		// const files = event.target.image1.value;
-		// console.log(files);
-		// console.log(event.target.postContent.value);
 		  
 		const cid = await storage.put( [new File([files as BlobPart], event.target.title.value + " Images", {type:"image"}), new File([event.target.postContent.value as BlobPart], event.target.title.value + " Text", {type:"text"})]);
 		console.log(cid);
