@@ -8,8 +8,10 @@ import { resolve } from 'path';
 const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEZiMEVjRTFFMjBFMjgwZmFBNWUxMTQ5QTI0MDhkMjU0RjQ1MDVFQ2UiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NjI4NjgxNDc4ODksIm5hbWUiOiJSZWZvdW5kV2ViM1N0b3JhZ2UifQ.CYS2krAPhgwEn5SP9lWh-kMtxiClr8Vdm6wu_eUaFr8"
 
 export const CreatePage = () => {
-	const [alert, setAlert] = useState<string>();
 
+	const storage = new Web3Storage({ token })
+	const [alert, setAlert] = useState<string>();
+	const [files, setFiles] = useState<any>();
 
 	const fileToDataUri = (file:Blob) => new Promise((resolve, reject) => {
 		const reader = new FileReader();
@@ -22,25 +24,37 @@ export const CreatePage = () => {
 	const submitContent = async (event:any) => {
 		event.preventDefault();
 	
-		const storage = new Web3Storage({ token })
-		const files = event.target.image1.value;
-		console.log(files);
-		console.log(event.target.postContent.value);
+		// const files = event.target.image1.value;
+		// console.log(files);
+		// console.log(event.target.postContent.value);
 		  
-		fileToDataUri(files)
-		.then(async dataUri => {
-			const cid = await storage.put( [new File([dataUri as BlobPart], event.target.title.value, {type:"image"})]);
+		const cid = await storage.put( [new File([files as BlobPart], event.target.title.value + " Images", {type:"image"}), new File([event.target.postContent.value as BlobPart], event.target.title.value + " Text", {type:"text"})]);
+		console.log(cid);
+		if(cid){
+			setAlert('Content added with CID:'+ cid);
 			console.log(cid);
-			if(cid){
-				setAlert('Content added with CID:'+ cid);
-				console.log(cid);
-			}else{
-				setAlert("Error uploading to IPFS.");
-			}
-		})
+		}else{
+			setAlert("Error uploading to IPFS.");
+		}
 
-		
+		//todo: call smart contract - create nft
 	  };
+
+	  const saveFiles = (e:any) => {
+		e.preventDefault();
+		var DataArray:any = [];
+		const files = e.target.files;
+		for(var x=0; x< files.length; x++){
+			console.log(files[x]);
+		  
+			fileToDataUri(files[x])
+			.then(async dataUri => {
+				DataArray.push(dataUri);
+			})
+
+		}
+		setFiles(DataArray);
+	}
 
 	return (
 		<>
@@ -71,7 +85,7 @@ export const CreatePage = () => {
 					name="image1" 
 					type="file"
 					multiple={true}
-					required></input>		
+					required onChange={saveFiles}></input>		
 
 				<button
 					type="submit"
