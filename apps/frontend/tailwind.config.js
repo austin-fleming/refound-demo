@@ -56,6 +56,8 @@ module.exports = {
                 sitegap: '32px', // TODO: remove?
                 sitepad: '2rem', // TODO: remove?
                 sitebottom: '8rem', // TODO: remove?
+                headerTopHeight: 'var(--l-header-top-height)',
+                headerBottomHeight: 'var(--l-header-bottom-height)',
             },
         },
     },

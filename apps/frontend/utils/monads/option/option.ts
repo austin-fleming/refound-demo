@@ -158,7 +158,7 @@ export type OptionMatchPattern<T, U> = { some: (value: T) => U; none: () => U };
  */
 const some = <T>(value: T): Option<T> => new Some(value);
 
-const none = new None();
+const none = () => new None();
 
 export const option = {
 	// --------------
@@ -184,7 +184,7 @@ export const option = {
 	 * @returns {None} A None Option.
 	 */
 	empty: (): Option<never> => {
-		return none;
+		return none();
 	},
 
 	/**
@@ -193,7 +193,7 @@ export const option = {
 	 * @returns {None} A None Option.
 	 */
 	zero: (): Option<never> => {
-		return none;
+		return none();
 	},
 
 	/**
@@ -207,7 +207,7 @@ export const option = {
 	 * @returns {Option<T>} An Option.
 	 */
 	fromNullable: <T>(value: Nullable<T>): Option<T> => {
-		return isNothing(value) ? none : some(value);
+		return isNothing(value) ? none() : some(value);
 	},
 
 	/**
@@ -221,7 +221,7 @@ export const option = {
 	 * @returns {None} An Option.
 	 */
 	fromFalsy: <T>(value?: T): Option<T> => {
-		return value ? some(value) : none;
+		return value ? some<T>(value) : new None();
 	},
 
 	/**
@@ -235,7 +235,7 @@ export const option = {
 	 * @returns {Option<T>} An Option.
 	 */
 	fromPredicate: <T>(predicateFn: (value: T) => boolean, value: T): Option<T> => {
-		return predicateFn(value) ? some(value) : none;
+		return predicateFn(value) ? some(value) : none();
 	},
 
 	/**
@@ -248,7 +248,7 @@ export const option = {
 		try {
 			return some(throwableFn());
 		} catch {
-			return none;
+			return none();
 		}
 	},
 
@@ -297,7 +297,7 @@ export const option = {
 				someEligibleValues.push(item.extract());
 			} else {
 				// if a none value is found, the entire array is none
-				return none;
+				return none();
 			}
 		}
 		return some(someEligibleValues);

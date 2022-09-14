@@ -3,8 +3,9 @@ import type { ReactNode } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { createContext, useContext } from "react";
-import { CeloProvider, useCelo, Alfajores } from "@celo/react-celo";
+import { CeloProvider, useCelo, Alfajores, NetworkNames } from "@celo/react-celo";
 import { toast } from "@services/toast/toast";
+import { config } from "config/config";
 
 type AuthState = {
 	walletAddress: Nullable<string>;
@@ -24,12 +25,15 @@ const AuthContext = createContext<AuthState>(initialAuthState);
 export const useAuth = () => useContext(AuthContext);
 
 const InnerProvider = ({ children }: { children: ReactNode }) => {
-	const { address, connect, disconnect } = useCelo();
+	const { address, connect, disconnect, kit } = useCelo();
 	const [walletAddress, setWalletAddress] = useState<AuthState["walletAddress"]>(null);
 	const [isLoggedIn, setIsLoggedIn] = useState<AuthState["isLoggedIn"]>(false);
 
 	const loadAuthSummary = async () => {
 		setWalletAddress(address);
+
+		const { CELO, cUSD, cEUR, cREAL } = await kit.getTotalBalance(address);
+		console.log({ CELO, cUSD, cEUR, cREAL });
 	};
 
 	useEffect(() => {

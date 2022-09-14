@@ -5,14 +5,17 @@ import type { AppProps } from "next/app";
 import { Layout } from "@modules/layout/components/layout";
 import { Toaster } from "react-hot-toast";
 import { AuthContextProvider } from "@modules/auth/hooks/use-auth";
+import { AccountContextProvider } from "@modules/account/hooks/use-account";
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<AuthContextProvider>
-			<Layout>
-				<Component {...pageProps} />
-				<Toaster position="bottom-right" />
-			</Layout>
+			<AccountContextProvider>
+				<Layout>
+					<Component {...pageProps} />
+					<Toaster position="bottom-right" />
+				</Layout>
+			</AccountContextProvider>
 		</AuthContextProvider>
 	);
 }

@@ -22,6 +22,7 @@
     "Datetime",
     "Exif",
     "Falsyable",
+    "ipfs",
     "Lqip",
     "Postgrest",
     "sonarjs",

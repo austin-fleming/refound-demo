@@ -6,9 +6,10 @@ export type Photograph = {
 	width: number;
 	height: number;
 	description?: string;
-	creatorUsername: string;
+	creator: Account;
 	location?: string;
 	tags?: string[];
-	date?: Date;
+	date: Date;
 	slug: string;
+	ranking: PostRanking;
 };

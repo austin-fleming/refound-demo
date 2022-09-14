@@ -10,11 +10,8 @@ export type Pool = {
 	description: string; // md
 	creationDate: Date;
 	deadline: Date;
-	communityVotes: number;
-	communityRanking: number;
-	stakerVotes: number;
-	stakerRanking: number;
 	memberCount: number;
 	amountGoal: number;
 	amountContributed: number;
+	ranking: PostRanking;
 };

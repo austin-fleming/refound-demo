@@ -4,7 +4,8 @@ export type Account = {
 	type: "Account";
 	username: string;
 	avatarUrl: string;
-	contractAddress: string;
+	walletAddress: string;
 	status: TrustStatus;
 	bio: string; // md
+	slug: string;
 };

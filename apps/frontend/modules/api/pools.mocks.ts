@@ -16,13 +16,19 @@ export const poolsMocks: Pool[] = [
 			"Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 		deadline: new Date(),
 		creationDate: new Date(),
-		communityRanking: 0.82,
-		communityVotes: 58,
-		stakerRanking: 0.97,
-		stakerVotes: 28,
 		memberCount: 68,
 		amountGoal: 18_000,
 		amountContributed: 9_000,
+		ranking: {
+			community: {
+				votes: 58,
+				ratio: 0.82,
+			},
+			stakers: {
+				votes: 28,
+				ratio: 0.97,
+			},
+		},
 	},
 	{
 		type: "Pool",
@@ -38,12 +44,18 @@ export const poolsMocks: Pool[] = [
 			"Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 		deadline: new Date(),
 		creationDate: new Date(),
-		communityRanking: 0.72,
-		communityVotes: 89,
-		stakerRanking: 0.89,
-		stakerVotes: 68,
 		memberCount: 68,
 		amountGoal: 18_000,
 		amountContributed: 9_000,
+		ranking: {
+			community: {
+				votes: 96,
+				ratio: 0.72,
+			},
+			stakers: {
+				votes: 220,
+				ratio: 0.79,
+			},
+		},
 	},
 ];

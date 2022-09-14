@@ -1,4 +1,4 @@
-import { Result, result } from "@utils/monads";
+import { type Result, result } from "@utils/monads";
 import type { Pool } from "./pools";
 import { poolsMocks } from "./pools.mocks";
 

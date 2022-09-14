@@ -2,10 +2,8 @@
 	--l-max-content-width: 1400px;
 	--l-max-content-width--narrow: 600px;
 
-	/* 
-  --l-header-height: 4rem;
-	--l-screen-minus-header: calc(100vh - var(--l-header-height));
- */
+	--l-header-top-height: 38px;
+	--l-header-bottom-height: 86px;
 
 	--l-content-padding: 1rem;
 }
@@ -15,11 +13,14 @@
 		--l-content-padding: 2rem;
 	}
 }
-@media only screen and (min-width: 768px) {
-}
+/* @media only screen and (min-width: 768px) {
+} */
 @media only screen and (min-width: 1024px) {
+	:root {
+		--l-header-top-height: 146px;
+	}
 }
-@media only screen and (min-width: 1280px) {
+/* @media only screen and (min-width: 1280px) {
 }
 @media only screen and (min-width: 1536px) {
-}
+} */

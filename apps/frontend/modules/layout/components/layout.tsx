@@ -16,7 +16,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 
 			<Header />
 
-			<main id="main-content" className="pb-48 py-7 lg:py-28">
+			<main id="main-content" className="pb-headerBottomHeight pt-headerTopHeight">
 				{children}
 			</main>
 		</LayoutContextProvider>

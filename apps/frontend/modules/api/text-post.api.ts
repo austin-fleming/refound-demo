@@ -8,7 +8,7 @@ interface ITextPostService {
 
 const makeInMemoryTextPostService = (): ITextPostService => ({
 	getTextPosts: async (username) => {
-		const maybeTextPosts = textPostMocks.filter((post) => post.creatorUsername === username);
+		const maybeTextPosts = textPostMocks.filter((post) => post.creator.username === username);
 
 		if (!maybeTextPosts) return result.fail(new Error("Not Found"));
 

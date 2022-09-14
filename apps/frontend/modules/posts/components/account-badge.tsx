@@ -7,22 +7,16 @@ const colorClassTable: Record<Account["status"], string> = {
 	NONE: "bg-trustLevel-none-bg text-trustLevel-none-fg",
 };
 
-export const AccountBadge = ({
-	avatarUrl,
-	username,
-	status,
-}: {
-	avatarUrl: Account["avatarUrl"];
-	username: Account["username"];
-	status: Account["status"];
-}) => (
+export const AccountBadge = ({ creator }: { creator: Account }) => (
 	<div
-		className={`${colorClassTable[status]} text-sm leading-none flex flex-row items-center rounded-[6px] p-[0.2em]`}
+		className={`${
+			colorClassTable[creator.status]
+		} text-sm leading-none flex flex-row items-center rounded-[6px] p-[0.2em]`}
 	>
 		<figure className="relative h-[1.4em] w-[1.4em] rounded-[4px] overflow-hidden">
 			<NextImage
-				src={avatarUrl}
-				alt={username}
+				src={creator.avatarUrl}
+				alt={creator.username}
 				width={100}
 				height={100}
 				layout="fill"
@@ -31,7 +25,8 @@ export const AccountBadge = ({
 			/>
 		</figure>
 		<div className="px-[1em]">
-			@{username} <span className="capitalize opacity-60">• {status.toLowerCase()}</span>
+			@{creator.username}{" "}
+			<span className="capitalize opacity-60">• {creator.status.toLowerCase()}</span>
 		</div>
 	</div>
 );

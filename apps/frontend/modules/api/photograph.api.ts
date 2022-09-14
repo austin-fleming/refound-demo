@@ -10,7 +10,7 @@ interface IPhotographService {
 const makeInMemoryPhotographService = (): IPhotographService => ({
 	getPhotographs: async (username) => {
 		const maybePhotograph = photographMocks.filter(
-			(photo) => photo.creatorUsername === username,
+			(photo) => photo.creator.username === username,
 		);
 
 		if (!maybePhotograph) return result.fail(new Error("Not Found"));
