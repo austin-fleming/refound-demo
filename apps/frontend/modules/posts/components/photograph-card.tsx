@@ -1,4 +1,4 @@
-import type { Photograph } from "@modules/api/photographs";
+import type { Photograph } from "@modules/mocks/photographs";
 import { AccountBadge } from "./account-badge";
 import { ActionButtons } from "./action-buttons";
 import { CardContent } from "./post-card/card-content";

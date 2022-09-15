@@ -1,5 +1,5 @@
-import type { Account } from "@modules/api/account";
-import { accountService } from "@modules/api/account.api";
+import type { Account } from "@modules/mocks/account";
+import { accountService } from "@modules/mocks/account.api";
 import { useAuth } from "@modules/auth/hooks/use-auth";
 import { toast } from "@services/toast/toast";
 import type { Nullable } from "@utils/monads";

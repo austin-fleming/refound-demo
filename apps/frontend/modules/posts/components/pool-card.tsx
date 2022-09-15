@@ -1,4 +1,4 @@
-import type { Pool } from "@modules/api/pools";
+import type { Pool } from "@modules/mocks/pools";
 import { AccountBadge } from "./account-badge";
 import NextImage from "next/image";
 import NextLink from "next/link";

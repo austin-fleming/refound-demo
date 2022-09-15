@@ -1,4 +1,4 @@
-import type { Account } from "@modules/api/account";
+import type { Account } from "@modules/mocks/account";
 import NextImage from "next/image";
 
 const colorClassTable: Record<Account["status"], string> = {

@@ -1,4 +1,4 @@
-import type { PostRanking, RankingDetails } from "@modules/api/common";
+import type { PostRanking, RankingDetails } from "@modules/mocks/common";
 
 export const RankingBadge = ({
 	label,

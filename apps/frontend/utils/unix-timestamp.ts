@@ -1,15 +1,14 @@
-import type { Nullable } from "./monads";
+import type { Result } from "./monads";
+import { Nullable, result } from "./monads";
 
 export const unixTimestamp = {
 	fromDate: (date: Date): string => {
 		return `${Math.floor(date.getTime() / 1000)}`;
 	},
-	toDate: (timestamp: string): Nullable<Date> => {
-		console.log({ timestamp });
+	toDate: (timestamp: string): Result<Date> => {
 		const timestampNumber = Number(timestamp);
-		console.log({ timestampNumber });
-		if (Number.isNaN(timestampNumber)) return;
+		if (Number.isNaN(timestampNumber)) return result.fail(new Error("NaN"));
 
-		return new Date(timestampNumber * 1000);
+		return result.ok(new Date(timestampNumber * 1000));
 	},
 };

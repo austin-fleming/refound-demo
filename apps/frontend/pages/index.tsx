@@ -1,8 +1,3 @@
-import { HomePage } from "@modules/account/views/home-page";
-import type { NextPage } from "next";
+import { HomeView } from "@modules/account/views/home-view";
 
-const Home: NextPage = () => {
-	return <HomePage />;
-};
-
-export default Home;
+export default HomeView;

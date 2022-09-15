@@ -1,4 +1,4 @@
-import type { Account } from "@modules/api/account";
+import type { Account } from "@modules/mocks/account";
 import { CardContent } from "@modules/posts/components/post-card/card-content";
 import { CardDescription } from "@modules/posts/components/post-card/card-description";
 import { CardImage } from "@modules/posts/components/post-card/card-image";

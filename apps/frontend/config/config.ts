@@ -1,5 +1,5 @@
-import { refoundPostAbi } from "contracts/refound-post.abi";
-import { refoundAbi } from "contracts/refound.abi";
+import { refoundAbi, refoundPostAbi } from "config/abis";
+import type { AbiItem } from "web3-utils";
 
 export const config = {
 	contracts: {
@@ -7,11 +7,11 @@ export const config = {
 		chainId: 44787,
 		refound: {
 			address: process.env.NEXT_PUBLIC_REFOUND_CONTRACT_ADDRESS as string,
-			abi: refoundAbi,
+			abi: refoundAbi as AbiItem[],
 		},
 		refoundPost: {
 			address: process.env.NEXT_PUBLIC_REFOUNDPOST_CONTRACT_ADDRESS as string,
-			abi: refoundPostAbi,
+			abi: refoundPostAbi as AbiItem[],
 		},
 	},
 	storage: {

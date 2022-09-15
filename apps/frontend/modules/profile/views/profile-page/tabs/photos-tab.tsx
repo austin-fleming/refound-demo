@@ -1,5 +1,5 @@
 import { PhotographCard } from "@modules/posts/components/photograph-card";
-import { ProfileContext, useProfileContext } from "@modules/api/profile-context";
+import { ProfileContext, useProfileContext } from "@modules/mocks/profile-context";
 import { useEffect } from "react";
 
 export const PhotosTab = () => {

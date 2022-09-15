@@ -1,4 +1,4 @@
-import { useProfileContext } from "@modules/api/profile-context";
+import { useProfileContext } from "@modules/mocks/profile-context";
 import { useEffect } from "react";
 
 export const ArticlesTab = () => {

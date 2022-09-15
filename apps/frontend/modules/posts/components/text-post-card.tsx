@@ -1,4 +1,4 @@
-import type { TextPost } from "@modules/api/text-post";
+import type { TextPost } from "@modules/mocks/text-post";
 import NextLink from "next/link";
 import { AccountBadge } from "./account-badge";
 import { ActionButtons } from "./action-buttons";

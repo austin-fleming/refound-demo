@@ -1,16 +1,16 @@
-import type { Account } from "@modules/api/account";
-import { profileService } from "@modules/api/profile.api";
+import type { Account } from "@modules/mocks/account";
+import { profileService } from "@modules/mocks/profile.api";
 import { toast } from "@services/toast/toast";
 import type { Nullable } from "@utils/monads";
 import { useEffect, useState } from "react";
 import NextImage from "next/image";
 import { RightArrowIcon } from "@components/icons/arrow-icons";
-import { poolsMocks } from "@modules/api/pools.mocks";
+import { poolsMocks } from "@modules/mocks/pools.mocks";
 import {
 	ProfileContext,
 	ProfileContextProvider,
 	useProfileContext,
-} from "@modules/api/profile-context";
+} from "@modules/mocks/profile-context";
 import { AboutTab } from "./tabs/about-tab";
 import { ArticlesTab } from "./tabs/articles-tab";
 import { PhotosTab } from "./tabs/photos-tab";
@@ -87,8 +87,14 @@ const Inner = ({ username }: { username: string }) => {
 					<h1 className="text-2xl">@{profileData.username}</h1>
 
 					<div className="flex flex-col items-start w-full gap-2">
-						<PolyButton label='Send a Bonus' as='button' icon='rightArrow' fullWidth/>
-						<PolyButton label='Message' color='secondary' as='button' icon='rightArrow' fullWidth/>
+						<PolyButton label="Send a Bonus" as="button" icon="rightArrow" fullWidth />
+						<PolyButton
+							label="Message"
+							color="secondary"
+							as="button"
+							icon="rightArrow"
+							fullWidth
+						/>
 					</div>
 				</div>
 			</section>
