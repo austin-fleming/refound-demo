@@ -20,10 +20,11 @@ export const SignUpView: NextPage = () => {
 	const [formError, setFormError] = useState<string | undefined>();
 
 	const getAll = () => {
-		getProfile("0x2287bcdeac305d3d5a3a4bc915a683d323e830ab").then((users) => {
+		getAllProfiles().then((users) => {
 			users.match({
 				ok: (users) => {
 					console.log({ users });
+					toast.message("Users printed to log");
 				},
 				fail: () => console.log("no users"),
 			});
