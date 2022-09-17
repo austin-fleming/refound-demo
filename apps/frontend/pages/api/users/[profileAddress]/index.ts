@@ -1,3 +1,3 @@
-import { getProfileHandler } from "__deprecated__/hooks/use-refound-contract/handlers/get-profile.handler";
+import { getProfileHandler } from "@modules/refound/api-handlers/get-profile.handler";
 
 export default getProfileHandler;

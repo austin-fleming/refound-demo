@@ -35,6 +35,7 @@ PARSERS
 */
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const contractDataToDto = (contractData: string): Result<PostContractDTO> => {
+	console.log({ contractDataToDto: contractData });
 	try {
 		if (!contractData || !isString(contractData)) throw new Error("contractData is invalid");
 
@@ -43,7 +44,7 @@ const contractDataToDto = (contractData: string): Result<PostContractDTO> => {
 
 		const postRoot: Omit<PostContractDTO, "postData"> = {
 			posterId: (parsed.posterId as string) || throwFieldError("posterId"),
-			postId: (parsed.postId as string) || throwFieldError("postId"),
+			postId: parsed.postId as number,
 			createdAt: (parsed.createdAt as string) || throwFieldError("createdAt"),
 		};
 

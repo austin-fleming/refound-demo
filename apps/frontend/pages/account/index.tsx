@@ -1,9 +1,3 @@
-import { HomePage } from "@modules/account/views/home-view";
-import { refoundAbi } from "config/abis";
-import type { NextPage } from "next";
+import { AccountView } from "@modules/account/views/account.view";
 
-const Account: NextPage = () => {
-	return <HomePage />;
-};
-
-export default Account;
+export default AccountView;

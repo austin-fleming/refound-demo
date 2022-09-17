@@ -180,9 +180,10 @@ const createPost = async (
 				throw err;
 			});
 
+		console.log({ postCreationData: { profileId, contractSchema } });
 		// write to contract
 		const postId = await contract.methods
-			.makeRefoundPost(profileId, contractSchema)
+			.makeRefoundPost(Number.parseInt(profileId), contractSchema)
 			.send({ from: walletAddress });
 
 		if (!postId) throw new Error("Post creation likely failed when writing to contract.");

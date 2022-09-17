@@ -6,6 +6,7 @@ import { result } from "@utils/monads";
 import { postParser } from "../parsers/post.parser";
 import { queries as ipfsQueries } from "./ipfs.repo";
 import type { LicenseType } from "../models/license.model";
+import { valueToBigNumber } from "@celo/contractkit/lib/wrappers/BaseWrapper";
 
 /* 
 ----------------
@@ -14,6 +15,7 @@ QUERIES
 */
 const getPost = async (contract: Contract, postId: PostId): Promise<Result<Post>> => {
 	try {
+		console.log({ getPost: postId });
 		const rawUri = await contract.methods.tokenURI(postId).call();
 
 		if (!rawUri) throw new Error(`No uri returned for postId "${postId}"`);

@@ -14,7 +14,7 @@ export enum DataHost {
 	IPFS = "IPFS",
 }
 
-export type PostId = string;
+export type PostId = number | string;
 
 export type BasePost = {
 	type: NftType.POST;
@@ -40,6 +40,6 @@ export type ArticlePost = {
 	postType: PostType.ARTICLE;
 	body: Markdown;
 	coverImage?: ImagePost;
-};
+} & BasePost;
 
 export type Post = ImagePost | ArticlePost;

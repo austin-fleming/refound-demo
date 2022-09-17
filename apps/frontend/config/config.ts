@@ -1,4 +1,4 @@
-import { refoundAbi, refoundPostAbi } from "config/abis";
+import { refoundAbi, refoundPoolAbi, refoundPostAbi } from "config/abis";
 import type { AbiItem } from "web3-utils";
 
 export const config = {
@@ -12,6 +12,10 @@ export const config = {
 		refoundPost: {
 			address: process.env.NEXT_PUBLIC_REFOUNDPOST_CONTRACT_ADDRESS as string,
 			abi: refoundPostAbi as AbiItem[],
+		},
+		refoundPool: {
+			address: process.env.NEXT_PUBLIC_REFOUNDPOOL_CONTRACT_ADDRESS as string,
+			abi: refoundPoolAbi as AbiItem[],
 		},
 	},
 	storage: {

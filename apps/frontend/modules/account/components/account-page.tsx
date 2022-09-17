@@ -1,7 +1,7 @@
-import { useAuth } from "@modules/auth/hooks/use-auth";
+import { useAuth } from "@modules/refound/hooks/use-auth";
 
 export const AccountPage = () => {
-	const { isLoggedIn, walletAddress } = useAuth();
+	const { isLoggedIn, walletAddress, profile } = useAuth();
 
 	return (
 		<section>

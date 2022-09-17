@@ -9,7 +9,6 @@ interface IAccountService {
 
 const makeInMemoryAccountService = (): IAccountService => ({
 	getAccount: async (walletAddress) => {
-		console.log({ walletAddress });
 		try {
 			const maybeAccount = option.fromNullable(
 				accountMocks.find((value) => value.walletAddress === walletAddress),

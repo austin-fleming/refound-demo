@@ -86,7 +86,6 @@ export const ProfileContextProvider = ({ children }: { children: ReactNode }) =>
 		(await profileService.getProfile(profileUsername)).match({
 			ok: (data) => setProfileData(data),
 			fail: (err) => {
-				console.log(err);
 				toast.error("Failed to load profile.");
 				reset();
 			},

@@ -1,9 +1,8 @@
 import { PolyButton } from "@components/poly-button/poly-button";
-import { useAuth } from "@modules/auth/hooks/use-auth";
 import type { ReactNode } from "react";
 import { useLayout } from "../hooks/use-layout";
 import NextImage from "next/image";
-import { useAccount } from "@modules/account/hooks/use-account";
+import { useAuth } from "@modules/refound/hooks/use-auth";
 
 const MenuSection = ({ children, title }: { children: ReactNode; title: string }) => (
 	<div className="flex flex-col gap-2">
@@ -13,12 +12,11 @@ const MenuSection = ({ children, title }: { children: ReactNode; title: string }
 );
 
 const Menu = () => {
-	const { walletAddress, isLoggedIn, logIn, logOut } = useAuth();
-	const { avatarUrl, username } = useAccount();
+	const { walletAddress, isLoggedIn, logIn, logOut, profile } = useAuth();
 
 	const { toggleMenu } = useLayout();
 
-	return isLoggedIn ? (
+	return isLoggedIn && profile ? (
 		<div className="w-full max-h-screen overflow-y-scroll p-contentPadding">
 			<section className="flex flex-col items-center justify-center w-full gap-8 py-9">
 				<h2 className="text-2xl leading-none">Account</h2>
@@ -26,7 +24,7 @@ const Menu = () => {
 				<div className="w-1/2 mx-auto">
 					<figure className="w-full pb-[100%] relative rounded-md overflow-hidden">
 						<NextImage
-							src={avatarUrl || "/assets/avatar-placeholder.png"}
+							src={profile.avatarUrl || "/assets/avatar-placeholder.png"}
 							alt="your avatar"
 							layout="fill"
 							objectFit="cover"
@@ -35,7 +33,7 @@ const Menu = () => {
 				</div>
 
 				<div className="flex flex-col items-center justify-center w-full gap-2">
-					<p className="text-2xl leading-none">@{username}</p>
+					<p className="text-2xl leading-none">@{profile.username}</p>
 					{walletAddress && (
 						<p className="font-mono text-xs">{`${walletAddress.slice(
 							0,

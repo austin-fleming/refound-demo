@@ -1,3 +1,4 @@
+import type { Expand } from "@utils/helper-types/expand";
 import type { PostId, PostType } from "./post.model";
 import type { ProfileId, ProfileOwnerAddress } from "./profile.model";
 
@@ -56,7 +57,7 @@ export type ArticlePostContractSchema = {
 // CONTRACT DTO: What the contract will return when called
 export type PostContractDTO = {
 	posterId: string;
-	postId: string;
+	postId: number;
 	createdAt: string; // unix timestamp
 	postData: ImagePostContractSchema | ArticlePostContractSchema;
 };
@@ -68,11 +69,13 @@ export type BaseCreationProps = {
 	location?: string;
 };
 
-export type ImagePostCreationProps = {
-	description?: string;
-	width: number;
-	height: number;
-} & BaseCreationProps;
+export type ImagePostCreationProps = Expand<
+	{
+		description?: string;
+		width: number;
+		height: number;
+	} & BaseCreationProps
+>;
 
 export type ArticlePostCreationProps = {
 	coverImageId?: PostId;

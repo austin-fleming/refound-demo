@@ -9,13 +9,15 @@ import type { Post } from "../models/post.model";
 export async function getPostHandler(req: NextApiRequest, res: NextApiResponse<Post>) {
 	const { postId, requester } = req.query;
 
+	console.log({ getPostHandler: { postId, requester } });
+
 	if (!isString(postId) || !postId) return res.status(400).end();
 	if (!isString(requester) || !requester) return res.status(403).end();
 
 	const web3 = new Web3(config.contracts.rpcUrl);
 	const contract = new web3.eth.Contract(
-		config.contracts.refound.abi,
-		config.contracts.refound.address,
+		config.contracts.refoundPost.abi,
+		config.contracts.refoundPost.address,
 	);
 
 	return (await queries.getPost(contract, postId)).match({

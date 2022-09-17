@@ -11,6 +11,8 @@ export async function getPostsByProfileHandler(req: NextApiRequest, res: NextApi
 	try {
 		const { profileAddress, requester } = req.query;
 
+		console.log({ getPostsByProfileHandler: { profileAddress, requester } });
+
 		if (!isString(profileAddress) || !profileAddress) return res.status(400).end();
 		if (!isString(requester) || !requester) return res.status(403).end();
 
@@ -18,6 +20,10 @@ export async function getPostsByProfileHandler(req: NextApiRequest, res: NextApi
 		const contract = new web3.eth.Contract(
 			config.contracts.refound.abi,
 			config.contracts.refound.address,
+		);
+		const postContract = new web3.eth.Contract(
+			config.contracts.refoundPost.abi,
+			config.contracts.refoundPost.address,
 		);
 
 		const profile = (
@@ -27,7 +33,7 @@ export async function getPostsByProfileHandler(req: NextApiRequest, res: NextApi
 		});
 
 		const posts = (
-			await refoundPostQueries.getPostsByProfile(contract, profile.profileId)
+			await refoundPostQueries.getPostsByProfile(postContract, profile.profileId)
 		).unwrapOrElse((err) => {
 			throw err;
 		});

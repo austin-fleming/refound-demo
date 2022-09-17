@@ -1,3 +1,3 @@
-import type { getPostHandler } from "@modules/refound/api-handlers/get-post.handler";
+import { getPostHandler } from "@modules/refound/api-handlers/get-post.handler";
 
 export default getPostHandler;

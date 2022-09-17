@@ -14,5 +14,6 @@ module.exports = {
         "sonarjs/no-duplicate-string": "warn",
         "@typescript-eslint/no-empty-function": "warn",
         "security/detect-non-literal-fs-filename": 0
-    }
+    },
+    ignorePatterns: ["**/__deprecated__/**/*"]
 }

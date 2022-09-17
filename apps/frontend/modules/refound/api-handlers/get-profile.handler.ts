@@ -7,6 +7,7 @@ import { queries } from "../repo/refound-contract.repo";
 
 // Get user by wallet address
 export async function getProfileHandler(req: NextApiRequest, res: NextApiResponse<Profile>) {
+	console.log("profileRoute");
 	const { profileAddress, requester } = req.query;
 
 	if (!isString(profileAddress) || !profileAddress) return res.status(400).end();
@@ -20,6 +21,7 @@ export async function getProfileHandler(req: NextApiRequest, res: NextApiRespons
 
 	return (await queries.getProfileByAddress(contract, profileAddress)).match({
 		ok: (profile) => {
+			console.log({ profileRoute: profile });
 			res.status(200).json(profile);
 		},
 		fail: (err) => {

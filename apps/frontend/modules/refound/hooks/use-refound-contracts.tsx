@@ -3,41 +3,22 @@ import type { Profile, ProfileOwnerAddress } from "@modules/refound/models/profi
 import type { Result } from "@utils/monads";
 import type { AbiItem } from "web3-utils";
 import { useCelo } from "@celo/react-celo";
-import { useAuth } from "@modules/auth/hooks/use-auth";
 import { result } from "@utils/monads";
 import { refoundAbi } from "config/abis";
-import axios from "axios";
 import { config } from "config/config";
 import { commands as refoundCommands } from "../repo/refound-contract.repo";
 import { commands as refoundPostCommands } from "../repo/refound-post-contract.repo";
 import { Web3Storage } from "web3.storage";
 import type { Post, PostId } from "../models/post.model";
 import { PostType } from "../models/post.model";
-import type {
-	ArticlePostCreationProps,
-	ImagePostCreationProps,
-	PostCreationProperties,
-} from "../models/post.dto";
+import type { ArticlePostCreationProps, ImagePostCreationProps } from "../models/post.dto";
 import type { LicenseType } from "../models/license.model";
-import type { Contract } from "web3-eth-contract";
-
-const fetchWithAddress = async <T,>(
-	endpoint: string,
-	address: ProfileOwnerAddress,
-): Promise<Result<T>> => {
-	try {
-		const response = await axios.get<T>(`${endpoint}?requester=${address}`);
-		return result.ok(response.data);
-	} catch (err) {
-		return result.fail(err as Error);
-	}
-};
+import { fetchWithAddress } from "./utils/fetch-with-address";
+import { useAuth } from "./use-auth";
 
 export const useRefoundContracts = () => {
 	const { kit, address } = useCelo();
 	const { walletAddress } = useAuth();
-
-	console.log({ address, walletAddress });
 
 	const ipfsClient = new Web3Storage({ token: config.storage.web3storage.apiToken });
 

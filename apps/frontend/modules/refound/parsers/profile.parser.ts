@@ -16,7 +16,6 @@ import { throwFieldError } from "./utils/throw-field-error";
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const uriToModel = (profileId: string, profileUri: string): Result<Profile> => {
-	console.log({ uriToModel: { profileId, profileUri } });
 	try {
 		const parsedUri = JSON.parse(profileUri);
 

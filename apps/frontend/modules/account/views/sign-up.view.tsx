@@ -1,17 +1,17 @@
 import { PolyButton } from "@components/poly-button/poly-button";
-import { useAuth } from "@modules/auth/hooks/use-auth";
 import { toast } from "@services/toast/toast";
 import type { Result } from "@utils/monads";
 import { result } from "@utils/monads";
-import { useRefoundContract } from "__deprecated__/hooks/use-refound-contract/use-refound-contract";
 import type { NextPage } from "next";
 import type { ChangeEvent, MouseEventHandler } from "react";
 import { useState } from "react";
 import type { ProfileCreationProperties } from "@modules/refound/models/profile.dto";
+import { useAuth } from "@modules/refound/hooks/use-auth";
+import { useRefoundContracts } from "@modules/refound/hooks/use-refound-contracts";
 
 export const SignUpView: NextPage = () => {
-	const { walletAddress, isLoggedIn, logIn } = useAuth();
-	const { createProfile, updateProfile, getAllProfiles, getProfile } = useRefoundContract();
+	const { walletAddress, isLoggedIn, logIn, profile } = useAuth();
+	const { createProfile, updateProfile, getAllProfiles, getProfile } = useRefoundContracts();
 
 	const [formState, setFormState] = useState<Partial<ProfileCreationProperties>>({});
 	const [formStatus, setFormStatus] = useState<
@@ -20,7 +20,7 @@ export const SignUpView: NextPage = () => {
 	const [formError, setFormError] = useState<string | undefined>();
 
 	const getAll = () => {
-		getAllProfiles().then((users) => {
+		getProfile("0x14bac73FAe42b227D484aF9E6eaDe845bE476402").then((users) => {
 			users.match({
 				ok: (users) => {
 					console.log({ users });
@@ -73,7 +73,6 @@ export const SignUpView: NextPage = () => {
 				createProfile(validProfile).then((profileId) => {
 					profileId.match({
 						ok: (profileId) => {
-							console.log("Created profile id:", profileId);
 							setFormStatus("DONE");
 							toast.success("Profile Created!");
 						},
@@ -161,6 +160,10 @@ export const SignUpView: NextPage = () => {
 				</div>
 			)}
 			<PolyButton as="button" label="get users" onClick={getAll} />
+			<div>
+				<h1>Profile:</h1>
+				<code>{JSON.stringify(profile, null, "\t")}</code>
+			</div>
 		</section>
 	);
 };
