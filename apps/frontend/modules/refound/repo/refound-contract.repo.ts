@@ -1,4 +1,3 @@
-import { postMapper } from "@modules/contracts/hooks/use-refound-post-contract/post.mapper";
 import type { ProfileCreationProperties } from "@modules/refound/models/profile.dto";
 import type {
 	Profile,
@@ -13,7 +12,7 @@ import toast from "react-hot-toast";
 import type { Contract } from "web3-eth-contract";
 import type { Web3Storage } from "web3.storage";
 import type { PostCreationProperties } from "../models/post.dto";
-import type { PostId } from "../models/post.model";
+import type { PostId, PostType } from "../models/post.model";
 import { postParser } from "../parsers/post.parser";
 import { commands as ipfsCommands } from "./ipfs.repo";
 import { jsonFileFromObject } from "./utils/json-file-from-object";
@@ -133,20 +132,30 @@ const createPost = async (
 	contract: Contract,
 	ipfsClient: Web3Storage,
 	walletAddress: ProfileOwnerAddress,
-	imageFile: File,
+	postType: PostType,
 	metadata: PostCreationProperties,
+	imageFile?: File,
 ): Promise<Result<PostId>> => {
 	try {
+		const { profileId } = (await getProfileByAddress(contract, walletAddress)).unwrapOrElse(
+			(err) => {
+				throw err;
+			},
+		);
+
 		const storageSchema = postParser
-			.creationPropsToStorageSchema(metadata)
+			.creationPropsToStorageSchema(walletAddress, profileId, postType, metadata)
 			.unwrapOrElse((err) => {
 				throw err;
 			});
 
 		const metadataFile = jsonFileFromObject("metadata.json", storageSchema);
 
-		const files = [metadataFile, imageFile];
-		const directoryName = `${walletAddress.slice(-8)} | ${imageFile.name}`;
+		const files = [metadataFile];
+		if (imageFile) {
+			files.push(imageFile);
+		}
+		const directoryName = `${walletAddress.slice(-8)} | ${metadata.title}`;
 
 		// upload to ipfs
 		const { cid, paths } = (
@@ -166,14 +175,14 @@ const createPost = async (
 		});
 
 		const contractSchema = postParser
-			.creationPropsToContractDso(cid, paths, metadata)
+			.creationPropsToContractDso(cid, paths, postType)
 			.unwrapOrElse((err) => {
 				throw err;
 			});
 
 		// write to contract
 		const postId = await contract.methods
-			.makeRefoundPost(metadata.profileId, contractSchema)
+			.makeRefoundPost(profileId, contractSchema)
 			.send({ from: walletAddress });
 
 		if (!postId) throw new Error("Post creation likely failed when writing to contract.");

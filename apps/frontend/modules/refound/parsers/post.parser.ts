@@ -6,13 +6,19 @@ import { unixTimestamp } from "@utils/unix-timestamp";
 import type Web3 from "web3";
 import type {
 	ArticleMetadataStorageSchema,
+	ArticlePostContractSchema,
+	ArticlePostCreationProps,
+	BasePostContractSchema,
+	BaseStorageSchema,
 	ImageMetadataStorageSchema,
 	ImagePostContractSchema,
+	ImagePostCreationProps,
 	PostContractDTO,
 	PostCreationProperties,
 	PostStorageSchema,
 } from "../models/post.dto";
 import type { ArticlePost, BasePost, ImagePost, Post } from "../models/post.model";
+import { DataHost } from "../models/post.model";
 import { NftType } from "../models/post.model";
 import { PostType } from "../models/post.model";
 import { queries as refoundQueries } from "../repo/refound-contract.repo";
@@ -20,6 +26,7 @@ import { queries as refoundPostQueries } from "../repo/refound-post-contract.rep
 import { createGatewayUrl } from "../repo/utils/create-gateway-url";
 import { throwFieldError } from "./utils/throw-field-error";
 import type { Contract } from "web3-eth-contract";
+import type { ProfileId, ProfileOwnerAddress } from "../models/profile.model";
 
 /*
 --------
@@ -159,12 +166,114 @@ const dtoToModel = async (
 const creationPropsToContractDso = (
 	cid: string,
 	paths: string[],
-	creationProps: PostCreationProperties,
-): Result<string> => {};
+	postType: PostType,
+): Result<string> => {
+	try {
+		if (!cid) throwFieldError("cid");
+		if (!paths || !Array.isArray(paths) || !paths[0]) throwFieldError("paths");
+		if (!postType) throwFieldError("postType");
+
+		const baseProps: BasePostContractSchema = {
+			type: NftType.POST,
+			cid,
+			host: DataHost.IPFS,
+		};
+
+		if (postType === PostType.IMAGE) {
+			if (!paths[1]) throwFieldError("imagePath");
+
+			const imageProps: ImagePostContractSchema = {
+				...baseProps,
+				postType,
+				metadataPath: paths[0],
+				imagePath: paths[1],
+			};
+
+			return result.ok(JSON.stringify(imageProps));
+		}
+
+		if (postType === PostType.ARTICLE) {
+			const articleProps: ArticlePostContractSchema = {
+				...baseProps,
+				postType,
+				metadataPath: paths[0],
+			};
+
+			return result.ok(JSON.stringify(articleProps));
+		}
+
+		throw new Error(`postType "${postType}" does not match any parser`);
+	} catch (err) {
+		return result.fail(err as Error);
+	}
+};
 
 const creationPropsToStorageSchema = (
+	creatorAddress: ProfileOwnerAddress,
+	creatorId: ProfileId,
+	postType: PostType,
 	creationProps: PostCreationProperties,
-): Result<PostStorageSchema> => {};
+	// eslint-disable-next-line sonarjs/cognitive-complexity
+): Result<PostStorageSchema> => {
+	try {
+		if (!creatorAddress || !isString(creatorAddress)) throwFieldError("creatorAddress");
+		if (!creatorId || !isString(creatorId)) throwFieldError("creatorId");
+
+		const title = creationProps.title;
+		if (!title || !isString(title)) throwFieldError("title");
+
+		const tags = creationProps.tags || [];
+		if (!tags || !Array.isArray(tags)) throwFieldError("tags");
+
+		const location = creationProps.location;
+
+		const baseSchema: BaseStorageSchema = {
+			type: NftType.POST,
+			originalCreatorAddress: creatorAddress,
+			originalCreatorProfileId: creatorId,
+			title,
+			tags,
+			location,
+		};
+
+		if (postType === PostType.IMAGE) {
+			const { description, width, height } = creationProps as ImagePostCreationProps;
+
+			if (!width) throwFieldError("width");
+			if (!height) throwFieldError("height");
+
+			const imageSchema: ImageMetadataStorageSchema = {
+				...baseSchema,
+				postType: PostType.IMAGE,
+				description,
+				width,
+				height,
+			};
+
+			return result.ok(imageSchema as PostStorageSchema);
+		}
+
+		if (postType === PostType.ARTICLE) {
+			const { body, coverImageId } = creationProps as ArticlePostCreationProps;
+
+			if (!body || !isString(body)) throwFieldError("body");
+			if (coverImageId && !isString(coverImageId)) throwFieldError("coverImageId");
+
+			const articleSchema: ArticleMetadataStorageSchema = {
+				...baseSchema,
+				postType: PostType.ARTICLE,
+				body,
+				coverImageId,
+			};
+
+			return result.ok(articleSchema as PostStorageSchema);
+		}
+
+		throw new Error(`postType "${postType}" does not match any parser.`);
+	} catch (err) {
+		return result.fail(err as Error);
+	}
+};
 
 export const postParser = {
 	contractDataToDto,

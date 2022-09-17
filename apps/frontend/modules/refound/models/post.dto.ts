@@ -1,9 +1,12 @@
+import type { PostId, PostType } from "./post.model";
+import type { ProfileId, ProfileOwnerAddress } from "./profile.model";
+
 /* 
 IPFS DTO
 
 This is what should be written/read from ipfs.
 */
-type BaseStorageSchema = {
+export type BaseStorageSchema = {
 	type: string;
 	title: string;
 	tags: string[];
@@ -33,7 +36,7 @@ CONTRACT DTO
 
 This is what the contract will return when called.
 */
-type BasePostContractSchema = {
+export type BasePostContractSchema = {
 	type: string;
 	cid: string;
 	host: string;
@@ -59,4 +62,21 @@ export type PostContractDTO = {
 };
 
 // CREATION PROPERTIES
-export type PostCreationProperties = {};
+export type BaseCreationProps = {
+	title: string;
+	tags?: string[];
+	location?: string;
+};
+
+export type ImagePostCreationProps = {
+	description?: string;
+	width: number;
+	height: number;
+} & BaseCreationProps;
+
+export type ArticlePostCreationProps = {
+	coverImageId?: PostId;
+	body: string;
+} & BaseCreationProps;
+
+export type PostCreationProperties = ImagePostCreationProps | ArticlePostCreationProps;

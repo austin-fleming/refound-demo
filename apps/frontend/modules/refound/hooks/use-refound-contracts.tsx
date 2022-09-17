@@ -12,8 +12,14 @@ import { commands as refoundCommands } from "../repo/refound-contract.repo";
 import { commands as refoundPostCommands } from "../repo/refound-post-contract.repo";
 import { Web3Storage } from "web3.storage";
 import type { Post, PostId } from "../models/post.model";
-import type { PostCreationProperties } from "../models/post.dto";
+import { PostType } from "../models/post.model";
+import type {
+	ArticlePostCreationProps,
+	ImagePostCreationProps,
+	PostCreationProperties,
+} from "../models/post.dto";
 import type { LicenseType } from "../models/license.model";
+import type { Contract } from "web3-eth-contract";
 
 const fetchWithAddress = async <T,>(
 	endpoint: string,
@@ -50,7 +56,8 @@ export const useRefoundContracts = () => {
 	const createProfile = async (profileData: ProfileCreationProperties): Promise<Result<string>> =>
 		!walletAddress
 			? result.fail(new Error("No wallet connected"))
-			: refoundCommands.createProfile(refoundContract, walletAddress, profileData);
+			: // @ts-expect-error: web3 and celo provide slightly different "Contract" types
+			  refoundCommands.createProfile(refoundContract, walletAddress, profileData);
 
 	const updateProfile = async (profileData: ProfileCreationProperties): Promise<Result<string>> =>
 		!walletAddress
@@ -58,18 +65,31 @@ export const useRefoundContracts = () => {
 			: // @ts-expect-error: web3 and celo provide slightly different "Contract" types
 			  refoundCommands.updateProfile(refoundContract, walletAddress, profileData);
 
-	const createPost = async (
-		walletAddress: ProfileOwnerAddress,
+	const createImagePost = async (
 		imageFile: File,
-		metadata: PostCreationProperties,
+		metadata: ImagePostCreationProps,
 	): Promise<Result<PostId>> =>
 		!walletAddress
 			? result.fail(new Error("No wallet connected"))
 			: refoundCommands.createPost(
+					// @ts-expect-error: web3 and celo provide slightly different "Contract" types
 					refoundContract,
 					ipfsClient,
 					walletAddress,
+					PostType.IMAGE,
+					metadata,
 					imageFile,
+			  );
+
+	const createArticlePost = async (metadata: ArticlePostCreationProps): Promise<Result<PostId>> =>
+		!walletAddress
+			? result.fail(new Error("No wallet connected"))
+			: refoundCommands.createPost(
+					// @ts-expect-error: web3 and celo provide slightly different "Contract" types
+					refoundContract,
+					ipfsClient,
+					walletAddress,
+					PostType.ARTICLE,
 					metadata,
 			  );
 
@@ -80,6 +100,7 @@ export const useRefoundContracts = () => {
 		!walletAddress
 			? result.fail(new Error("No wallet connected"))
 			: refoundPostCommands.purchaseLicense(
+					// @ts-expect-error: web3 and celo provide slightly different "Contract" types
 					refoundPostContract,
 					walletAddress,
 					postId,
@@ -118,7 +139,8 @@ export const useRefoundContracts = () => {
 	return {
 		createProfile,
 		updateProfile,
-		createPost,
+		createImagePost,
+		createArticlePost,
 		purchaseLicense,
 		getProfile,
 		getAllProfiles,
