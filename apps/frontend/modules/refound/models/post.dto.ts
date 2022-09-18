@@ -27,7 +27,7 @@ export type ImageMetadataStorageSchema = {
 export type ArticleMetadataStorageSchema = {
 	postType: string;
 	body: string;
-	coverImageId?: string;
+	coverImageId?: string | number;
 } & BaseStorageSchema;
 
 export type PostStorageSchema = ImageMetadataStorageSchema | ArticleMetadataStorageSchema;

@@ -1,10 +1,12 @@
 import type { ProfileCreationProperties } from "@modules/refound/models/profile.dto";
-import type { Profile, ProfileOwnerAddress } from "@modules/refound/models/profile.model";
+import type {
+	Profile,
+	ProfileOwnerAddress,
+	ProfileUsername,
+} from "@modules/refound/models/profile.model";
 import type { Result } from "@utils/monads";
-import type { AbiItem } from "web3-utils";
 import { useCelo } from "@celo/react-celo";
 import { result } from "@utils/monads";
-import { refoundAbi } from "config/abis";
 import { config } from "config/config";
 import { commands as refoundCommands } from "../repo/refound-contract.repo";
 import { commands as refoundPostCommands } from "../repo/refound-post-contract.repo";
@@ -14,62 +16,65 @@ import { PostType } from "../models/post.model";
 import type { ArticlePostCreationProps, ImagePostCreationProps } from "../models/post.dto";
 import type { LicenseType } from "../models/license.model";
 import { fetchWithAddress } from "./utils/fetch-with-address";
-import { useAuth } from "./use-auth";
+import type { PostAggregate } from "../models/post.aggregate";
+import type { PoolAggregate } from "../models/pool.aggregate";
+import type { LicenseAggregate } from "../models/license.aggregate";
+import { useAccount } from "@modules/account/state/use-account";
 
 export const useRefoundContracts = () => {
-	const { kit, address } = useCelo();
-	const { walletAddress } = useAuth();
+	const { kit } = useCelo();
+	const { account } = useAccount();
 
 	const ipfsClient = new Web3Storage({ token: config.storage.web3storage.apiToken });
 
-	const refoundContract = new kit.connection.web3.eth.Contract(
-		refoundAbi as AbiItem[],
-		config.contracts.refound.address,
+	const coreContract = new kit.connection.web3.eth.Contract(
+		config.contracts.coreContract.abi,
+		config.contracts.coreContract.address,
 	);
-	const refoundPostContract = new kit.connection.web3.eth.Contract(
-		refoundAbi as AbiItem[],
-		config.contracts.refound.address,
+	const postContract = new kit.connection.web3.eth.Contract(
+		config.contracts.postContract.abi,
+		config.contracts.postContract.address,
 	);
 
 	/* 
 	COMMANDS
 	*/
 	const createProfile = async (profileData: ProfileCreationProperties): Promise<Result<string>> =>
-		!walletAddress
+		!account.address
 			? result.fail(new Error("No wallet connected"))
 			: // @ts-expect-error: web3 and celo provide slightly different "Contract" types
-			  refoundCommands.createProfile(refoundContract, walletAddress, profileData);
+			  refoundCommands.createProfile(coreContract, account.address, profileData);
 
 	const updateProfile = async (profileData: ProfileCreationProperties): Promise<Result<string>> =>
-		!walletAddress
+		!account.address
 			? result.fail(new Error("No wallet connected"))
 			: // @ts-expect-error: web3 and celo provide slightly different "Contract" types
-			  refoundCommands.updateProfile(refoundContract, walletAddress, profileData);
+			  refoundCommands.updateProfile(coreContract, account.address, profileData);
 
 	const createImagePost = async (
 		imageFile: File,
 		metadata: ImagePostCreationProps,
 	): Promise<Result<PostId>> =>
-		!walletAddress
+		!account.address
 			? result.fail(new Error("No wallet connected"))
 			: refoundCommands.createPost(
 					// @ts-expect-error: web3 and celo provide slightly different "Contract" types
-					refoundContract,
+					coreContract,
 					ipfsClient,
-					walletAddress,
+					account.address,
 					PostType.IMAGE,
 					metadata,
 					imageFile,
 			  );
 
 	const createArticlePost = async (metadata: ArticlePostCreationProps): Promise<Result<PostId>> =>
-		!walletAddress
+		!account.address
 			? result.fail(new Error("No wallet connected"))
 			: refoundCommands.createPost(
 					// @ts-expect-error: web3 and celo provide slightly different "Contract" types
-					refoundContract,
+					coreContract,
 					ipfsClient,
-					walletAddress,
+					account.address,
 					PostType.ARTICLE,
 					metadata,
 			  );
@@ -78,44 +83,55 @@ export const useRefoundContracts = () => {
 		postId: PostId,
 		licenseType: LicenseType,
 	): Promise<Result<true>> =>
-		!walletAddress
+		!account.address
 			? result.fail(new Error("No wallet connected"))
 			: refoundPostCommands.purchaseLicense(
 					// @ts-expect-error: web3 and celo provide slightly different "Contract" types
-					refoundPostContract,
-					walletAddress,
+					postContract,
+					account.address,
 					postId,
 					licenseType,
 			  );
 	/* 
 	QUERIES
 	*/
-	const getProfile = async (address: ProfileOwnerAddress): Promise<Result<Profile>> =>
-		!walletAddress
+	const getProfileByUsername = async (username: ProfileUsername): Promise<Result<Profile>> =>
+		!account.address
 			? result.fail(new Error("No wallet connected"))
-			: fetchWithAddress<Profile>(`/api/users/${address}`, walletAddress);
+			: fetchWithAddress<Profile>(`/api/users/${username}`, account.address);
+
+	const getProfileByAddress = async (address: ProfileOwnerAddress): Promise<Result<Profile>> =>
+		!account.address
+			? result.fail(new Error("No wallet connected"))
+			: fetchWithAddress<Profile>(`/api/users/account/${address}`, account.address);
 
 	const getAllProfiles = async (): Promise<Result<Profile[]>> =>
-		!walletAddress
+		!account.address
 			? result.fail(new Error("No wallet connected"))
-			: fetchWithAddress<Profile[]>(`/api/users/`, walletAddress);
+			: fetchWithAddress<Profile[]>(`/api/users/`, account.address);
 
-	const getPostsCreatedByProfile = async (
-		address: ProfileOwnerAddress,
-	): Promise<Result<Post[]>> =>
-		!walletAddress
+	const getPostsByProfile = async (username: ProfileUsername): Promise<Result<PostAggregate[]>> =>
+		!account.address
 			? result.fail(new Error("No wallet connected"))
-			: fetchWithAddress<Post[]>(`/api/users/${address}/posts`, walletAddress);
+			: fetchWithAddress<PostAggregate[]>(`/api/users/${username}/posts`, account.address);
 
-	const getPost = async (postId: PostId): Promise<Result<Post>> =>
-		!walletAddress
+	const getPost = async (postId: PostId): Promise<Result<PostAggregate>> =>
+		!account.address
 			? result.fail(new Error("No wallet connected"))
-			: fetchWithAddress<Post>(`/api/posts/${postId}`, walletAddress);
+			: fetchWithAddress<PostAggregate>(`/api/posts/${postId}`, account.address);
 
 	const getAllPosts = async (): Promise<Result<Post[]>> =>
-		!walletAddress
+		!account.address
 			? result.fail(new Error("No wallet connected"))
-			: fetchWithAddress<Post[]>(`/api/posts`, walletAddress);
+			: fetchWithAddress<Post[]>(`/api/posts`, account.address);
+
+	const getPoolsByProfile = async (
+		profileAddress: ProfileOwnerAddress,
+	): Promise<Result<PoolAggregate[]>> => {};
+
+	const getLicensesByProfile = async (
+		profileAddress: ProfileOwnerAddress,
+	): Promise<Result<LicenseAggregate[]>> => {};
 
 	return {
 		createProfile,
@@ -123,9 +139,12 @@ export const useRefoundContracts = () => {
 		createImagePost,
 		createArticlePost,
 		purchaseLicense,
-		getProfile,
+		getProfileByUsername,
+		getProfileByAddress,
 		getAllProfiles,
-		getPostsCreatedByProfile,
+		getPostsByProfile,
+		getPoolsByProfile,
+		getLicensesByProfile,
 		getPost,
 		getAllPosts,
 	};

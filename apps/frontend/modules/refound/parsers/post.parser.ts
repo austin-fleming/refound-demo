@@ -27,6 +27,7 @@ import { createGatewayUrl } from "../repo/utils/create-gateway-url";
 import { throwFieldError } from "./utils/throw-field-error";
 import type { Contract } from "web3-eth-contract";
 import type { ProfileId, ProfileOwnerAddress } from "../models/profile.model";
+import type { PostAggregate } from "../models/post.aggregate";
 
 /*
 --------
@@ -104,7 +105,6 @@ const dtoToModel = async (
 		const basePost: BasePost = {
 			type: NftType.POST,
 			creatorId: contractDto.posterId,
-			creatorAddress: storageDto.originalCreatorAddress,
 			postId: contractDto.postId,
 			createdAt,
 			title: storageDto.title,
@@ -276,9 +276,39 @@ const creationPropsToStorageSchema = (
 	}
 };
 
+const dtoToAggregate = async (
+	contract: Contract,
+	contractDto: PostContractDTO,
+	storageDto: PostStorageSchema,
+): Promise<Result<PostAggregate>> => {
+	try {
+		const postModel = (await dtoToModel(contract, contractDto, storageDto)).unwrapOrElse(
+			(err) => {
+				throw err;
+			},
+		);
+
+		const profile = (
+			await refoundQueries.getProfileById(contract, postModel.creatorId)
+		).unwrapOrElse((err) => {
+			throw err;
+		});
+
+		const postAggregate: PostAggregate = {
+			...postModel,
+			creator: profile,
+		};
+
+		return result.ok(postAggregate);
+	} catch (err) {
+		return result.fail(err as Error);
+	}
+};
+
 export const postParser = {
 	contractDataToDto,
 	dtoToModel,
+	dtoToAggregate,
 	creationPropsToContractDso,
 	creationPropsToStorageSchema,
 };

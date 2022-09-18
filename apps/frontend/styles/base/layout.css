@@ -17,7 +17,7 @@
 } */
 @media only screen and (min-width: 1024px) {
 	:root {
-		--l-header-top-height: 146px;
+		--l-header-top-height: 4rem;
 	}
 }
 /* @media only screen and (min-width: 1280px) {

@@ -4,10 +4,14 @@ import Web3 from "web3";
 import { isString } from "@utils/data-helpers/is-string";
 import { queries as refoundPostQueries } from "../repo/refound-post-contract.repo";
 import { queries as refoundQueries } from "../repo/refound-contract.repo";
-import type { Post } from "../models/post.model";
+import type { PostAggregate } from "../models/post.aggregate";
 
 // Get posts created by wallet address
-export async function getPostsByProfileHandler(req: NextApiRequest, res: NextApiResponse<Post[]>) {
+export async function getPostsByProfileHandler(
+	req: NextApiRequest,
+	res: NextApiResponse<PostAggregate[]>,
+) {
+	res.setHeader("Cache-Control", `s-maxage=5, stale-while-revalidate`);
 	try {
 		const { profileAddress, requester } = req.query;
 
@@ -18,12 +22,12 @@ export async function getPostsByProfileHandler(req: NextApiRequest, res: NextApi
 
 		const web3 = new Web3(config.contracts.rpcUrl);
 		const contract = new web3.eth.Contract(
-			config.contracts.refound.abi,
-			config.contracts.refound.address,
+			config.contracts.coreContract.abi,
+			config.contracts.coreContract.address,
 		);
 		const postContract = new web3.eth.Contract(
-			config.contracts.refoundPost.abi,
-			config.contracts.refoundPost.address,
+			config.contracts.postContract.abi,
+			config.contracts.postContract.address,
 		);
 
 		const profile = (

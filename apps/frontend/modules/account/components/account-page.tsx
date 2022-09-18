@@ -1,14 +1,14 @@
-import { useAuth } from "@modules/refound/hooks/use-auth";
+import { useAccount } from "../state/use-account";
 
 export const AccountPage = () => {
-	const { isLoggedIn, walletAddress, profile } = useAuth();
+	const { account } = useAccount();
 
 	return (
 		<section>
 			<h1>Account</h1>
 			<div>
 				<h2>Address:</h2>
-				<p>{walletAddress || "n/a"}</p>
+				<p>{account.address || "n/a"}</p>
 			</div>
 		</section>
 	);

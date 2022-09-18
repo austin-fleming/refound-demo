@@ -7,7 +7,7 @@ import { queries } from "../repo/refound-contract.repo";
 
 // Get user by wallet address
 export async function getProfileHandler(req: NextApiRequest, res: NextApiResponse<Profile>) {
-	console.log("profileRoute");
+	res.setHeader("Cache-Control", `s-maxage=5, stale-while-revalidate`);
 	const { profileAddress, requester } = req.query;
 
 	if (!isString(profileAddress) || !profileAddress) return res.status(400).end();
@@ -15,8 +15,8 @@ export async function getProfileHandler(req: NextApiRequest, res: NextApiRespons
 
 	const web3 = new Web3(config.contracts.rpcUrl);
 	const contract = new web3.eth.Contract(
-		config.contracts.refound.abi,
-		config.contracts.refound.address,
+		config.contracts.coreContract.abi,
+		config.contracts.coreContract.address,
 	);
 
 	return (await queries.getProfileByAddress(contract, profileAddress)).match({

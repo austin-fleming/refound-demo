@@ -13,7 +13,7 @@ export const BottomNav = () => {
 			className="z-[5000] fixed bottom-0 left-0 right-0 w-full bg-white border-t-2 border-solid border-slate-300"
 		>
 			<nav className="flex flex-row relative -top-[2px] max-w-[500px] w-full mx-auto pb-[24px]">
-				<NextLink href="/">
+				<NextLink href="/home">
 					<a
 						aria-current={currentPage === "home"}
 						className={`${S.navButton} ${
@@ -63,7 +63,12 @@ export const BottomNav = () => {
 						<span className={S.navButton__label}>Notifications</span>
 					</a>
 				</NextLink>
-				<button className={S.navButton} type="button" onClick={toggleMenu} aria-label="open menu">
+				<button
+					className={S.navButton}
+					type="button"
+					onClick={toggleMenu}
+					aria-label="open menu"
+				>
 					<AccountIcon className={S.navButton__icon} />
 					<span className={S.navButton__label}>Account</span>
 				</button>

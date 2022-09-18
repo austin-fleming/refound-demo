@@ -1,6 +1,6 @@
 import type { ProfileOwnerAddress } from "./profile.model";
 
-export type PoolId = string;
+export type PoolId = string | number;
 
 export type Pool = {
 	poolId: PoolId;

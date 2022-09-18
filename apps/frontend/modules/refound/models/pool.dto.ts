@@ -1,19 +1,8 @@
-/* 
-struct Campaign {
-        address creator;
-        uint goal;
-        string title;
-        string description;
-        string imageLink;
-        uint pledged;
-        uint startAt;
-        uint endAt;
-        bool claimed;
-    }
-*/
+import type { ProfileId } from "./profile.model";
 
 export type PoolDTO = {
-	creator: string; // address
+	id: string | number;
+	creatorId: ProfileId; // address
 	goal: number;
 	title: string;
 	description: string;

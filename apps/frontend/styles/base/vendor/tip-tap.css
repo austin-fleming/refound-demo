@@ -1,0 +1,9 @@
+.ProseMirror > * + * {
+	@apply mt-3;
+}
+.ProseMirror img {
+	@apply h-auto max-w-full;
+}
+.ProseMirror img.ProseMirror-selectednode {
+	outline: 3px solid #68cef8;
+}

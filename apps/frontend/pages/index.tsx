@@ -1,3 +1,3 @@
-import { HomeView } from "@modules/account/views/home.view";
+import { LandingView } from "@modules/refound/parsers/views/landing.view";
 
-export default HomeView;
+export default LandingView;

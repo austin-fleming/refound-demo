@@ -1,0 +1,18 @@
+.root {
+	@apply overflow-hidden border-2 border-solid rounded-lg border-slate-400;
+}
+
+.editor {
+	@apply prose focus:outline-none min-h-[50vh];
+}
+
+.toolbar {
+	@apply flex flex-row flex-wrap;
+}
+
+.toolButton {
+	@apply text-sm bg-slate-200 border-2 border-transparent border-solid px-[0.75em] py-[0.2em] flex-grow;
+}
+.isActive {
+	@apply text-white bg-black;
+}

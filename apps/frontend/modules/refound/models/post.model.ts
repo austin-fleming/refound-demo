@@ -19,7 +19,6 @@ export type PostId = number | string;
 export type BasePost = {
 	type: NftType.POST;
 	creatorId: ProfileId;
-	creatorAddress: ProfileOwnerAddress;
 	postId: PostId;
 	createdAt: Date;
 	title: string;

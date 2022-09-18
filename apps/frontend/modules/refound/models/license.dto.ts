@@ -1,8 +1,11 @@
+import type { UnixTimestamp } from "@modules/shared/models/unix-timestamp.vo";
+import type { LicenseType } from "./license.model";
+
 /* 
 What the contract will return
 */
 export type LicenseContractDTO = {
-	postID: string;
-	Ltype: string;
-	purchaseDate: string;
+	postID: string | number;
+	Ltype: LicenseType;
+	purchaseDate: UnixTimestamp;
 };

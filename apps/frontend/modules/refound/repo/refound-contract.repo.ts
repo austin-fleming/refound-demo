@@ -3,6 +3,7 @@ import type {
 	Profile,
 	ProfileId,
 	ProfileOwnerAddress,
+	ProfileUsername,
 } from "@modules/refound/models/profile.model";
 import { profileParser } from "@modules/refound/parsers/profile.parser";
 import { isString } from "@utils/data-helpers/is-string";
@@ -22,23 +23,34 @@ import { jsonFileFromObject } from "./utils/json-file-from-object";
 QUERIES
 ----------------
 */
+
+const getProfileByUsername = async (
+	contract: Contract,
+	username: ProfileUsername,
+): Promise<Result<Profile>> => {
+	try {
+		const profileId = await contract.methods.getProfileIdByHandle(username).call();
+		const rawUri = await contract.methods.tokenURI(profileId);
+
+		return profileParser.uriToModel(profileId, rawUri);
+	} catch (err) {
+		return result.fail(err as Error);
+	}
+};
+
 const getProfileByAddress = async (
 	contract: Contract,
 	address: ProfileOwnerAddress,
 ): Promise<Result<Profile>> => {
 	try {
-		const { _profileExists, _profileUri, _profileId } = await contract.methods
-			.getRefoundProfile(address)
-			.call();
+		const profileId = await contract.methods.ProfileIdByAddress(address).call();
+		const profileUri = await contract.methods.tokenURI(profileId).call();
 
-		if (_profileExists === false)
-			throw new Error(`Profile with address "${address}" does not exist`);
-		if (!_profileUri || !isString(_profileUri))
+		console.log({ profileUri });
+		if (!profileUri || !isString(profileUri))
 			throw new Error("getProfileByAddress did not return profileUri");
-		if (!_profileId || !isString(_profileId))
-			throw new Error("getProfileByAddress did not return profileId");
 
-		return profileParser.uriToModel(_profileId, _profileUri);
+		return profileParser.uriToModel(profileId, profileUri);
 	} catch (err) {
 		return result.fail(err as Error);
 	}
@@ -209,6 +221,7 @@ export const commands = {
 };
 
 export const queries = {
+	getProfileByUsername,
 	getProfileByAddress,
 	getAllProfiles,
 	getProfileById,

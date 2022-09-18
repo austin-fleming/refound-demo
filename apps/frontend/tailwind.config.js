@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const defaultTheme = require('tailwindcss/defaultTheme')
+const formPlugin = require('@tailwindcss/forms')
+const typographyPlugin = require("@tailwindcss/typography")
 
 const withOpacityValue = (variable) => ({ opacityValue }) => {
     if (opacityValue === undefined) {
@@ -61,5 +63,5 @@ module.exports = {
             },
         },
     },
-    plugins: [],
+    plugins: [formPlugin, typographyPlugin],
 }

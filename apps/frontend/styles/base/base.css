@@ -1,5 +1,6 @@
 @import "./colors.css";
 @import "./layout.css";
+@import "./vendor/tip-tap.css";
 
 html {
 	@apply w-full overflow-x-hidden;
@@ -8,7 +9,7 @@ html {
 
 html,
 body {
-	@apply text-primary font-normal;
+	@apply font-normal text-primary;
 }
 
 body {

@@ -1,21 +1,33 @@
-import { refoundAbi, refoundPoolAbi, refoundPostAbi } from "config/abis";
 import type { AbiItem } from "web3-utils";
+import refoundCoreContract from "./contracts/Refound.sol/Refound.json";
+import refoundPostContract from "./contracts/RefoundPost.sol/RefoundPost.json";
+import refoundPoolContract from "./contracts/FundingPool.sol/FundingPool.json";
+import refoundRusdContract from "./contracts/RefoundUSD.sol/RefoundUSD.json";
+import refoundFakeUsdcContract from "./contracts/FakeUSDC.sol/fakeUSDC.json";
 
 export const config = {
 	contracts: {
 		rpcUrl: "https://alfajores-forno.celo-testnet.org",
 		chainId: 44787,
-		refound: {
-			address: process.env.NEXT_PUBLIC_REFOUND_CONTRACT_ADDRESS as string,
-			abi: refoundAbi as AbiItem[],
+		coreContract: {
+			address: process.env.NEXT_PUBLIC_REFOUNDCONTRACT_CORE as string,
+			abi: refoundCoreContract.abi as AbiItem[],
 		},
-		refoundPost: {
-			address: process.env.NEXT_PUBLIC_REFOUNDPOST_CONTRACT_ADDRESS as string,
-			abi: refoundPostAbi as AbiItem[],
+		postContract: {
+			address: process.env.NEXT_PUBLIC_REFOUNDCONTRACT_POST as string,
+			abi: refoundPostContract.abi as AbiItem[],
 		},
-		refoundPool: {
-			address: process.env.NEXT_PUBLIC_REFOUNDPOOL_CONTRACT_ADDRESS as string,
-			abi: refoundPoolAbi as AbiItem[],
+		poolContract: {
+			address: process.env.NEXT_PUBLIC_REFOUNDCONTRACT_POOL as string,
+			abi: refoundPoolContract.abi as AbiItem[],
+		},
+		refoundUsdContract: {
+			address: process.env.NEXT_PUBLIC_REFOUNDCONTRACT_RUSD as string,
+			abi: refoundRusdContract.abi as AbiItem[],
+		},
+		fakeUsdcContract: {
+			address: process.env.NEXT_PUBLIC_REFOUNDCONTRACT_FUSDC as string,
+			abi: refoundFakeUsdcContract.abi as AbiItem[],
 		},
 	},
 	storage: {

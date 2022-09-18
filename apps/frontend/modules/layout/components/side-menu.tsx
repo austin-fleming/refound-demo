@@ -2,7 +2,8 @@ import { PolyButton } from "@components/poly-button/poly-button";
 import type { ReactNode } from "react";
 import { useLayout } from "../hooks/use-layout";
 import NextImage from "next/image";
-import { useAuth } from "@modules/refound/hooks/use-auth";
+import NextLink from "next/link";
+import { useAccount } from "@modules/account/state/use-account";
 
 const MenuSection = ({ children, title }: { children: ReactNode; title: string }) => (
 	<div className="flex flex-col gap-2">
@@ -12,11 +13,10 @@ const MenuSection = ({ children, title }: { children: ReactNode; title: string }
 );
 
 const Menu = () => {
-	const { walletAddress, isLoggedIn, logIn, logOut, profile } = useAuth();
-
+	const { account, login, logout } = useAccount();
 	const { toggleMenu } = useLayout();
 
-	return isLoggedIn && profile ? (
+	return account.status === "CONNECTED" ? (
 		<div className="w-full max-h-screen overflow-y-scroll p-contentPadding">
 			<section className="flex flex-col items-center justify-center w-full gap-8 py-9">
 				<h2 className="text-2xl leading-none">Account</h2>
@@ -24,7 +24,7 @@ const Menu = () => {
 				<div className="w-1/2 mx-auto">
 					<figure className="w-full pb-[100%] relative rounded-md overflow-hidden">
 						<NextImage
-							src={profile.avatarUrl || "/assets/avatar-placeholder.png"}
+							src={account.profile?.avatarUrl || "/assets/avatar-placeholder.png"}
 							alt="your avatar"
 							layout="fill"
 							objectFit="cover"
@@ -33,14 +33,20 @@ const Menu = () => {
 				</div>
 
 				<div className="flex flex-col items-center justify-center w-full gap-2">
-					<p className="text-2xl leading-none">@{profile.username}</p>
-					{walletAddress && (
-						<p className="font-mono text-xs">{`${walletAddress.slice(
+					<p className="text-2xl leading-none">
+						{`@${account.profile?.username}` || "-"}
+					</p>
+					{account.address && (
+						<p className="font-mono text-xs">{`${account.address.slice(
 							0,
 							6,
-						)}...${walletAddress.slice(-4)}`}</p>
+						)}...${account.address.slice(-4)}`}</p>
 					)}
 				</div>
+
+				<NextLink href="/account">
+					<a>View Account</a>
+				</NextLink>
 			</section>
 
 			<section className="py-8">
@@ -56,7 +62,7 @@ const Menu = () => {
 
 			<section className="flex flex-col gap-4">
 				<MenuSection title="General">
-					<PolyButton as="button" onClick={logOut} label="Log Out" size="sm" fullWidth />
+					<PolyButton as="button" onClick={logout} label="Log Out" size="sm" fullWidth />
 					<PolyButton
 						as="button"
 						label="Notifications"
@@ -153,7 +159,7 @@ const Menu = () => {
 				align="center"
 				onClick={() => {
 					toggleMenu();
-					logIn();
+					login();
 				}}
 				label="Log In"
 			/>

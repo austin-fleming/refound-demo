@@ -10,7 +10,6 @@ import { useCallback, useEffect, useState } from "react";
 import type { TextPost } from "@modules/mocks/text-post";
 import type { Pool } from "@modules/mocks/pools";
 import type { Account } from "@modules/mocks/account";
-import { AccountCard } from "@modules/account/components/account-card";
 import { CardFeed } from "@modules/posts/components/post-card/card-feed";
 import { ProfileCard } from "@modules/profile/components/profile-card";
 

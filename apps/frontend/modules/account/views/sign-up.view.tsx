@@ -6,30 +6,19 @@ import type { NextPage } from "next";
 import type { ChangeEvent, MouseEventHandler } from "react";
 import { useState } from "react";
 import type { ProfileCreationProperties } from "@modules/refound/models/profile.dto";
-import { useAuth } from "@modules/refound/hooks/use-auth";
 import { useRefoundContracts } from "@modules/refound/hooks/use-refound-contracts";
+import { useAccount } from "../state/use-account";
 
 export const SignUpView: NextPage = () => {
-	const { walletAddress, isLoggedIn, logIn, profile } = useAuth();
-	const { createProfile, updateProfile, getAllProfiles, getProfile } = useRefoundContracts();
+	const { login, account } = useAccount();
+
+	const { createProfile, updateProfile, getAllProfiles } = useRefoundContracts();
 
 	const [formState, setFormState] = useState<Partial<ProfileCreationProperties>>({});
 	const [formStatus, setFormStatus] = useState<
 		"NONE" | "READY" | "SUBMITTING" | "DONE" | "ERROR"
 	>("NONE");
 	const [formError, setFormError] = useState<string | undefined>();
-
-	const getAll = () => {
-		getProfile("0x14bac73FAe42b227D484aF9E6eaDe845bE476402").then((users) => {
-			users.match({
-				ok: (users) => {
-					console.log({ users });
-					toast.message("Users printed to log");
-				},
-				fail: () => console.log("no users"),
-			});
-		});
-	};
 
 	const validateForm = (
 		unvalidated: Partial<ProfileCreationProperties>,
@@ -118,7 +107,7 @@ export const SignUpView: NextPage = () => {
 	return (
 		<section>
 			<h1>Sign up!</h1>
-			{isLoggedIn ? (
+			{account.status === "CONNECTED" ? (
 				<form className="flex flex-col gap-8">
 					<label>
 						<span>Username</span>
@@ -156,13 +145,12 @@ export const SignUpView: NextPage = () => {
 			) : (
 				<div>
 					<h2>Connect your wallet to get started!</h2>
-					<PolyButton as="button" label="Connect Wallet" onClick={logIn} />
+					<PolyButton as="button" label="Connect Wallet" onClick={login} />
 				</div>
 			)}
-			<PolyButton as="button" label="get users" onClick={getAll} />
 			<div>
 				<h1>Profile:</h1>
-				<code>{JSON.stringify(profile, null, "\t")}</code>
+				<code>{JSON.stringify(account.profile, null, "\t")}</code>
 			</div>
 		</section>
 	);

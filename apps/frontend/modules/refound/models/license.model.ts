@@ -9,6 +9,6 @@ export enum LicenseType {
 
 export type License = {
 	postId: PostId;
-	license: LicenseType;
+	licenseType: LicenseType;
 	purchaseDate: Date;
 };
