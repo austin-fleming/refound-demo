@@ -65,8 +65,8 @@ export const LandingView: NextPage = () => {
 					align="center" fullWidth color="secondary"/></a>
 				</div>
 			</Grid>
-			<Grid item sm={12} md={4} style={{paddingTop:"1%"}}>
-				<img src="https://drive.google.com/uc?export=view&id=1Aaa1NqyNnAlxFtEAD0N7ch-T44d8KLzg" style={{width:"100%"}} alt="Love and respect everyone ! by alisdare1 is licensed under CC BY-SA 2.0. File:Oil Wars, Global Warming, Climate Wars (15133025720).jpg by Eden, Janine and Jim from New York City is licensed under CC BY 2.0."></img>
+			<Grid item sm={12} md={4} style={{paddingTop:"3%"}}>
+				<img src="https://drive.google.com/uc?export=view&id=1o3Fy4e2RuLWnFJDe3H5C_RKRQjANUPOT" style={{width:"75%"}} alt="Refound iPhone Mockup"></img>
 			</Grid>
 		</Grid>
 
