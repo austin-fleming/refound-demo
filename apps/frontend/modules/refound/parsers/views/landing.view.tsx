@@ -23,25 +23,25 @@ export const LandingView: NextPage = () => {
 				<h1 className="font-bold" style={{fontSize: "3em"}}>Your platform for empowering journalism on the blockchain</h1>
 				<p>Refound is an NFT marketplace where journalists and photographers can share first person, creative content from the frontlines swiftly, raise awareness, and sell directly to businesses, with sale proceeds going to customizable beneficiaries. Refound leverages blockchain technology to create a decentralized platform helping conflict zone journalists and photographers to directly sell their content to the public and news media at higher margins and with greater financial control, helping regenerate their economic cycle.</p>
 				<div className="flex flex-row items-center justify-left w-full gap-2" style={{marginTop:"20px"}}>
-					<PolyButton as="button"
+					<a href="/"><PolyButton as="button"
 					size="md" 
 					label="Get Started"
 					color="secondary"
-					align="center"/>
+					align="center"/></a>
 
-					<PolyButton 
+					<a href="/learn-more"><PolyButton 
 					as="button"
 					size="md" 
 					label="Learn More"
-					align="center"/>
+					align="center"/></a>
 				</div>
 			</Grid>
 			<Grid item sm={12} md={6}>
-				<img src="https://bafybeifxqj72mophcwjppk27zpftyxjxa4ltn2d2sfoipzna77bpddup3m.ipfs.w3s.link/images.png" style={{width:"80%"}}></img>
+				<img src="https://drive.google.com/uc?export=view&id=1Aaa1NqyNnAlxFtEAD0N7ch-T44d8KLzg" style={{width:"100%"}} alt="Love and respect everyone ! by alisdare1 is licensed under CC BY-SA 2.0. File:Oil Wars, Global Warming, Climate Wars (15133025720).jpg by Eden, Janine and Jim from New York City is licensed under CC BY 2.0."></img>
 			</Grid>
 		</Grid>
 
-	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginTop:"5%"}}>
+	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginTop:"5%", padding:"5%"}}>
 		<h1 className="font-bold" style={{fontSize: "3em"}}>Mint the art of journalism back to life.</h1>
 		<p>Our decentralized application provides journalists a platform to share their content, monetize it, and maintain anonymity and safety by using a wallet sign-in.</p>
 	</Grid>
@@ -58,8 +58,8 @@ export const LandingView: NextPage = () => {
 				</CardContent>
 				<CardMedia
 					component="img"
-					height="140"
-					image="https://mirror.xyz/vectors/publishing.svg"
+					style={{maxWidth:"300px", margin: "0 auto"}}
+					image="https://drive.google.com/uc?export=view&id=1rmyR7oMANOLUSNDp8__CK_1lCJImsdn2"
 				/>
 			</Card>
 		</Grid>
@@ -75,13 +75,13 @@ export const LandingView: NextPage = () => {
 				</CardContent>
 				<CardMedia
 					component="img"
-					height="140"
-					image="https://mirror.xyz/_next/image?url=%2Fimages%2Fwriting-nfts.png&w=1920&q=75"
+					style={{maxWidth:"300px", margin: "0 auto"}}
+					image="https://drive.google.com/uc?export=view&id=1cy3_NZqn4POkjs1RQ-y_H-A0xB28GWiL"
 				/>
 			</Card>
 		</Grid>
 	</Grid>
-	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginTop:"5%"}}>
+	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto"}}>
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 			<Card sx={{ maxWidth: 600 }}>
 				<CardContent>
@@ -94,8 +94,8 @@ export const LandingView: NextPage = () => {
 				</CardContent>
 				<CardMedia
 					component="img"
-					height="140"
-					image="https://mirror.xyz/vectors/publishing.svg"
+					style={{maxWidth:"300px", margin: "0 auto"}}
+					image="https://drive.google.com/uc?export=view&id=1OyjFHs0szQmIIvPi6jOP9c1VQmbrR0tT"
 				/>
 			</Card>
 		</Grid>
@@ -111,13 +111,13 @@ export const LandingView: NextPage = () => {
 				</CardContent>
 				<CardMedia
 					component="img"
-					height="140"
-					image="https://mirror.xyz/_next/image?url=%2Fimages%2Fwriting-nfts.png&w=1920&q=75"
+					style={{maxWidth:"260px", margin: "0 auto"}}
+					image="https://drive.google.com/uc?export=view&id=1cKrxJuvUyB1Ams0hA-rr4srP-cGpz3gU"
 				/>
 			</Card>
 		</Grid>
 	</Grid>
-	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginTop:"5%"}}>
+	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto"}}>
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 			<Card sx={{ maxWidth: 600 }}>
 				<CardContent>
@@ -130,8 +130,8 @@ export const LandingView: NextPage = () => {
 				</CardContent>
 				<CardMedia
 					component="img"
-					height="140"
-					image="https://mirror.xyz/vectors/publishing.svg"
+					style={{maxWidth:"140px", margin: "0 auto"}}
+					image="https://drive.google.com/uc?export=view&id=1IFzD8lq10J6ebLdnkpXqqWkocz3AgV7s"
 				/>
 			</Card>
 		</Grid>
@@ -147,13 +147,13 @@ export const LandingView: NextPage = () => {
 				</CardContent>
 				<CardMedia
 					component="img"
-					height="140"
-					image="https://mirror.xyz/_next/image?url=%2Fimages%2Fwriting-nfts.png&w=1920&q=75"
+					style={{maxWidth:"300px", margin: "0 auto"}}
+					image="https://drive.google.com/uc?export=view&id=1GHZkVxh1IfipGI-A7aYDT80rB7lzYmzf"
 				/>
 			</Card>
 		</Grid>
 	</Grid>
-	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginTop:"5%"}}>
+	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto"}}>
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 			<Card sx={{ maxWidth: 600 }}>
 				<CardContent>
@@ -166,8 +166,8 @@ export const LandingView: NextPage = () => {
 				</CardContent>
 				<CardMedia
 					component="img"
-					height="140"
-					image="https://mirror.xyz/vectors/publishing.svg"
+					style={{maxWidth:"300px", margin: "0 auto"}}
+					image="https://drive.google.com/uc?export=view&id=12kAwXMD0CcHXEEJGnFedKf_L5NwXd4Cx"
 				/>
 			</Card>
 		</Grid>
@@ -183,13 +183,13 @@ export const LandingView: NextPage = () => {
 				</CardContent>
 				<CardMedia
 					component="img"
-					height="140"
-					image="https://drive.google.com/uc?export=view&id=1gMXqyZBCs3Z0TgLnZIm3dlKVjRdu2Bam"
+					style={{maxWidth:"250px", margin: "0 auto"}}
+					image="https://drive.google.com/uc?export=view&id=1jEJpL7rEfUX6COlgjW7UglmzeUzgOHAk"
 				/>
 			</Card>
 		</Grid>
 	</Grid>
-	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginTop:"5%"}}>
+	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto"}}>
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 			<Card sx={{ maxWidth: 600 }}>
 				<CardContent>
@@ -202,8 +202,8 @@ export const LandingView: NextPage = () => {
 				</CardContent>
 				<CardMedia
 					component="img"
-					height="140"
-					image="https://drive.google.com/uc?export=view&id=1kanh0oS6o_AheC9l0dLftaDB5oR6fWbt"
+					style={{maxWidth:"300px", margin: "0 auto"}}
+					image="https://drive.google.com/uc?export=view&id=1V-wSwFgnvVMOcV8GXlvR-KmGjRf8qi49"
 				/>
 			</Card>
 		</Grid>
@@ -219,13 +219,13 @@ export const LandingView: NextPage = () => {
 				</CardContent>
 				<CardMedia
 					component="img"
-					height="140"
-					image="https://drive.google.com/uc?export=view&id=1xBc4K6nSh_BTElP23S3fBoMUJd4St0MJ"
+					style={{maxWidth:"280px", margin: "0 auto"}}
+					image="https://drive.google.com/uc?export=view&id=1puFStVwrGnr8vWYNQN8h0JoQCeRi6Y9O"
 				/>
 			</Card>
 		</Grid>
 	</Grid>
-	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginTop:"5%"}}>
+	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto"}}>
 		<h1 className="font-bold" style={{fontSize:"2em"}}>Start publishing in seconds.</h1>
 	</Grid>
 	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginBottom:"5%"}}>

@@ -25,11 +25,12 @@ export const LearnMoreView: NextPage = () => {
 				<p>We invite you to join our global community and monetize your photographs and writing!</p>
 				<p>Sign up here for your unique Refound name handle!</p>
 				<div className="flex flex-row items-center justify-left w-full gap-2" style={{marginTop:"20px"}}>
-					<PolyButton 
+					<a href="/sign-up"><PolyButton 
 					as="button"
 					size="md" 
 					label="Sign Up"
 					align="center"/>
+					</a>
 				</div>
 			</Grid>
 			
@@ -37,7 +38,7 @@ export const LearnMoreView: NextPage = () => {
 
 		<Grid container justifyContent="center" sm={12} style={{margin:"0 auto", marginTop:"5%", backgroundColor:"#E7E5E4"}}>
 			<Grid item sm={12}  md={6} style={{padding:"3%"}}>
-				<div style={{maxWidth:"450px"}}><img src="https://bafybeickydgz2jvdiooqv4gzpvu5newc4qtbhzo7e42g5obesjffpallpq.ipfs.w3s.link/11173964734_b9d7f61849_b-modified-min.png" alt="'Netting a trade and an income in northern Lebanon' by DFID - UK Department for International Development is licensed under CC BY 2.0."></img></div>
+				<div style={{maxWidth:"300px"}}><img src="https://bafybeickydgz2jvdiooqv4gzpvu5newc4qtbhzo7e42g5obesjffpallpq.ipfs.w3s.link/11173964734_b9d7f61849_b-modified-min.png" alt="'Netting a trade and an income in northern Lebanon' by DFID - UK Department for International Development is licensed under CC BY 2.0."></img></div>
 			</Grid>
 			<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 				<h1 className="font-bold" style={{fontSize: "3em"}}>ABOUT REFOUND</h1>
@@ -55,7 +56,7 @@ export const LearnMoreView: NextPage = () => {
 		</Grid>
 		<Grid container justifyContent="center" sm={12} style={{margin:"0 auto", marginTop:"5%", backgroundColor:"#E7E5E4"}}>
 			<Grid item sm={12}  md={6} style={{padding:"3%"}}>
-				<div style={{maxWidth:"450px"}}><img src="https://bafybeihvlpctyczp3jecmnyzcimr5typ72oqzpz2tbugia4ejmu7us2pla.ipfs.w3s.link/WhyRefound-modified.png" alt="'Netting a trade and an income in northern Lebanon' by DFID - UK Department for International Development is licensed under CC BY 2.0."></img></div>
+				<div style={{maxWidth:"300px"}}><img src="https://bafybeihvlpctyczp3jecmnyzcimr5typ72oqzpz2tbugia4ejmu7us2pla.ipfs.w3s.link/WhyRefound-modified.png" alt="'Netting a trade and an income in northern Lebanon' by DFID - UK Department for International Development is licensed under CC BY 2.0."></img></div>
 			</Grid>
 			<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 				<h1 className="font-bold" style={{fontSize: "3em"}}>WHY SHOULD I PUBLISH ON REFOUND?</h1>
@@ -74,10 +75,10 @@ export const LearnMoreView: NextPage = () => {
 		</Grid>
 		<Grid container justifyContent="center" sm={12} style={{margin:"0 auto", marginTop:"5%", backgroundColor:"#E7E5E4"}}>
 			<Grid item sm={12}  md={6} style={{padding:"3%"}}>
-				<div style={{maxWidth:"450px"}}><img src="https://bafybeickydgz2jvdiooqv4gzpvu5newc4qtbhzo7e42g5obesjffpallpq.ipfs.w3s.link/11173964734_b9d7f61849_b-modified-min.png" alt="'Netting a trade and an income in northern Lebanon' by DFID - UK Department for International Development is licensed under CC BY 2.0."></img></div>
+				<div style={{maxWidth:"300px"}}><img src="https://drive.google.com/uc?export=view&id=1jGT3htJ6eiMCS_oDBNtKPytMEUFKVKuE" alt="Dude, where is my rainforest? #Melbourneclimatestrike IMG_5389 by John Englart (Takver) is licensed under CC BY-SA 2.0."></img></div>
 			</Grid>
 			<Grid item sm={12}  md={6} style={{padding:"3%"}}>
-				<h1 className="font-bold" style={{fontSize: "3em"}}>What ARE THE BENEFITS OF MAKING MY WORK INTO AN NFT?</h1>
+				<h1 className="font-bold" style={{fontSize: "3em"}}>WHAT ARE THE BENEFITS OF MAKING MY WORK INTO AN NFT?</h1>
 				<p style={{marginBottom:"20px"}}>Content minted as a non-fungible token (NFT) benefits from the utility of the NFT smart contracts: journalists who publish their work wrapped in an NFT have full control of their intellectual property and greater revenue visibility from licensing NFTs. An NFT is like a digital fingerprint and contract for the use for your photo. Journalists can also reduce the emails and contractual back and forth required for selling their content and have a seamless smart contract to protect their intellectual property and revenue streams.  When your NFT is created it is called minting, basically the process of the NFT contract being created and recorded in the blockchain, making it non-fungible (i.e. it cannot be replaced or duplicated).</p>
 			</Grid>
 		</Grid>
@@ -85,6 +86,21 @@ export const LearnMoreView: NextPage = () => {
 			<Grid item sm={12}  style={{padding:"5%"}}>
 				<h1 className="font-bold" style={{fontSize: "3em"}}>WHAT WILL I EARN AND WILL MY CRYPTO CURRENCY EARNINGS BE STABLE?</h1>
 				<p>As you create the NFT, you will be able to set your price as well as select licensing types.  This will allow you more clarity in how your work is setup for sale.  You will receive 99% of your NFT sale proceeds, with Refound only taking 1% as a platform fee.  You will be able to use CUSD and CEuro for earnings, which are stable coins tied to the US dollar and Euro, respectively.</p>
+			</Grid>
+		</Grid>
+		<Grid container justifyContent="center" sm={12} style={{margin:"0 auto", marginTop:"5%", backgroundColor:"#E7E5E4"}}>
+			<Grid item sm={8} md={6} xs={8} style={{padding:"1%"}}>
+				<h1 className="font-bold" style={{fontSize: "3em"}}>HELPFUL LINKS</h1>
+				<a style={{textDecoration:"underline"}} href="https://medium.com/defi-for-the-people/how-to-set-up-metamask-with-celo-912d698fcafe" target="_blank">How To Set Up Metamask With Celo</a>
+				<iframe style={{marginTop:"20px"}}
+					width="800"
+					height="400"
+					src={`https://www.youtube.com/embed/p_Y-oAEBk9c`}
+					frameBorder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+					allowFullScreen
+					title="Embedded youtube"
+					/>
 			</Grid>
 		</Grid>
 	</div>
