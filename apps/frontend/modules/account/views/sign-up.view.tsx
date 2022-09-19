@@ -82,6 +82,12 @@ export const SignUpView: NextPage = () => {
 	};
 
 	useEffect(() => {
+		if (account.status === "CONNECTED") {
+			router.push("/discover");
+		}
+	}, [account]);
+
+	useEffect(() => {
 		if (formStatus === "DONE") {
 			router.push("/account");
 		}
