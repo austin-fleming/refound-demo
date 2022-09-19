@@ -1,13 +1,3 @@
-import { ProfilePage } from "@modules/profile/views/profile-page/profile-page";
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { ProfileView } from "@modules/profile/views/profile.view";
 
-const Profile: NextPage = () => {
-	const router = useRouter();
-	const { username } = router.query;
-
-	return <ProfilePage username={username as string} />;
-};
-
-export default Profile;
+export default ProfileView;

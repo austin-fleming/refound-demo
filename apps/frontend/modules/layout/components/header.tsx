@@ -12,7 +12,7 @@ export const Header = () => {
 		<header>
 			<div
 				id="header-top"
-				className="z-[5000] fixed top-0 right-0 flex-row items-center justify-between w-full text-2xl leading-none bg-white border-b-2 border-black border-solid flex lg:text-4xl px-contentPadding py-[0.25em]"
+				className="z-[5000] fixed top-0 right-0 flex-row items-center justify-between w-full text-2xl leading-none bg-white border-b-2 border-black border-solid flex lg:text-4xl px-contentPadding h-headerTopHeight"
 			>
 				<NextLink href="/">
 					<a>

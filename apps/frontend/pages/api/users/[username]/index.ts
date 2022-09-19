@@ -1,3 +1,1 @@
-import { getProfileHandler } from "@modules/refound/api-handlers/get-profile.handler";
-
-export default getProfileHandler;
+export { getProfileByUsernameHandler as default } from "@modules/refound/api-handlers/profiles/get-profile-by-username.handler";

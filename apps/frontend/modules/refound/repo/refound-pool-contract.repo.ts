@@ -1,19 +1,31 @@
 import type { Result } from "@utils/monads";
 import { result } from "@utils/monads";
 import type { Pool, PoolId } from "../models/pool.model";
-import type { ProfileOwnerAddress } from "../models/profile.model";
+import type { ProfileOwnerAddress, ProfileUsername } from "../models/profile.model";
 import type { Contract } from "web3-eth-contract";
 import type { PoolAggregate } from "../models/pool.aggregate";
-import { queries as baseQueries } from "./refound-contract.repo";
+import { queries as baseQueries } from "./refound-core-contract.repo";
 import type { PoolDTO } from "../models/pool.dto";
 import { unixTimestamp } from "@utils/unix-timestamp";
 import { throwFieldError } from "../parsers/utils/throw-field-error";
+import { poolParser } from "../parsers/pool.parser";
 
 interface IRefoundPoolRepo {
 	// QUERIES
-	getPool: (contract: Contract, poolId: PoolId) => Promise<Result<PoolAggregate>>;
+	getPool: (
+		coreContract: Contract,
+		poolContract: Contract,
+		poolId: PoolId,
+	) => Promise<Result<PoolAggregate>>;
+	getPools: (coreContract: Contract, poolContract: Contract) => Promise<Result<PoolAggregate[]>>;
+	getPoolsByUsername: (
+		coreContract: Contract,
+		poolContract: Contract,
+		username: ProfileUsername,
+	) => Promise<Result<PoolAggregate[]>>;
 	getPoolsByCreator: (
-		contract: Contract,
+		coreContract: Contract,
+		poolContract: Contract,
 		address: ProfileOwnerAddress,
 	) => Promise<Result<PoolAggregate[]>>;
 	// COMMANDS
@@ -40,82 +52,112 @@ interface IRefoundPoolRepo {
 	) => Promise<Result<>>; */
 }
 
-const getPool: IRefoundPoolRepo["getPool"] = async (contract, poolId) => {
+/* 
+----------------
+QUERIES
+----------------
+*/
+
+const getPool: IRefoundPoolRepo["getPool"] = async (coreContract, poolContract, poolId) => {
 	try {
-		const rawPool: PoolDTO = contract.methods.campaigns(poolId).call();
+		// 1. get pool
+		const rawPool: PoolDTO = poolContract.methods.campaigns(poolId).call();
 
-		if (!rawPool) throw new Error("No pool found");
-
+		// 2. get profile
 		const profile = (
-			await baseQueries.getProfileById(contract, rawPool.creatorId)
+			await baseQueries.getProfileById(coreContract, rawPool.creatorId)
 		).unwrapOrElse((err) => {
 			throw err;
 		});
 
-		const startAt: Date = unixTimestamp.toDate(rawPool.startAt).unwrapOrElse((err) => {
-			throw err;
-		});
-		const endAt: Date = unixTimestamp.toDate(rawPool.endAt).unwrapOrElse((err) => {
-			throw err;
-		});
-
-		const poolAggregate: PoolAggregate = {
-			...rawPool,
-			startAt,
-			endAt,
-			poolId,
-			creator: profile,
-		};
-
-		return result.ok(poolAggregate);
+		// 3. build aggregate
+		return poolParser.dtoToAggregate(rawPool, profile);
 	} catch (err) {
 		return result.fail(err as Error);
 	}
 };
 
-const getPoolsByCreator: IRefoundPoolRepo["getPoolsByCreator"] = async (
-	contract,
-	creatorAddress,
-) => {
+const getPools: IRefoundPoolRepo["getPools"] = async (coreContract, poolContract) => {
 	try {
-		const rawPools: PoolDTO[] = contract.methods.creatorToCampaigns(creatorAddress).call();
+		const rawPools: PoolDTO[] = await poolContract.methods.campaigns().call();
 
-		if (!rawPools || !Array.isArray(rawPools)) throw new Error("Expected an array of poolDTOs");
-
-		const pools: PoolAggregate[] = await Promise.all(
-			rawPools.map(async (rawPool) => {
-				if (!rawPool) throw new Error("No pool found");
-
-				const profile = (
-					await baseQueries.getProfileById(contract, rawPool.creatorId)
-				).unwrapOrElse((err) => {
-					throw err;
-				});
-
-				const startAt: Date = unixTimestamp.toDate(rawPool.startAt).unwrapOrElse((err) => {
-					throw err;
-				});
-				const endAt: Date = unixTimestamp.toDate(rawPool.endAt).unwrapOrElse((err) => {
-					throw err;
-				});
-
-				const poolAggregate: PoolAggregate = {
-					...rawPool,
-					startAt,
-					endAt,
-					poolId: rawPool.id,
-					creator: profile,
-				};
-
-				return poolAggregate;
-			}),
+		// TODO: optimize somehow. currently profiles get fetched multiple times
+		const aggregates = await Promise.all(
+			rawPools.map(async (rawPool) =>
+				(
+					await baseQueries.getProfileByAddress(coreContract, rawPool.creator)
+				).chainOk((profile) => poolParser.dtoToAggregate(rawPool, profile)),
+			),
 		);
 
-		return result.ok(pools);
+		return result.sequence(aggregates);
 	} catch (err) {
 		return result.fail(err as Error);
 	}
 };
+
+const getPoolsByUsername: IRefoundPoolRepo["getPoolsByUsername"] = async (
+	coreContract,
+	poolContract,
+	username,
+) => {
+	try {
+		// 1. get profile to get the address
+		const profile = (
+			await baseQueries.getProfileByUsername(coreContract, username)
+		).unwrapOrElse((err) => {
+			throw err;
+		});
+
+		// 2. fetch pools by address
+		const rawPools: PoolDTO[] = await poolContract.methods
+			.creatorToCampaign(profile.address)
+			.call();
+
+		// 3. parse into an aggregate
+		const poolAggregates = rawPools.map((rawPool) =>
+			poolParser.dtoToAggregate(rawPool, profile),
+		);
+
+		// 4. clean up
+		return result.sequence(poolAggregates);
+	} catch (err) {
+		return result.fail(err as Error);
+	}
+};
+
+const getPoolsByOwner: IRefoundPoolRepo["getPoolsByCreator"] = async (
+	coreContract,
+	poolContract,
+	address,
+) => {
+	try {
+		// 1. get owner profile
+		const ownerProfile = (
+			await baseQueries.getProfileByAddress(coreContract, address)
+		).unwrapOrElse((err) => {
+			throw err;
+		});
+		// 2. query pools
+		const rawPools: PoolDTO[] = await poolContract.methods
+			.creatorToCampaigns(ownerProfile.address)
+			.call();
+		// 3. build aggregates
+		const poolAggregates = rawPools.map((rawPool) =>
+			poolParser.dtoToAggregate(rawPool, ownerProfile),
+		);
+		// 4. clean up
+		return result.sequence(poolAggregates);
+	} catch (err) {
+		return result.fail(err as Error);
+	}
+};
+
+/* 
+----------------
+COMMANDS
+----------------
+*/
 
 const createPool = async (
 	contract: Contract,
@@ -161,6 +203,6 @@ const createPool = async (
 	}
 };
 
-export const queries = { getPool };
+export const queries = { getPool, getPools, getPoolsByUsername, getPoolsByOwner };
 
 export const commands = { createPool };

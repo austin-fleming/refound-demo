@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    /* typescript: {
+    typescript: {
         // !! WARN !!
         // Dangerously allow production builds to successfully complete even if
         // your project has type errors.
@@ -13,7 +13,7 @@ const nextConfig = {
         // your project has type errors.
         // !! WARN !!
         ignoreBuildErrors: true,
-    }, */
+    },
     reactStrictMode: true,
     swcMinify: true,
     images: {

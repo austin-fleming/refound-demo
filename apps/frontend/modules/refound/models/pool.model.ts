@@ -3,7 +3,7 @@ import type { ProfileOwnerAddress } from "./profile.model";
 export type PoolId = string | number;
 
 export type Pool = {
-	poolId: PoolId;
+	id: PoolId;
 	creatorAddress: ProfileOwnerAddress;
 	goal: number;
 	title: string;

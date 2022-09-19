@@ -37,8 +37,6 @@ export const CreateTestView: NextPage = () => {
 				onClick={(e) => {
 					e.preventDefault();
 
-					console.log({ formSubmission: formState });
-
 					if (account.address && formState.image) {
 						createImagePost(formState.image, {
 							width: 1000,

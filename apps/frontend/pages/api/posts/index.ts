@@ -1,3 +1,1 @@
-import { getAllPostsHandler } from "@modules/refound/api-handlers/get-all-posts.handler";
-
-export default getAllPostsHandler;
+export { getPostsHandler as default } from "@modules/refound/api-handlers/posts/get-posts.handler";

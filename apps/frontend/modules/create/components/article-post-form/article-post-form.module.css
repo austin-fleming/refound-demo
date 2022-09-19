@@ -1,0 +1,15 @@
+.formRoot {
+	@apply flex flex-col gap-4;
+}
+
+.fieldLabel {
+	@apply flex flex-col;
+}
+
+.fieldLabelText {
+	@apply text-sm font-bold;
+}
+
+.fieldInput {
+	@apply border-2 border-solid rounded-lg bg-slate-300 border-slate-300 form-input focus:bg-white focus:border-black;
+}

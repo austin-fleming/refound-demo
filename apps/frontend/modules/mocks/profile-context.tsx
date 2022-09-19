@@ -22,6 +22,9 @@ interface IWeb3AuthContext {
 } 
 */
 
+import { useRefoundContracts } from "@modules/refound/hooks/use-refound-contracts";
+import type { PostAggregate } from "@modules/refound/models/post.aggregate";
+import type { Profile } from "@modules/refound/models/profile.model";
 import type { Nullable } from "@utils/monads";
 import type { ReactNode } from "react";
 import { createContext, useCallback, useContext, useState } from "react";
@@ -70,10 +73,11 @@ export const ProfileContext = createContext(initialState);
 export const useProfileContext = () => useContext(ProfileContext);
 
 export const ProfileContextProvider = ({ children }: { children: ReactNode }) => {
-	const [profileData, setProfileData] = useState<Nullable<Account>>(null);
-	const [photographs, setPhotographs] = useState<Nullable<Photograph[]>>(null);
+	const [profileData, setProfileData] = useState<Nullable<Profile>>(null);
+	const [photographs, setPhotographs] = useState<Nullable<PostAggregate[]>>(null);
 	const [pools, setPools] = useState<Nullable<Pool[]>>(null);
-	const [textPosts, setTextPosts] = useState<Nullable<TextPost[]>>(null);
+	const [textPosts, setTextPosts] = useState<Nullable<PostAggregate[]>>(null);
+	const { getProfileByUsername, getPostsByProfile } = useRefoundContracts();
 
 	const reset = () => {
 		setProfileData(null);
@@ -83,7 +87,7 @@ export const ProfileContextProvider = ({ children }: { children: ReactNode }) =>
 	};
 
 	const loadProfile = useCallback(async (profileUsername: string) => {
-		(await profileService.getProfile(profileUsername)).match({
+		(await getProfileByUsername(profileUsername)).match({
 			ok: (data) => setProfileData(data),
 			fail: (err) => {
 				toast.error("Failed to load profile.");
@@ -95,7 +99,7 @@ export const ProfileContextProvider = ({ children }: { children: ReactNode }) =>
 	const loadPhotographs = useCallback(async () => {
 		if (!profileData?.username) return;
 
-		(await photographService.getPhotographs(profileData.username)).match({
+		(await getPostsByProfile(profileData.username)).match({
 			ok: (photos) => setPhotographs(photos),
 			fail: (err) => {
 				console.error(err);

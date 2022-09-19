@@ -4,6 +4,7 @@ import type { Post } from "@modules/refound/models/post.model";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { useAccount } from "../state/use-account";
+import NextLink from "next/link";
 
 export const AccountView: NextPage = () => {
 	const { account } = useAccount();
@@ -11,9 +12,9 @@ export const AccountView: NextPage = () => {
 	const [posts, setPosts] = useState<Post[]>([]);
 
 	useEffect(() => {
-		if (!account.address) return;
+		if (!account.address || !account.profile?.username) return;
 
-		getPostsByProfile(account.address).then((maybePosts) =>
+		getPostsByProfile(account.profile?.username).then((maybePosts) =>
 			maybePosts.match({
 				ok: (posts) => {
 					setPosts(posts);
@@ -27,6 +28,9 @@ export const AccountView: NextPage = () => {
 
 	return (
 		<section>
+			<NextLink href={`/u/${account.profile?.username}`}>
+				<a>View Profile</a>
+			</NextLink>
 			<h1 className="font-bold">Profile Info</h1>
 			<pre>{JSON.stringify(account.profile, null, "\t")}</pre>
 			<h1 className="font-bold">Posts</h1>

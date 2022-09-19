@@ -2,26 +2,26 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { config } from "config/config";
 import Web3 from "web3";
 import { isString } from "@utils/data-helpers/is-string";
-import { queries as refoundPostQueries } from "../repo/refound-post-contract.repo";
-import { queries as refoundQueries } from "../repo/refound-contract.repo";
-import type { PostAggregate } from "../models/post.aggregate";
+import { queries as refoundPostQueries } from "../../repo/refound-post-contract.repo";
+import { queries as refoundQueries } from "../../repo/refound-core-contract.repo";
+import type { PostAggregate } from "../../models/post.aggregate";
 
 // Get posts created by wallet address
-export async function getPostsByProfileHandler(
+export async function getPostsByUsernameHandler(
 	req: NextApiRequest,
 	res: NextApiResponse<PostAggregate[]>,
 ) {
 	res.setHeader("Cache-Control", `s-maxage=5, stale-while-revalidate`);
 	try {
-		const { profileAddress, requester } = req.query;
+		const { username, requester } = req.query;
 
-		console.log({ getPostsByProfileHandler: { profileAddress, requester } });
+		console.log({ getPostsByProfileHandler: { username, requester } });
 
-		if (!isString(profileAddress) || !profileAddress) return res.status(400).end();
-		if (!isString(requester) || !requester) return res.status(403).end();
+		if (!isString(username) || !username) return res.status(400).end();
+		// if (!isString(requester) || !requester) return res.status(403).end();
 
 		const web3 = new Web3(config.contracts.rpcUrl);
-		const contract = new web3.eth.Contract(
+		const baseContract = new web3.eth.Contract(
 			config.contracts.coreContract.abi,
 			config.contracts.coreContract.address,
 		);
@@ -31,16 +31,19 @@ export async function getPostsByProfileHandler(
 		);
 
 		const profile = (
-			await refoundQueries.getProfileByAddress(contract, profileAddress)
+			await refoundQueries.getProfileByUsername(baseContract, username)
 		).unwrapOrElse((err) => {
 			throw err;
 		});
 
+		console.log({ getPostsByProfileHandler: { profile } });
+
 		const posts = (
-			await refoundPostQueries.getPostsByProfile(postContract, profile.profileId)
+			await refoundPostQueries.getPostsByProfile(baseContract, postContract, profile.address)
 		).unwrapOrElse((err) => {
 			throw err;
 		});
+		console.log({ getPostsByProfileHandler: { posts } });
 
 		return res.status(200).json(posts);
 	} catch (err) {

@@ -1,13 +1,18 @@
 import type { Result } from "@utils/monads";
 import type { Contract } from "web3-eth-contract";
-import type { Post, PostId } from "../models/post.model";
-import type { ProfileId, ProfileOwnerAddress } from "../models/profile.model";
+import type { PostId } from "../models/post.model";
+import { Post, PostType } from "../models/post.model";
+import type { ProfileId, ProfileOwnerAddress, ProfileUsername } from "../models/profile.model";
 import { result } from "@utils/monads";
 import { postParser } from "../parsers/post.parser";
 import { queries as ipfsQueries } from "./ipfs.repo";
 import { License, LicenseType } from "../models/license.model";
 import { valueToBigNumber } from "@celo/contractkit/lib/wrappers/BaseWrapper";
-import type { PostAggregate } from "../models/post.aggregate";
+import type {
+	ArticlePostAggregate,
+	ImagePostAggregate,
+	PostAggregate,
+} from "../models/post.aggregate";
 import type { LicenseContractDTO } from "../models/license.dto";
 import type { LicenseAggregate } from "../models/license.aggregate";
 import { unixTimestamp } from "@utils/unix-timestamp";
@@ -19,10 +24,14 @@ import { isString } from "@utils/data-helpers/is-string";
 QUERIES
 ----------------
 */
-const getPost = async (contract: Contract, postId: PostId): Promise<Result<PostAggregate>> => {
+const getPost = async (
+	coreContract: Contract,
+	postContract: Contract,
+	postId: PostId,
+): Promise<Result<PostAggregate>> => {
 	try {
 		console.log({ getPost: postId });
-		const rawUri = await contract.methods.tokenURI(postId).call();
+		const rawUri = await postContract.methods.tokenURI(postId).call();
 
 		if (!rawUri) throw new Error(`No uri returned for postId "${postId}"`);
 
@@ -36,15 +45,18 @@ const getPost = async (contract: Contract, postId: PostId): Promise<Result<PostA
 			throw err;
 		});
 
-		return postParser.dtoToAggregate(contract, postDto, metadata);
+		return postParser.dtoToAggregate(coreContract, postContract, postDto, metadata);
 	} catch (err) {
 		return result.fail(err as Error);
 	}
 };
 
-const getAllPosts = async (contract: Contract): Promise<Result<PostAggregate[]>> => {
+const getAllPosts = async (
+	coreContract: Contract,
+	postContract: Contract,
+): Promise<Result<PostAggregate[]>> => {
 	try {
-		const rawUris = await contract.methods.getAllPosts().call();
+		const rawUris = await postContract.methods.getAllPosts().call();
 
 		if (!Array.isArray(rawUris)) throw new Error("Expected array from contract");
 
@@ -63,7 +75,7 @@ const getAllPosts = async (contract: Contract): Promise<Result<PostAggregate[]>>
 					throw err;
 				});
 
-				return postParser.dtoToAggregate(contract, postDto, metadata);
+				return postParser.dtoToAggregate(coreContract, postContract, postDto, metadata);
 			}),
 		);
 
@@ -74,17 +86,23 @@ const getAllPosts = async (contract: Contract): Promise<Result<PostAggregate[]>>
 };
 
 const getPostsByProfile = async (
-	contract: Contract,
-	profileId: ProfileId,
+	coreContract: Contract,
+	postContract: Contract,
+	address: ProfileOwnerAddress,
 ): Promise<Result<PostAggregate[]>> => {
 	try {
-		const rawUris = await contract.methods.getPostIDs(profileId).call();
+		console.log({ getPostsByProfile: address });
+		const postIds = await postContract.methods.getPostIDs(address).call();
 
-		if (!Array.isArray(rawUris)) throw new Error("Expected array from contract");
+		console.log({ postIds });
+
+		if (!Array.isArray(postIds)) throw new Error("Expected array from contract");
 
 		const posts = await Promise.all(
-			rawUris.map(async (postUri) => {
-				const postDto = postParser.contractDataToDto(postUri).unwrapOrElse((err) => {
+			postIds.map(async (postId) => {
+				const rawPost = await postContract.methods.tokenURI(postId).call();
+
+				const postDto = postParser.contractDataToDto(rawPost).unwrapOrElse((err) => {
 					throw err;
 				});
 
@@ -97,7 +115,7 @@ const getPostsByProfile = async (
 					throw err;
 				});
 
-				return postParser.dtoToAggregate(contract, postDto, metadata);
+				return postParser.dtoToAggregate(coreContract, postContract, postDto, metadata);
 			}),
 		);
 
@@ -107,12 +125,32 @@ const getPostsByProfile = async (
 	}
 };
 
+const getImagePostsByOwner = async (
+	baseContract: Contract,
+	postContract: Contract,
+	address: ProfileOwnerAddress,
+): Promise<Result<ImagePostAggregate[]>> =>
+	(await getPostsByProfile(baseContract, postContract, address)).mapOk(
+		(posts) => posts.filter((post) => post.postType === PostType.IMAGE) as ImagePostAggregate[],
+	);
+
+const getArticlePostsByOwner = async (
+	baseContract: Contract,
+	postContract: Contract,
+	address: ProfileOwnerAddress,
+): Promise<Result<ArticlePostAggregate[]>> =>
+	(await getPostsByProfile(baseContract, postContract, address)).mapOk(
+		(posts) =>
+			posts.filter((post) => post.postType === PostType.ARTICLE) as ArticlePostAggregate[],
+	);
+
 const getLicensesByAddress = async (
-	contract: Contract,
+	coreContract: Contract,
+	postContract: Contract,
 	walletAddress: ProfileOwnerAddress,
 ): Promise<Result<LicenseAggregate[]>> => {
 	try {
-		const rawLicenses: LicenseContractDTO[] = await contract.methods
+		const rawLicenses: LicenseContractDTO[] = await postContract.methods
 			.getLicensesByAddress(walletAddress)
 			.call();
 
@@ -131,9 +169,11 @@ const getLicensesByAddress = async (
 						throw err;
 					});
 
-				const post = (await getPost(contract, postId)).unwrapOrElse((err) => {
-					throw err;
-				});
+				const post = (await getPost(coreContract, postContract, postId)).unwrapOrElse(
+					(err) => {
+						throw err;
+					},
+				);
 
 				return {
 					postId,
@@ -205,6 +245,8 @@ export const queries = {
 	getPostsByProfile,
 	getLicensesByAddress,
 	getLicensePrices,
+	getImagePostsByOwner,
+	getArticlePostsByOwner,
 };
 
 export const commands = {

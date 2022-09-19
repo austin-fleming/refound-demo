@@ -56,7 +56,7 @@ export type ArticlePostContractSchema = {
 
 // CONTRACT DTO: What the contract will return when called
 export type PostContractDTO = {
-	posterId: string;
+	profileId: string;
 	postId: number;
 	createdAt: string; // unix timestamp
 	postData: ImagePostContractSchema | ArticlePostContractSchema;
@@ -77,9 +77,11 @@ export type ImagePostCreationProps = Expand<
 	} & BaseCreationProps
 >;
 
-export type ArticlePostCreationProps = {
-	coverImageId?: PostId;
-	body: string;
-} & BaseCreationProps;
+export type ArticlePostCreationProps = Expand<
+	{
+		coverImageId?: PostId;
+		body: string;
+	} & BaseCreationProps
+>;
 
 export type PostCreationProperties = ImagePostCreationProps | ArticlePostCreationProps;

@@ -130,7 +130,7 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
 	);
 };
 
-export const RichTextEditor = ({ setContent }: { setContent: (htmlString: string) => void }) => {
+export const RichTextEditor = ({ onChange }: { onChange: (htmlString: string) => void }) => {
 	const editor = useEditor({
 		extensions: [StarterKit, Image],
 		content: "<p>Start typing</p>",
@@ -139,11 +139,10 @@ export const RichTextEditor = ({ setContent }: { setContent: (htmlString: string
 				class: S.editor,
 			},
 		},
+		onUpdate: ({ editor }) => {
+			onChange(editor.getHTML());
+		},
 	});
-
-	const output = () => {
-		setContent(editor?.getHTML() || "");
-	};
 
 	return (
 		<div className={S.root}>

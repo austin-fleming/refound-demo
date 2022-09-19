@@ -3,7 +3,6 @@ import { isString } from "@utils/data-helpers/is-string";
 import type { Result } from "@utils/monads";
 import { result } from "@utils/monads";
 import { unixTimestamp } from "@utils/unix-timestamp";
-import type Web3 from "web3";
 import type {
 	ArticleMetadataStorageSchema,
 	ArticlePostContractSchema,
@@ -21,7 +20,7 @@ import type { ArticlePost, BasePost, ImagePost, Post } from "../models/post.mode
 import { DataHost } from "../models/post.model";
 import { NftType } from "../models/post.model";
 import { PostType } from "../models/post.model";
-import { queries as refoundQueries } from "../repo/refound-contract.repo";
+import { queries as refoundQueries } from "../repo/refound-core-contract.repo";
 import { queries as refoundPostQueries } from "../repo/refound-post-contract.repo";
 import { createGatewayUrl } from "../repo/utils/create-gateway-url";
 import { throwFieldError } from "./utils/throw-field-error";
@@ -44,7 +43,7 @@ const contractDataToDto = (contractData: string): Result<PostContractDTO> => {
 		if (!parsed || !isObject(parsed)) throw new Error("failed to parsed contract data");
 
 		const postRoot: Omit<PostContractDTO, "postData"> = {
-			posterId: (parsed.posterId as string) || throwFieldError("posterId"),
+			profileId: (parsed.profileId as string) || throwFieldError("profileId"),
 			postId: parsed.postId as number,
 			createdAt: (parsed.createdAt as string) || throwFieldError("createdAt"),
 		};
@@ -93,7 +92,7 @@ const contractDataToDto = (contractData: string): Result<PostContractDTO> => {
 };
 
 const dtoToModel = async (
-	contract: Contract,
+	postContract: Contract,
 	contractDto: PostContractDTO,
 	storageDto: PostStorageSchema,
 ): Promise<Result<Post>> => {
@@ -104,7 +103,7 @@ const dtoToModel = async (
 
 		const basePost: BasePost = {
 			type: NftType.POST,
-			creatorId: contractDto.posterId,
+			creatorId: contractDto.profileId,
 			postId: contractDto.postId,
 			createdAt,
 			title: storageDto.title,
@@ -141,11 +140,11 @@ const dtoToModel = async (
 			const metadata = storageDto as ArticleMetadataStorageSchema;
 
 			const image = metadata.coverImageId
-				? ((await refoundPostQueries.getPost(contract, metadata.coverImageId)).unwrapOrElse(
-						(err) => {
-							throw err;
-						},
-				  ) as ImagePost)
+				? ((
+						await refoundPostQueries.getPost(postContract, metadata.coverImageId)
+				  ).unwrapOrElse((err) => {
+						throw err;
+				  }) as ImagePost)
 				: undefined;
 
 			const post: ArticlePost = {
@@ -277,23 +276,27 @@ const creationPropsToStorageSchema = (
 };
 
 const dtoToAggregate = async (
-	contract: Contract,
+	baseContract: Contract,
+	postContract: Contract,
 	contractDto: PostContractDTO,
 	storageDto: PostStorageSchema,
 ): Promise<Result<PostAggregate>> => {
 	try {
-		const postModel = (await dtoToModel(contract, contractDto, storageDto)).unwrapOrElse(
+		const postModel = (await dtoToModel(postContract, contractDto, storageDto)).unwrapOrElse(
 			(err) => {
 				throw err;
 			},
 		);
 
+		console.log({ "postParser dtoToAggregate": postModel });
+
 		const profile = (
-			await refoundQueries.getProfileById(contract, postModel.creatorId)
+			await refoundQueries.getProfileById(baseContract, postModel.creatorId)
 		).unwrapOrElse((err) => {
 			throw err;
 		});
 
+		console.log({ "postParser dtoToAggregate:": profile });
 		const postAggregate: PostAggregate = {
 			...postModel,
 			creator: profile,
