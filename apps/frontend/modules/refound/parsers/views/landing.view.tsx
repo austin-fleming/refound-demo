@@ -10,10 +10,6 @@ import { useDiscover } from "@modules/discover/state/use-discover/discover.provi
 import { useRefoundContracts } from "@modules/refound/hooks/use-refound-contracts";
 import NextLink from "next/link";
 import { PhotographCard } from "../../../discover/components/cards/photograph-card";
-import { TabFailed } from "../../../discover/components/discover-tabs/tab-failed";
-import { TabLoading } from "../../../discover/components/discover-tabs/tab-loading";
-import type { DiscoverTabs } from "../../../discover/state/use-discover/reducer";
-import { type DiscoverState, initialDiscoverState, discoverReducer } from "../../../discover/state/use-discover/reducer";
 import {
   Divider,
   Grid,
@@ -25,15 +21,14 @@ import {
 import { useCallback, useState } from "react";
 import { toast } from "@services/toast/toast";
 
-import { createContext, useContext, useReducer } from "react";
-
 export const LandingView: NextPage = () => {
 	const [posts, setPosts] = useState<any>();
 	const { getAllImagePosts } = useRefoundContracts();
-	const [state, dispatch] = useReducer(discoverReducer, initialDiscoverState);
 
 	useEffect(() => {
-		loadImages()
+		if(!posts){
+			loadImages();
+		}
 
 		if(posts){
 			console.log('posts');
@@ -267,10 +262,10 @@ export const LandingView: NextPage = () => {
 	</Grid>
 
 	<Grid container justifyContent="center" sm={12} style={{margin:"0 auto"}}>
-		{posts && posts.map((post:any) => (	
-			<Grid item sm={6} md={2} style={{padding:"1%"}} overflow="hidden">
+		{posts && posts.slice(0,5).map((post:any) => (	
+			<Grid item xs={6} md={2} style={{padding:"1%"}}>
 				<a href="/posts/"{...post.postId}>
-					<PhotographCard key={post.postId} photoData={post} />
+					<PhotographCard key={post.postId} photoData={post}/>
 				</a>
 			</Grid>
 		))}		

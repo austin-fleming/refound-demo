@@ -20,10 +20,10 @@ export const LearnMoreView: NextPage = () => {
 	<div className="sm:bg-cover bg-no-repeat" style={{backgroundPositionY:"40%", marginTop:"-1%", backgroundPositionX:"center", backgroundBlendMode:"", backgroundAttachment:"fixed", backgroundImage: "url('https://drive.google.com/uc?export=view&id=1luofxidgISHUx42aHfGYaS0T8rAPpetW')"}}>
 		<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", height:"100vh", color:"white"}}>
 			<Grid item sm={12}  style={{padding:"5%", fontFamily:"Andale Mono"}}>
-				<h1 className="font-bold lg:text-5xl" style={{marginTop:"15%", textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>Hello! Welcome to Refound Journalism!</h1>
-				<h1 className="font-bold lg:text-5xl" style={{textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>We are glad you are here!</h1>
-				<p style={{textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>We invite you to join our global community and monetize your photographs and writing!</p>
-				<p style={{textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>Sign up here for your unique Refound name handle!</p>
+				<h1 className="font-bold" style={{marginTop:"15%", fontSize:"2.5em", textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>Hello! Welcome to Refound Journalism!</h1>
+				<h1 className="font-bold" style={{fontSize:"2.5em",textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>We are glad you are here!</h1>
+				<p style={{ fontSize:"1.5em", textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>We invite you to join our global community and monetize your photographs and writing!</p>
+				<p style={{fontSize:"1.5em",textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>Sign up here for your unique Refound name handle!</p>
 				<div className="flex flex-row items-center justify-left w-full gap-2" style={{marginTop:"20px"}}>
 					<a href="/sign-up"><PolyButton 
 					as="button"
