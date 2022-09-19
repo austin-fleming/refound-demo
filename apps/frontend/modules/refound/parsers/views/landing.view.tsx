@@ -23,16 +23,16 @@ export const LandingView: NextPage = () => {
 				<h1 className="font-bold" style={{fontSize: "3em", color:"#01A0B0"}}>Your platform for empowering journalism on the blockchain</h1>
 				<p>Refound is an NFT marketplace where journalists and photographers can share first person, creative content from the frontlines swiftly, raise awareness, and sell directly to businesses, with sale proceeds going to customizable beneficiaries. Refound leverages blockchain technology to create a decentralized platform helping conflict zone journalists and photographers to directly sell their content to the public and news media at higher margins and with greater financial control, helping regenerate their economic cycle.</p>
 				<div className="flex flex-row items-center justify-left w-full gap-2" style={{marginTop:"20px"}}>
-					<a href="/"><PolyButton as="button"
+					<a href="/sign-up"><PolyButton as="button"
 					size="md" 
-					label="Get Started"
+					label="Sign Up"
 					color="secondary"
 					align="center"/></a>
 
 					<a href="/learn-more"><PolyButton 
 					as="button"
 					size="md" 
-					label="Learn More"
+					label="Refound 101"
 					align="center"/></a>
 				</div>
 			</Grid>
