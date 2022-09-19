@@ -2,8 +2,12 @@ import { RefoundIcon } from "@components/icons/refound-icon";
 import NextLink from "next/link";
 import { BottomNav } from "./bottom-nav/bottom-nav";
 import { SideMenu } from "./side-menu";
+import { useAccount } from "../../account/state/use-account";
+import { PolyButton } from "@components/poly-button/poly-button";
 
 export const Header = () => {
+	const { login, account } = useAccount();
+
 	return (
 		<header>
 			<div
@@ -12,10 +16,15 @@ export const Header = () => {
 			>
 				<NextLink href="/">
 					<a>
-						<RefoundIcon className="h-[0.8em] lg:h-[0.7em]" />
+						<RefoundIcon className="h-[0.8em] lg:h-[0.7em] inline" /><h1 className="font-normal leading-none text-[1em]" style={{display:"inline-block"}}>refound</h1>
 					</a>
 				</NextLink>
-				<h1 className="font-normal leading-none text-[1em]">refound</h1>
+				{!account && <PolyButton onClick={login} 
+					as="button"
+					size="sm" 
+					label="Connect Wallet"
+					align="center"/>}
+					{account && <p style={{fontSize:"0.5em"}}>Hello{account.profile && "," + account.profile?.username.substr(0, 12)}</p>}
 			</div>
 
 			<BottomNav />
