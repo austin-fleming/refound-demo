@@ -84,7 +84,7 @@ export const LandingView: NextPage = () => {
 	</Grid>
 	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto"}}>
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
-			<Card sx={{ maxWidth: 600, height: 300 }}>
+			<Card sx={{ maxWidth: 600, height: 350 }}>
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					In app camera capability
@@ -101,7 +101,7 @@ export const LandingView: NextPage = () => {
 			</Card>
 		</Grid>
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
-			<Card sx={{ maxWidth: 600, height: 300 }}>
+			<Card sx={{ maxWidth: 600, height: 350 }}>
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					Cryptocurrency benefits
