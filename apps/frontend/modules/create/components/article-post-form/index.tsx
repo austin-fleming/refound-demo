@@ -36,7 +36,7 @@ export const ArticlePostForm = () => {
 
 	const getPostIdFromImage = async (imageUrl: string): Promise<PostId> => {
 		if (
-			!imageUrl.startsWith("https://refound.app/posts/") ||
+			!imageUrl.startsWith("https://refound.app/posts/") &&
 			!imageUrl.startsWith("http://refound.app/posts/")
 		)
 			throw new Error("Images must be refound a refound post link");
@@ -130,9 +130,11 @@ export const ArticlePostForm = () => {
 		);
 	};
 
-	const textInputOnChange = (e: ChangeEvent<HTMLInputElement>) =>
+	const textInputOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+		setSubmissionStatus("IDLE");
+		console.log({ formData });
 		setFormData({ ...formData, [e.target.name]: e.target.value });
-
+	};
 	return (
 		<form className={S.formRoot}>
 			<label className={S.fieldLabel}>

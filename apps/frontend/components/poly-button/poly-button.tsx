@@ -19,6 +19,7 @@ type BaseProps = {
 	icon?: ButtonIcon;
 	fullWidth?: boolean;
 	align?: "center" | "left";
+	className?: string;
 };
 
 type LinkProps = {
@@ -64,9 +65,10 @@ export const PolyButton = ({
 	style = "solid",
 	size = "base",
 	align = "left",
-	isDisabled,
+	isDisabled = false,
 	icon,
 	fullWidth,
+	className = "",
 	...rest
 }: PolyButtonProps) => {
 	const { as } = rest;
@@ -75,7 +77,7 @@ export const PolyButton = ({
 		isDisabled && S.isDisabled
 	} ${fullWidth && S.fullWidth} ${align === "left" && S.alignLeft} ${
 		align === "center" && S.alignCenter
-	}`;
+	} ${className}`;
 
 	if (as === "link") {
 		const { to, isExternal, preload, ...linkRest } = rest;

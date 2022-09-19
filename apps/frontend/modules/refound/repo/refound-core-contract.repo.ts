@@ -58,7 +58,13 @@ const getProfileByAddress = async (
 
 const getAllProfiles = async (contract: Contract): Promise<Result<Profile[]>> => {
 	try {
-		const profileDtos = await contract.methods.getAllRefoundProfiles().call();
+		const profileCount = await contract.methods.profiles().call(); // adjust for the offset
+
+		const profileDtos = await Promise.all(
+			[...Array.from(profileCount)].map(async (_, idx) =>
+				contract.methods.tokenURI(idx + 1).call(),
+			),
+		);
 
 		if (!profileDtos || !Array.isArray(profileDtos))
 			throw new Error("getAllProfiles did not return array");

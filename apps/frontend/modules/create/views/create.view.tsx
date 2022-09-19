@@ -10,7 +10,7 @@ export const CreateView: NextPage = () => {
 
 	return (
 		<section className="flex flex-col w-full max-w-screen-md mx-auto min-h-[101vh]">
-			<div className="flex flex-row w-full text-center justify-items-stretch">
+			<div className="flex flex-row w-full text-center shadow-md justify-items-stretch">
 				<button
 					type="button"
 					aria-label="use image post form"
@@ -42,8 +42,10 @@ export const CreateView: NextPage = () => {
 					Article
 				</button>
 			</div>
-			{postType === PostType.IMAGE && <ImagePostForm />}
-			{postType === PostType.ARTICLE && <ArticlePostForm />}
+			<div className="w-full py-16 mx-auto px-contentPadding">
+				{postType === PostType.IMAGE && <ImagePostForm />}
+				{postType === PostType.ARTICLE && <ArticlePostForm />}
+			</div>
 		</section>
 	);
 };

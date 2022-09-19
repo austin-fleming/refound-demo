@@ -133,8 +133,14 @@ export const useRefoundContracts = () => {
 	const getPost = async (postId: PostId): Promise<Result<PostAggregate>> =>
 		fetchWithAddress<PostAggregate>(`/api/posts/${postId}`, account.address);
 
-	const getAllPosts = async (): Promise<Result<Post[]>> =>
-		fetchWithAddress<Post[]>(`/api/posts`, account.address);
+	const getAllPosts = async (): Promise<Result<PostAggregate[]>> =>
+		fetchWithAddress<PostAggregate[]>(`/api/posts`, account.address);
+
+	const getAllImagePosts = async (): Promise<Result<ImagePostAggregate[]>> =>
+		fetchWithAddress<ImagePostAggregate[]>(`/api/posts/images`, account.address);
+
+	const getAllArticlePosts = async (): Promise<Result<ArticlePostAggregate[]>> =>
+		fetchWithAddress<ArticlePostAggregate[]>(`/api/posts/articles`, account.address);
 
 	const getPool = async (poolId: PoolId): Promise<Result<PoolAggregate>> =>
 		fetchWithAddress<PoolAggregate>(`/api/pools/${poolId}`, account.address);
@@ -178,5 +184,7 @@ export const useRefoundContracts = () => {
 		getLicensesByProfile,
 		getPost,
 		getAllPosts,
+		getAllImagePosts,
+		getAllArticlePosts,
 	};
 };

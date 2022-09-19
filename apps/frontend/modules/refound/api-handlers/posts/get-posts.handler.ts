@@ -11,12 +11,16 @@ export async function getPostsHandler(req: NextApiRequest, res: NextApiResponse<
 	// if (!isString(requester) || !requester) return res.status(403).end();
 
 	const web3 = new Web3(config.contracts.rpcUrl);
-	const contract = new web3.eth.Contract(
+	const coreContract = new web3.eth.Contract(
+		config.contracts.coreContract.abi,
+		config.contracts.coreContract.address,
+	);
+	const postContract = new web3.eth.Contract(
 		config.contracts.postContract.abi,
 		config.contracts.postContract.address,
 	);
 
-	return (await queries.getAllPosts(contract)).match({
+	return (await queries.getAllPosts(coreContract, postContract)).match({
 		ok: (posts) => {
 			res.status(200).json(posts);
 		},

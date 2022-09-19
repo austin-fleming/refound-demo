@@ -13,7 +13,7 @@ export const BottomNav = () => {
 			className="z-[5000] fixed bottom-0 left-0 right-0 w-full bg-white border-t-2 border-solid border-slate-300"
 		>
 			<nav className="flex flex-row relative -top-[2px] max-w-[500px] w-full mx-auto pb-[24px]">
-				<NextLink href="/home">
+				{/* <NextLink href="/home">
 					<a
 						aria-current={currentPage === "home"}
 						className={`${S.navButton} ${
@@ -23,7 +23,7 @@ export const BottomNav = () => {
 						<HomeIcon className={S.navButton__icon} filled={currentPage === "home"} />
 						<span className={S.navButton__label}>Home</span>
 					</a>
-				</NextLink>
+				</NextLink> */}
 				<NextLink href="/discover">
 					<a
 						aria-current={currentPage === "discover"}
@@ -49,7 +49,7 @@ export const BottomNav = () => {
 						<span className={S.navButton__label}>Create</span>
 					</a>
 				</NextLink>
-				<NextLink href="/notifications">
+				{/* <NextLink href="/notifications">
 					<a
 						aria-current={currentPage === "notifications"}
 						className={`${S.navButton} ${
@@ -62,7 +62,7 @@ export const BottomNav = () => {
 						/>
 						<span className={S.navButton__label}>Notifications</span>
 					</a>
-				</NextLink>
+				</NextLink> */}
 				<button
 					className={S.navButton}
 					type="button"
