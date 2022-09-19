@@ -256,7 +256,7 @@ export const LandingView: NextPage = () => {
 				<Card sx={{ maxWidth: 600 }} style={{padding:"5%"}}>
 					<CardContent>
 						<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
-						Ukraine
+						Lorem
 						</Typography>
 					</CardContent>
 					<CardMedia
@@ -275,7 +275,7 @@ export const LandingView: NextPage = () => {
 				<Card sx={{ maxWidth: 600 }} style={{padding:"5%"}}>
 					<CardContent>
 						<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
-						Ukraine
+						Lorem Ipsum
 						</Typography>
 					</CardContent>
 					<CardMedia
@@ -294,7 +294,7 @@ export const LandingView: NextPage = () => {
 				<Card sx={{ maxWidth: 600 }} style={{padding:"5%"}}>
 					<CardContent>
 						<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
-						Ukraine
+						Lorem
 						</Typography>
 					</CardContent>
 					<CardMedia
@@ -313,7 +313,7 @@ export const LandingView: NextPage = () => {
 				<Card sx={{ maxWidth: 600 }} style={{padding:"5%"}}>
 					<CardContent>
 						<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
-						Ukraine
+						Lorem Ipsum
 						</Typography>
 					</CardContent>
 					<CardMedia
@@ -332,7 +332,7 @@ export const LandingView: NextPage = () => {
 				<Card sx={{ maxWidth: 600 }} style={{padding:"5%"}}>
 					<CardContent>
 						<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
-						Ukraine
+						Lorem
 						</Typography>
 					</CardContent>
 					<CardMedia
