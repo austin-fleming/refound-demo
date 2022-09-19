@@ -18,7 +18,7 @@ import {
 export const LandingView: NextPage = () => {
 	return (
 	<>
-		<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginTop:"5%"}}>
+		<Grid container justifyContent="center" sm={8} style={{margin:"0 auto"}}>
 			<Grid item sm={12}  md={6} style={{padding:"5%"}}>
 				<h1 className="font-bold" style={{fontSize: "3em"}}>Your platform for empowering journalism on the blockchain</h1>
 				<p>Refound is an NFT marketplace where journalists and photographers can share first person, creative content from the frontlines swiftly, raise awareness, and sell directly to businesses, with sale proceeds going to customizable beneficiaries. Refound leverages blockchain technology to create a decentralized platform helping conflict zone journalists and photographers to directly sell their content to the public and news media at higher margins and with greater financial control, helping regenerate their economic cycle.</p>
@@ -41,11 +41,13 @@ export const LandingView: NextPage = () => {
 			</Grid>
 		</Grid>
 
-	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginTop:"5%", padding:"5%"}}>
+	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", padding:"5%"}}>
 		<h1 className="font-bold" style={{fontSize: "3em"}}>Mint the art of journalism back to life.</h1>
 		<p>Our decentralized application provides journalists a platform to share their content, monetize it, and maintain anonymity and safety by using a wallet sign-in.</p>
 	</Grid>
-	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginTop:"5%"}}>
+
+
+	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto"}}>
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 			<Card sx={{ maxWidth: 600 }}>
 				<CardContent>
@@ -53,13 +55,13 @@ export const LandingView: NextPage = () => {
 					Immutable and Decentralized
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
-					The immutability of the blockchain allows the journalists to post content that is wrapped in utility NFTs and reducing the risk of censorship and later modification of their original works, since the blockchain will always have a record of the original photograph or article when it was uploaded by the journalist.
+					The immutability of the blockchain allows the journalists to post content that is wrapped in utility NFTs and reducing the risk of censorship and later modification of their original works, since the blockchain will always have a record of the original photograph or article when it was uploaded by the journalist. 
 					</Typography>
 				</CardContent>
 				<CardMedia
 					component="img"
-					style={{maxWidth:"300px", margin: "0 auto"}}
-					image="https://drive.google.com/uc?export=view&id=1rmyR7oMANOLUSNDp8__CK_1lCJImsdn2"
+					style={{maxWidth:"200px", margin: "0 auto"}}
+					image="https://drive.google.com/uc?export=view&id=1AIa2MzZwM9aVZxAKL_C1srYwK4jR2VXv"
 				/>
 			</Card>
 		</Grid>
@@ -75,8 +77,8 @@ export const LandingView: NextPage = () => {
 				</CardContent>
 				<CardMedia
 					component="img"
-					style={{maxWidth:"300px", margin: "0 auto"}}
-					image="https://drive.google.com/uc?export=view&id=1cy3_NZqn4POkjs1RQ-y_H-A0xB28GWiL"
+					style={{maxWidth:"200px", margin: "0 auto"}}
+					image="https://drive.google.com/uc?export=view&id=1bEspbn-09HkoZX8TknAFgY5o5eXgXhIl"
 				/>
 			</Card>
 		</Grid>
@@ -89,13 +91,13 @@ export const LandingView: NextPage = () => {
 					In app camera capability
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
-					to capture live photos for NFTs.  This helps store the meta data of time and place directly on the blockchain on IPFS and helping viewers and newsrooms know that the image is not altered or doctored. 
+					to capture live photos for NFTs.  This helps store the meta data of time and place directly on the blockchain on IPFS and helping viewers and newsrooms know that the image is not altered or doctored.
 					</Typography>
 				</CardContent>
 				<CardMedia
 					component="img"
-					style={{maxWidth:"300px", margin: "0 auto"}}
-					image="https://drive.google.com/uc?export=view&id=1OyjFHs0szQmIIvPi6jOP9c1VQmbrR0tT"
+					style={{maxWidth:"200px", margin: "0 auto", marginTop:"5%"}}
+					image="https://drive.google.com/uc?export=view&id=1if2YgQXUDxuwbaPwRkQYLRY1qXZ8W8JZ"
 				/>
 			</Card>
 		</Grid>
@@ -111,8 +113,8 @@ export const LandingView: NextPage = () => {
 				</CardContent>
 				<CardMedia
 					component="img"
-					style={{maxWidth:"260px", margin: "0 auto"}}
-					image="https://drive.google.com/uc?export=view&id=1cKrxJuvUyB1Ams0hA-rr4srP-cGpz3gU"
+					style={{maxWidth:"200px", margin: "0 auto"}}
+					image="https://drive.google.com/uc?export=view&id=1FledxyrcSA8YO1m8nwP3vP78I5s4Fwcu"
 				/>
 			</Card>
 		</Grid>
@@ -125,13 +127,13 @@ export const LandingView: NextPage = () => {
 					Decentralized content moderation and on-chain governance
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
-					On chain governance is utilized for content moderation which promotes credibility in a decentralized manner. Centralized platforms try to moderate content with a one size fits all approach banning users and deleting posts that only a small subsection of users find offensive. However, Refound allows users to adjust content filters so that they don't see some content rather than removing it for everyone. Refound allows users to downvote content they view as being misinformation making it less likely to be shown to others.  There is also an option to flag content which is then reviewed by community moderators to make a mulit-signatory decision as to its viability on the platform. 
+					  On chain governance is utilized for content moderation which promotes credibility in a decentralized manner. Centralized platforms try to moderate content with a one size fits all approach banning users and deleting posts that only a small subsection of users find offensive. However, Refound allows users to adjust content filters so that they don't see some content rather than removing it for everyone. Refound allows users to downvote content they view as being misinformation making it less likely to be shown to others.  There is also an option to flag content which is then reviewed by community moderators to make a mulit-signatory decision as to its viability on the platform.  
 					</Typography>
 				</CardContent>
 				<CardMedia
 					component="img"
 					style={{maxWidth:"140px", margin: "0 auto"}}
-					image="https://drive.google.com/uc?export=view&id=1IFzD8lq10J6ebLdnkpXqqWkocz3AgV7s"
+					image="https://drive.google.com/uc?export=view&id=1AIa2MzZwM9aVZxAKL_C1srYwK4jR2VXv"
 				/>
 			</Card>
 		</Grid>
@@ -147,8 +149,8 @@ export const LandingView: NextPage = () => {
 				</CardContent>
 				<CardMedia
 					component="img"
-					style={{maxWidth:"300px", margin: "0 auto"}}
-					image="https://drive.google.com/uc?export=view&id=1GHZkVxh1IfipGI-A7aYDT80rB7lzYmzf"
+					style={{maxWidth:"200px", margin: "0 auto", marginTop:"15%"}}
+					image="https://drive.google.com/uc?export=view&id=1MkX4U53XFu2fLpmKFS_452dv9kLPuLfb"
 				/>
 			</Card>
 		</Grid>
@@ -166,7 +168,7 @@ export const LandingView: NextPage = () => {
 				</CardContent>
 				<CardMedia
 					component="img"
-					style={{maxWidth:"300px", margin: "0 auto"}}
+					style={{maxWidth:"200px", margin: "0 auto"}}
 					image="https://drive.google.com/uc?export=view&id=12kAwXMD0CcHXEEJGnFedKf_L5NwXd4Cx"
 				/>
 			</Card>
@@ -178,13 +180,13 @@ export const LandingView: NextPage = () => {
 					Support for journalists: Funding pools and bonus payments
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
-					Funding pools allow the community to direct tokens to commission topics they want journalists to photograph and write about and for journalists to raise funds for initiatives they want to report on.  Refound also offers the ability for users to support journalists in areas affected by war and conflict by sending them a bonus payment when viewing their content.
+					Funding pools and bonus payments:  Funding pools allow the community to direct tokens to commission topics they want journalists to photograph and write about and for journalists to raise funds for initiatives they want to report on.  Refound also offers the ability for users to support journalists in areas affected by war and conflict by sending them a bonus payment when viewing their content.  
 					</Typography>
 				</CardContent>
 				<CardMedia
 					component="img"
-					style={{maxWidth:"250px", margin: "0 auto"}}
-					image="https://drive.google.com/uc?export=view&id=1jEJpL7rEfUX6COlgjW7UglmzeUzgOHAk"
+					style={{maxWidth:"170px", margin: "0 auto"}}
+					image="https://drive.google.com/uc?export=view&id=1za8Aqy87MRCFO-9C-zQ6TNm09kru4TyM"
 				/>
 			</Card>
 		</Grid>
@@ -197,13 +199,13 @@ export const LandingView: NextPage = () => {
 					An on-chain SOS alert feature
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
-					which allows journalists in a geographically focused conflict zone to communicate with each other and send verified alerts of any escalating danger or risk in the area they are in, with alerts posting on a decentralized ledger. (To be developed in next phase)
+					which allows journalists in a geographically focused conflict zone to communicate with each other and send verified alerts of any escalating danger or risk in the area they are in, with alerts posting on a decentralized ledger(To be developed in next phase).
 					</Typography>
 				</CardContent>
 				<CardMedia
 					component="img"
-					style={{maxWidth:"300px", margin: "0 auto"}}
-					image="https://drive.google.com/uc?export=view&id=1V-wSwFgnvVMOcV8GXlvR-KmGjRf8qi49"
+					style={{maxWidth:"200px", margin: "0 auto"}}
+					image="https://drive.google.com/uc?export=view&id=1452x4aUtPiezOASIrOLfCIrxs0nwkewx"
 				/>
 			</Card>
 		</Grid>
@@ -219,14 +221,14 @@ export const LandingView: NextPage = () => {
 				</CardContent>
 				<CardMedia
 					component="img"
-					style={{maxWidth:"280px", margin: "0 auto"}}
-					image="https://drive.google.com/uc?export=view&id=1puFStVwrGnr8vWYNQN8h0JoQCeRi6Y9O"
+					style={{maxWidth:"182px", margin: "0 auto"}}
+					image="https://drive.google.com/uc?export=view&id=1eyBawxYwVsArDp80Qwd0k4u5KdNqCmbk"
 				/>
 			</Card>
 		</Grid>
 	</Grid>
 	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto"}}>
-		<h1 className="font-bold" style={{fontSize:"2em"}}>Start publishing in seconds.</h1>
+		<h1 className="font-bold" style={{fontSize:"3em", padding:"2%"}}>Mint the art of journalism back to life and start publishing.</h1>
 	</Grid>
 	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginBottom:"5%"}}>
 	<PolyButton as="button"
