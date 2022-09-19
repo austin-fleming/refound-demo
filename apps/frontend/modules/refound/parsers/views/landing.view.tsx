@@ -185,7 +185,7 @@ export const LandingView: NextPage = () => {
 				</CardContent>
 				<CardMedia
 					component="img"
-					style={{maxWidth:"170px", margin: "0 auto"}}
+					style={{maxWidth:"160px", margin: "0 auto"}}
 					image="https://drive.google.com/uc?export=view&id=1za8Aqy87MRCFO-9C-zQ6TNm09kru4TyM"
 				/>
 			</Card>
