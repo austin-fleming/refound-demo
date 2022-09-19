@@ -18,6 +18,7 @@ import type { LicenseAggregate } from "../models/license.aggregate";
 import { unixTimestamp } from "@utils/unix-timestamp";
 import { throwFieldError } from "../parsers/utils/throw-field-error";
 import { isString } from "@utils/data-helpers/is-string";
+import type { ImagePostContractSchema } from "../models/post.dto";
 
 /* 
 ----------------
@@ -78,6 +79,79 @@ const getAllPosts = async (
 				return postParser.dtoToAggregate(coreContract, postContract, postDto, metadata);
 			}),
 		);
+
+		return result.sequence(posts);
+	} catch (err) {
+		return result.fail(err as Error);
+	}
+};
+
+const getAllImagePosts = async (
+	coreContract: Contract,
+	postContract: Contract,
+): Promise<Result<ImagePostAggregate[]>> => {
+	try {
+		const rawUris = await postContract.methods.getAllPosts().call();
+
+		if (!Array.isArray(rawUris)) throw new Error("Expected array from contract");
+
+		const dtos = rawUris.map((uri) =>
+			postParser.contractDataToDto(uri).unwrapOrElse((err) => {
+				throw err;
+			}),
+		);
+		const imageDtos = dtos.filter((dto) => dto.postData.postType === PostType.IMAGE);
+
+		const posts = (await Promise.all(
+			imageDtos.map(async (imageDto) => {
+				const metadata = (
+					await ipfsQueries.getPostMetadata(
+						imageDto.postData.cid,
+						imageDto.postData.metadataPath,
+					)
+				).unwrapOrElse((err) => {
+					throw err;
+				});
+
+				return postParser.dtoToAggregate(coreContract, postContract, imageDto, metadata);
+			}),
+		)) as Result<ImagePostAggregate>[];
+
+		return result.sequence(posts);
+	} catch (err) {
+		return result.fail(err as Error);
+	}
+};
+const getAllArticlePosts = async (
+	coreContract: Contract,
+	postContract: Contract,
+): Promise<Result<ArticlePostAggregate[]>> => {
+	try {
+		const rawUris = await postContract.methods.getAllPosts().call();
+
+		if (!Array.isArray(rawUris)) throw new Error("Expected array from contract");
+
+		const dtos = rawUris.map((uri) =>
+			postParser.contractDataToDto(uri).unwrapOrElse((err) => {
+				throw err;
+			}),
+		);
+		const articleDtos = dtos.filter((dto) => dto.postData.postType === PostType.ARTICLE);
+
+		const posts = (await Promise.all(
+			articleDtos.map(async (articleDto) => {
+				const metadata = (
+					await ipfsQueries.getPostMetadata(
+						articleDto.postData.cid,
+						articleDto.postData.metadataPath,
+					)
+				).unwrapOrElse((err) => {
+					throw err;
+				});
+
+				return postParser.dtoToAggregate(coreContract, postContract, articleDto, metadata);
+			}),
+		)) as Result<ArticlePostAggregate>[];
 
 		return result.sequence(posts);
 	} catch (err) {
@@ -242,6 +316,8 @@ const purchaseLicense = async (
 export const queries = {
 	getPost,
 	getAllPosts,
+	getAllImagePosts,
+	getAllArticlePosts,
 	getPostsByProfile,
 	getLicensesByAddress,
 	getLicensePrices,

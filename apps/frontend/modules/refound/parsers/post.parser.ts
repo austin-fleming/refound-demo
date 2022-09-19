@@ -92,6 +92,7 @@ const contractDataToDto = (contractData: string): Result<PostContractDTO> => {
 };
 
 const dtoToModel = async (
+	coreContract: Contract,
 	postContract: Contract,
 	contractDto: PostContractDTO,
 	storageDto: PostStorageSchema,
@@ -141,7 +142,11 @@ const dtoToModel = async (
 
 			const image = metadata.coverImageId
 				? ((
-						await refoundPostQueries.getPost(postContract, metadata.coverImageId)
+						await refoundPostQueries.getPost(
+							coreContract,
+							postContract,
+							metadata.coverImageId,
+						)
 				  ).unwrapOrElse((err) => {
 						throw err;
 				  }) as ImagePost)
@@ -282,11 +287,11 @@ const dtoToAggregate = async (
 	storageDto: PostStorageSchema,
 ): Promise<Result<PostAggregate>> => {
 	try {
-		const postModel = (await dtoToModel(postContract, contractDto, storageDto)).unwrapOrElse(
-			(err) => {
-				throw err;
-			},
-		);
+		const postModel = (
+			await dtoToModel(baseContract, postContract, contractDto, storageDto)
+		).unwrapOrElse((err) => {
+			throw err;
+		});
 
 		console.log({ "postParser dtoToAggregate": postModel });
 

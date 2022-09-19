@@ -104,7 +104,7 @@ export const InnerProvider = ({ children }: { children: ReactNode }) => {
 				.then((profile) => {
 					toast.success("Registration completed!");
 					dispatch({ type: "COMPLETE_REGISTRATION", payload: profile });
-					router.push("/home");
+					router.push("/discover");
 				})
 				.catch((err) => {
 					console.error(err);

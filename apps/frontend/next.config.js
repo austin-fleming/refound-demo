@@ -17,8 +17,12 @@ const nextConfig = {
     reactStrictMode: true,
     swcMinify: true,
     images: {
-        // TODO: remove once mocks are done
-        domains: ['images.unsplash.com']
+        domains: ['images.unsplash.com'],
+        remotePatterns: [{
+            protocol: 'https',
+            port: '',
+            hostname: '**.ipfs.dweb.link'
+        }]
     },
     /* future: {
         webpack5: true

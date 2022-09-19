@@ -12,76 +12,184 @@ import type { Result } from "@utils/monads";
 import { result } from "@utils/monads";
 import { useRouter } from "next/router";
 import type { ChangeEvent, MouseEventHandler } from "react";
+import { Reducer, useReducer } from "react";
 import { useState } from "react";
-import { RichTextEditor } from "../rich-text-editor";
 import { TagInput } from "./tag-input";
 import S from "./image-post-form.module.css";
 import { FileDropInput } from "../form-inputs/file-drop-input";
 
-type FormState = {
+type FormData = {
 	title?: string;
-	coverImageLink?: string; // url
-	tags?: string[];
+	image?: File;
+	width?: number;
+	height?: number;
+	description?: string;
 	location?: string;
+	tags?: string[];
+};
+
+type ReducerState = {
+	validationStatus: "IDLE" | "VALIDATING" | "SUCCESS" | "FAIL";
+	submissionStatus: "IDLE" | "SUBMITTING" | "SUCCESS" | "FAIL";
+	validationErrors: string[];
+} & FormData;
+
+const initialReducerState: ReducerState = {
+	title: "",
+	image: undefined,
+	width: 0,
+	height: 0,
+	description: "",
+	location: "",
+	tags: [],
+	validationStatus: "IDLE",
+	submissionStatus: "IDLE",
+	validationErrors: [],
+};
+
+type ReducerActions =
+	| { type: "SET_TITLE"; payload: FormData["title"] }
+	| {
+			type: "SET_IMAGE";
+			payload: {
+				image?: FormData["image"];
+				width?: FormData["width"];
+				height?: FormData["height"];
+			};
+	  }
+	| { type: "SET_DESCRIPTION"; payload: FormData["description"] }
+	| { type: "SET_LOCATION"; payload: FormData["location"] }
+	| { type: "SET_TAGS"; payload: FormData["tags"] }
+	| { type: "SUBMIT_START" }
+	| { type: "VALIDATION_START" }
+	| { type: "VALIDATION_PASS" }
+	| { type: "VALIDATION_FAIL"; payload: string[] }
+	| { type: "SUBMIT_SUCCESS" }
+	| { type: "SUBMIT_FAIL" }
+	| { type: "RESET" };
+
+const reducer = (state: ReducerState, action: ReducerActions): ReducerState => {
+	switch (action.type) {
+		case "SET_TITLE":
+			return {
+				...state,
+				title: action.payload,
+				validationStatus: "IDLE",
+				submissionStatus: "IDLE",
+			};
+		case "SET_IMAGE":
+			return {
+				...state,
+				...action.payload,
+				validationStatus: "IDLE",
+				submissionStatus: "IDLE",
+			};
+		case "SET_DESCRIPTION":
+			return {
+				...state,
+				description: action.payload,
+				validationStatus: "IDLE",
+				submissionStatus: "IDLE",
+			};
+		case "SET_LOCATION":
+			return {
+				...state,
+				location: action.payload,
+				validationStatus: "IDLE",
+				submissionStatus: "IDLE",
+			};
+		case "SET_TAGS":
+			return {
+				...state,
+				tags: action.payload,
+				validationStatus: "IDLE",
+				submissionStatus: "IDLE",
+			};
+		case "SUBMIT_START":
+			return {
+				...state,
+				submissionStatus: "SUBMITTING",
+				validationStatus: "IDLE",
+				validationErrors: [],
+			};
+		case "VALIDATION_START":
+			return { ...state, validationStatus: "VALIDATING", validationErrors: [] };
+		case "SUBMIT_FAIL":
+			return { ...state, submissionStatus: "FAIL" };
+		case "SUBMIT_SUCCESS":
+			return { ...state, submissionStatus: "SUCCESS", validationErrors: [] };
+		case "VALIDATION_PASS":
+			return { ...state, validationStatus: "SUCCESS", validationErrors: [] };
+		case "VALIDATION_FAIL":
+			return {
+				...state,
+				submissionStatus: "FAIL",
+				validationStatus: "FAIL",
+				validationErrors: action.payload,
+			};
+		case "RESET":
+			return initialReducerState;
+		default:
+			return state;
+	}
 };
 
 export const ImagePostForm = () => {
 	const router = useRouter();
-	const [formData, setFormData] = useState<FormState>({});
-	const [validationStatus, setValidationStatus] = useState<
-		"IDLE" | "VALIDATING" | "PASSED" | "FAILED"
-	>("IDLE");
-	const [validationErrors, setValidationErrors] = useState<string[]>([]);
-	const [submissionStatus, setSubmissionStatus] = useState<
-		"IDLE" | "SUBMITTING" | "SUCCESS" | "FAIL"
-	>("IDLE");
-	const { getPost, createImagePost } = useRefoundContracts();
+	const [state, dispatch] = useReducer(reducer, initialReducerState);
+	const { createImagePost } = useRefoundContracts();
 
-	const validateForm = async (formData: FormState): Promise<Result<ImagePostCreationProps>> => {
-		setValidationStatus("VALIDATING");
-		setValidationErrors([]);
+	const validateForm = async (): Promise<
+		Result<{ image: File; metadata: ImagePostCreationProps }>
+	> => {
+		dispatch({ type: "VALIDATION_START" });
 		try {
-			const { title, coverImageLink, tags, location } = formData;
+			const { title, image, description, width, height, tags, location } = state;
 
 			if (!title?.trim() || !isString(title)) throw new Error("Title is missing.");
 			if (title.length < 10) throw new Error("Title is too short.");
 
+			if (!image?.name || image.size === 0) throw new Error("File is missing.");
+
+			if (!width) throw new Error("Image width is missing.");
+			if (!height) throw new Error("Image height is missing.");
+
 			const creationProps: ImagePostCreationProps = {
 				title: title.trim(),
+				width,
+				height,
+				description,
 				tags: tags ? tags.map((tag) => tag.toLowerCase()) : [],
 				location: location?.trim(),
 			};
 
-			setValidationStatus("PASSED");
-			setValidationErrors([]);
-
-			return result.ok(creationProps);
+			dispatch({ type: "VALIDATION_PASS" });
+			return result.ok({ image: image, metadata: creationProps });
 		} catch (err) {
-			setValidationStatus("FAILED");
-			setValidationErrors([(err as Error).message]);
+			dispatch({ type: "VALIDATION_FAIL", payload: [(err as Error).message] });
 			return result.fail(err as Error);
 		}
 	};
 
-	const createPost = async (formData: FormState): Promise<Result<true>> => {
+	const createPost = async (): Promise<Result<true>> => {
 		try {
-			setSubmissionStatus("SUBMITTING");
+			dispatch({ type: "SUBMIT_START" });
 
-			const creationProps = await (
-				await validateForm(formData)
-			).unwrapOrElse((err) => {
+			const creationProps = (await validateForm()).unwrapOrElse((err) => {
 				throw err;
 			});
 
-			(await createImagePost(creationProps)).unwrapOrElse((err) => {
-				throw err;
-			});
+			(await createImagePost(creationProps.image, creationProps.metadata)).unwrapOrElse(
+				(err) => {
+					throw err;
+				},
+			);
 
-			setSubmissionStatus("SUCCESS");
+			dispatch({ type: "SUBMIT_SUCCESS" });
 			return result.ok(true);
 		} catch (err) {
 			console.error(err);
-			setSubmissionStatus("FAIL");
+			dispatch({ type: "SUBMIT_FAIL" });
 			return result.fail(new Error("Failed to create post."));
 		}
 	};
@@ -89,7 +197,7 @@ export const ImagePostForm = () => {
 	const onSubmit: MouseEventHandler<HTMLButtonElement> = (e) => {
 		e.preventDefault();
 
-		createPost(formData).then((confirmation) =>
+		createPost().then((confirmation) =>
 			confirmation.match({
 				ok: () => {
 					toast.success("Post created!");
@@ -102,9 +210,6 @@ export const ImagePostForm = () => {
 		);
 	};
 
-	const textInputOnChange = (e: ChangeEvent<HTMLInputElement>) =>
-		setFormData({ ...formData, [e.target.name]: e.target.value });
-
 	return (
 		<form className={S.formRoot}>
 			<label className={S.fieldLabel}>
@@ -114,13 +219,19 @@ export const ImagePostForm = () => {
 					name="title"
 					type="text"
 					placeholder="Title"
-					onChange={textInputOnChange}
+					onChange={(e) => {
+						dispatch({ type: "SET_TITLE", payload: e.target.value });
+					}}
 				/>
 			</label>
 
 			<label className={S.fieldLabel}>
 				<span className={S.fieldLabelText}>Image*</span>
-				<FileDropInput />
+				<FileDropInput
+					setProps={(imageData) => {
+						dispatch({ type: "SET_IMAGE", payload: imageData });
+					}}
+				/>
 			</label>
 
 			<label className={S.fieldLabel}>
@@ -128,7 +239,20 @@ export const ImagePostForm = () => {
 				<TagInput
 					name="tags"
 					onChange={(values) => {
-						setFormData({ ...formData, tags: values });
+						dispatch({ type: "SET_TAGS", payload: values });
+					}}
+				/>
+			</label>
+
+			<label className={S.fieldLabel}>
+				<span className={S.fieldLabelText}>Description</span>
+				<input
+					className={S.fieldInput}
+					name="description"
+					type="text"
+					placeholder="A brief description"
+					onChange={(e) => {
+						dispatch({ type: "SET_DESCRIPTION", payload: e.target.value });
 					}}
 				/>
 			</label>
@@ -139,7 +263,9 @@ export const ImagePostForm = () => {
 					className={S.fieldInput}
 					name="location"
 					type="text"
-					onChange={textInputOnChange}
+					onChange={(e) => {
+						dispatch({ type: "SET_LOCATION", payload: e.target.value });
+					}}
 					placeholder="Where is this about?"
 				/>
 			</label>
@@ -148,16 +274,16 @@ export const ImagePostForm = () => {
 				label="submit"
 				as="button"
 				size="lg"
-				disabled={submissionStatus !== "IDLE"}
+				disabled={state.submissionStatus !== "IDLE" || state.validationStatus === "FAIL"}
 				fullWidth
 				icon="rightArrow"
 				aria-label="submit"
 				onClick={onSubmit}
 			/>
-			{validationErrors.length > 0 && (
+			{state.validationErrors.length > 0 && (
 				<div className="flex flex-col gap-2 text-sm text-red-900">
 					{" "}
-					{validationErrors.map((errorText) => (
+					{state.validationErrors.map((errorText) => (
 						<p key={errorText}>{errorText}</p>
 					))}
 				</div>

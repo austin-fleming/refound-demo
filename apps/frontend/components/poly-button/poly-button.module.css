@@ -6,6 +6,10 @@
 	@apply w-full;
 }
 
+.isDisabled {
+	@apply pointer-events-none opacity-60;
+}
+
 .alignLeft {
 	@apply text-left;
 }
