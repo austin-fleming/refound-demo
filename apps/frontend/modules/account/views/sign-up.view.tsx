@@ -89,33 +89,61 @@ export const SignUpView: NextPage = () => {
 
 	return (
 		<section className="w-full max-w-screen-md py-8 mx-auto px-contentPadding">
-			<h1 className="w-full mb-4 font-bold text-center">Create Your Profile</h1>
-			<form className="flex flex-col gap-8">
-				<label className="flex flex-col">
-					<span className="text-sm font-bold">Username</span>
-					<input name="username" type="text" onChange={onChange} />
-				</label>
+			{!account?.address ? (
+				<div className="flex flex-col gap-12 justify-center items-center w-full min-h-[70vh] h-full">
+					<h1 className="text-2xl font-bold">Welcome to Refound</h1>
+					<PolyButton as="button" size="lg" label="Connect Your Wallet" onClick={login} />
+					<p className="prose prose-sm max-w-[32ch] text-center text-slate-900">
+						This site is running on the Celo blockchain. Make sure you have a compatible
+						wallet such as MetaMask installed. If you need some test money, you can{" "}
+						<a
+							href="https://celo.org/developers/faucet"
+							target="_blank"
+							rel="noreferrer"
+							className="underline"
+						>
+							visit this link
+						</a>
+						.
+					</p>
+				</div>
+			) : (
+				<>
+					<div className="flex flex-col items-center justify-center w-full gap-8">
+						<h1 className="w-full mb-4 font-bold text-center">Create Your Profile</h1>
+						<form className="flex flex-col w-full gap-8">
+							<label className="flex flex-col">
+								<span className="text-sm font-bold">Username</span>
+								<input name="username" type="text" onChange={onChange} />
+							</label>
 
-				<label className="flex flex-col">
-					<span className="text-sm font-bold">Bio</span>
-					<textarea name="bio" onChange={onChange} />
-				</label>
+							<label className="flex flex-col">
+								<span className="text-sm font-bold">Bio</span>
+								<textarea name="bio" onChange={onChange} />
+							</label>
 
-				<label className="flex flex-col">
-					<span className="text-sm font-bold">Avatar Url</span>
-					<input name="avatarUrl" type="text" onChange={onChange} />
-				</label>
+							<label className="flex flex-col">
+								<span className="text-sm font-bold">Avatar Url</span>
+								<input name="avatarUrl" type="text" onChange={onChange} />
+							</label>
 
-				{formStatus !== "DONE" && (
-					<PolyButton
-						as="button"
-						label={formStatus === "SUBMITTING" ? "submitting..." : "submit"}
-						isDisabled={formStatus !== "READY"}
-						onClick={submitForm}
-					/>
-				)}
-				{formError && <span>{formError}</span>}
-			</form>
+							{formStatus !== "DONE" && (
+								<PolyButton
+									as="button"
+									label={formStatus === "SUBMITTING" ? "submitting..." : "submit"}
+									isDisabled={formStatus !== "READY"}
+									onClick={submitForm}
+									icon="rightArrow"
+								/>
+							)}
+							{formError && <span>{formError}</span>}
+						</form>
+						<p className="prose prose-sm max-w-[32ch] text-center text-slate-900">
+							Your profile will be minted as an NFT to the Celo blockchain.
+						</p>
+					</div>
+				</>
+			)}
 		</section>
 	);
 };
