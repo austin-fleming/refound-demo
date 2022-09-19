@@ -29,9 +29,9 @@ const getProfileByUsername = async (
 	username: ProfileUsername,
 ): Promise<Result<Profile>> => {
 	try {
-		const profileId = await contract.methods.getProfileIdByHandle(username).call();
-		const rawUri = await contract.methods.tokenURI(profileId);
-
+		const profileId = await contract.methods.getProfileIdbyHandle(username).call();
+		const rawUri = await contract.methods.tokenURI(profileId).call();
+		console.log({ rawUri });
 		return profileParser.uriToModel(profileId, rawUri);
 	} catch (err) {
 		return result.fail(err as Error);
@@ -84,7 +84,7 @@ const getProfileById = async (
 		const profileUri = await contract.methods.tokenURI(profileId).call();
 
 		if (!profileId) throw new Error(`Profile with profileId "${profileId}" does not exist`);
-
+		console.log({ "refoundContractRepo  getProfileById": profileUri });
 		return profileParser.uriToModel(profileId, profileUri);
 	} catch (err) {
 		return result.fail(err as Error);

@@ -8,7 +8,7 @@ import type { Result } from "@utils/monads";
 import { useCelo } from "@celo/react-celo";
 import { result } from "@utils/monads";
 import { config } from "config/config";
-import { commands as refoundCommands } from "../repo/refound-contract.repo";
+import { commands as refoundCommands } from "../repo/refound-core-contract.repo";
 import { commands as refoundPostCommands } from "../repo/refound-post-contract.repo";
 import { Web3Storage } from "web3.storage";
 import type { Post, PostId } from "../models/post.model";
@@ -16,10 +16,15 @@ import { PostType } from "../models/post.model";
 import type { ArticlePostCreationProps, ImagePostCreationProps } from "../models/post.dto";
 import type { LicenseType } from "../models/license.model";
 import { fetchWithAddress } from "./utils/fetch-with-address";
-import type { PostAggregate } from "../models/post.aggregate";
+import type {
+	ArticlePostAggregate,
+	ImagePostAggregate,
+	PostAggregate,
+} from "../models/post.aggregate";
 import type { PoolAggregate } from "../models/pool.aggregate";
 import type { LicenseAggregate } from "../models/license.aggregate";
 import { useAccount } from "@modules/account/state/use-account";
+import type { PoolId } from "../models/pool.model";
 
 export const useRefoundContracts = () => {
 	const { kit } = useCelo();
@@ -92,48 +97,73 @@ export const useRefoundContracts = () => {
 					postId,
 					licenseType,
 			  );
+
 	/* 
 	QUERIES
 	*/
+
 	const getProfileByUsername = async (username: ProfileUsername): Promise<Result<Profile>> =>
-		!account.address
-			? result.fail(new Error("No wallet connected"))
-			: fetchWithAddress<Profile>(`/api/users/${username}`, account.address);
+		fetchWithAddress<Profile>(`/api/users/${username}`, account.address);
 
 	const getProfileByAddress = async (address: ProfileOwnerAddress): Promise<Result<Profile>> =>
-		!account.address
-			? result.fail(new Error("No wallet connected"))
-			: fetchWithAddress<Profile>(`/api/users/account/${address}`, account.address);
+		fetchWithAddress<Profile>(`/api/users/account/${address}`, account.address);
 
 	const getAllProfiles = async (): Promise<Result<Profile[]>> =>
-		!account.address
-			? result.fail(new Error("No wallet connected"))
-			: fetchWithAddress<Profile[]>(`/api/users/`, account.address);
+		fetchWithAddress<Profile[]>(`/api/users/`, account.address);
 
 	const getPostsByProfile = async (username: ProfileUsername): Promise<Result<PostAggregate[]>> =>
-		!account.address
-			? result.fail(new Error("No wallet connected"))
-			: fetchWithAddress<PostAggregate[]>(`/api/users/${username}/posts`, account.address);
+		fetchWithAddress<PostAggregate[]>(`/api/users/${username}/posts`, account.address);
+
+	const getImagePostsByProfile = async (
+		username: ProfileUsername,
+	): Promise<Result<ImagePostAggregate[]>> =>
+		fetchWithAddress<ImagePostAggregate[]>(
+			`/api/users/${username}/posts/images`,
+			account.address,
+		);
+
+	const getArticlePostsByProfile = async (
+		username: ProfileUsername,
+	): Promise<Result<ArticlePostAggregate[]>> =>
+		fetchWithAddress<ArticlePostAggregate[]>(
+			`/api/users/${username}/posts/articles`,
+			account.address,
+		);
 
 	const getPost = async (postId: PostId): Promise<Result<PostAggregate>> =>
-		!account.address
-			? result.fail(new Error("No wallet connected"))
-			: fetchWithAddress<PostAggregate>(`/api/posts/${postId}`, account.address);
+		fetchWithAddress<PostAggregate>(`/api/posts/${postId}`, account.address);
 
 	const getAllPosts = async (): Promise<Result<Post[]>> =>
-		!account.address
-			? result.fail(new Error("No wallet connected"))
-			: fetchWithAddress<Post[]>(`/api/posts`, account.address);
+		fetchWithAddress<Post[]>(`/api/posts`, account.address);
 
-	const getPoolsByProfile = async (
-		profileAddress: ProfileOwnerAddress,
-	): Promise<Result<PoolAggregate[]>> => {};
+	const getPool = async (poolId: PoolId): Promise<Result<PoolAggregate>> =>
+		fetchWithAddress<PoolAggregate>(`/api/pools/${poolId}`, account.address);
+
+	const getPools = async (): Promise<Result<PoolAggregate[]>> =>
+		fetchWithAddress<PoolAggregate[]>(`/api/pools`, account.address);
+
+	const getPoolsByAccount = async (
+		accountAddress: ProfileOwnerAddress,
+	): Promise<Result<PoolAggregate[]>> =>
+		fetchWithAddress<PoolAggregate[]>(
+			`/api/users/account/${accountAddress}/pools`,
+			account.address,
+		);
+
+	const getPoolsByUsername = async (
+		username: ProfileUsername,
+	): Promise<Result<PoolAggregate[]>> =>
+		fetchWithAddress<PoolAggregate[]>(`/api/users/${username}/pools`, account.address);
 
 	const getLicensesByProfile = async (
 		profileAddress: ProfileOwnerAddress,
 	): Promise<Result<LicenseAggregate[]>> => {};
 
 	return {
+		getPool,
+		getPools,
+		getPoolsByAccount,
+		getPoolsByUsername,
 		createProfile,
 		updateProfile,
 		createImagePost,
@@ -143,7 +173,8 @@ export const useRefoundContracts = () => {
 		getProfileByAddress,
 		getAllProfiles,
 		getPostsByProfile,
-		getPoolsByProfile,
+		getImagePostsByProfile,
+		getArticlePostsByProfile,
 		getLicensesByProfile,
 		getPost,
 		getAllPosts,

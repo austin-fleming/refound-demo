@@ -1,3 +1,3 @@
-import { ProfilesView } from "@modules/profile/views/profiles.view";
+import { ProfilesView } from "@modules/profile/views/profile.view";
 
 export default ProfilesView;

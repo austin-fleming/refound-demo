@@ -2,7 +2,7 @@ import type { ProfileId } from "./profile.model";
 
 export type PoolDTO = {
 	id: string | number;
-	creatorId: ProfileId; // address
+	creator: string; // address
 	goal: number;
 	title: string;
 	description: string;

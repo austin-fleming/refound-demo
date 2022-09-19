@@ -1,8 +1,8 @@
-import { CreatePage } from "@modules/create/views/create-page";
+import { CreateView } from "@modules/create/views/create.view";
 import type { NextPage } from "next";
 
 const Create: NextPage = () => {
-	return <CreatePage />;
+	return <CreateView />;
 };
 
 export default Create;
