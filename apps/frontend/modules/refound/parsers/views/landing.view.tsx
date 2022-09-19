@@ -5,7 +5,8 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+
 import {
   Divider,
   Grid,
@@ -350,11 +351,11 @@ export const LandingView: NextPage = () => {
 		<h1 className="font-bold" style={{fontSize:"3em", padding:"2%", color:"#01A0B0"}}>Mint the art of journalism back to life and start publishing.</h1>
 	</Grid>
 	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginBottom:"5%"}}>
-	<PolyButton as="button"
+	<a href="/sign-up"><PolyButton as="button"
 					size="md" 
 					label="Connect Wallet"
 					color="secondary"
-					align="center"/>
+					align="center"/></a>
 	</Grid>
 	</>
 	);

@@ -13,7 +13,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 
 			<AccessibleShortcut targetId="#header-bottom" label="Skip to Navigation" />
 			<AccessibleShortcut targetId="#main-content" label="Skip to Content" />
-
+		
 			<Header />
 
 			<main id="main-content" className="pb-headerBottomHeight pt-headerTopHeight">
