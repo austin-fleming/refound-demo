@@ -16,7 +16,7 @@ export const Header = () => {
 			>
 				<NextLink href="/">
 					<a>
-						<RefoundIcon className="h-[0.8em] lg:h-[0.7em] inline" /><h1 className="font-normal leading-none text-[1em]" style={{display:"inline-block"}}>refound</h1>
+						<RefoundIcon className="h-[0.8em] lg:h-[0.7em] inline" /><h1 className="font-normal leading-none text-[1em]" style={{display:"inline-block", marginLeft:"10px"}}> refound</h1>
 					</a>
 				</NextLink>
 				{!account && <PolyButton onClick={login} 
