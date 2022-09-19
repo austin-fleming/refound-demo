@@ -17,11 +17,11 @@ import {
 
 export const LearnMoreView: NextPage = () => {
 	return (
-	<div className="sm:bg-cover bg-no-repeat" style={{backgroundPositionY:"30%", backgroundPositionX:"center", backgroundAttachment:"fixed", backgroundImage: "url('https://drive.google.com/uc?export=view&id=1HDhIc0XIeb_G03sWIoUem-U1nQiA-tLl')"}}>
+	<div className="sm:bg-cover bg-no-repeat" style={{backgroundPositionY:"30%", marginTop:"-1%", backgroundPositionX:"center", backgroundAttachment:"fixed", backgroundImage: "url('https://drive.google.com/uc?export=view&id=1HDhIc0XIeb_G03sWIoUem-U1nQiA-tLl')"}}>
 		<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", height:"100vh", color:"white"}}>
-			<Grid item sm={12}  style={{padding:"5%"}}>
+			<Grid item sm={12}  style={{padding:"5%", fontFamily:"Andale Mono"}}>
 				<h1 className="font-bold lg:text-5xl" style={{marginTop:"15%"}}>Hello! Welcome to Refound Journalism!</h1>
-				<h1 className="font-bold lg:text-5xl">WE ARE GLAD YOU ARE HERE!</h1>
+				<h1 className="font-bold lg:text-5xl">We are glad you are here!</h1>
 				<p>We invite you to join our global community and monetize your photographs and writing!</p>
 				<p>Sign up here for your unique Refound name handle!</p>
 				<div className="flex flex-row items-center justify-left w-full gap-2" style={{marginTop:"20px"}}>
