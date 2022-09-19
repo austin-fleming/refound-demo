@@ -19,11 +19,12 @@ export const Header = () => {
 						<RefoundIcon className="h-[0.8em] lg:h-[0.7em] inline" /><h1 className="font-normal leading-none text-[1em]" style={{display:"inline-block"}}>refound</h1>
 					</a>
 				</NextLink>
-				<PolyButton onClick={login} 
+				{!account && <PolyButton onClick={login} 
 					as="button"
 					size="sm" 
 					label="Connect Wallet"
-					align="center"/>
+					align="center"/>}
+					{account && <p style={{fontSize:"0.5em"}}>Hello{account.profile && "," + account.profile?.username.substr(0, 12)}</p>}
 			</div>
 
 			<BottomNav />
