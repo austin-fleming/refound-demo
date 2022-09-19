@@ -20,7 +20,7 @@ export const LandingView: NextPage = () => {
 	<>
 		<Grid container justifyContent="center" sm={8} style={{margin:"0 auto"}}>
 			<Grid item sm={12}  md={6} style={{padding:"5%"}}>
-				<h1 className="font-bold" style={{fontSize: "3em"}}>Your platform for empowering journalism on the blockchain</h1>
+				<h1 className="font-bold" style={{fontSize: "3em", color:"#01A0B0"}}>Your platform for empowering journalism on the blockchain</h1>
 				<p>Refound is an NFT marketplace where journalists and photographers can share first person, creative content from the frontlines swiftly, raise awareness, and sell directly to businesses, with sale proceeds going to customizable beneficiaries. Refound leverages blockchain technology to create a decentralized platform helping conflict zone journalists and photographers to directly sell their content to the public and news media at higher margins and with greater financial control, helping regenerate their economic cycle.</p>
 				<div className="flex flex-row items-center justify-left w-full gap-2" style={{marginTop:"20px"}}>
 					<a href="/"><PolyButton as="button"
@@ -42,7 +42,7 @@ export const LandingView: NextPage = () => {
 		</Grid>
 
 	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", padding:"5%"}}>
-		<h1 className="font-bold" style={{fontSize: "3em"}}>Mint the art of journalism back to life.</h1>
+		<h1 className="font-bold" style={{fontSize: "3em", color:"#01A0B0"}}>Mint the art of journalism back to life.</h1>
 		<p>Our decentralized application provides journalists a platform to share their content, monetize it, and maintain anonymity and safety by using a wallet sign-in.</p>
 	</Grid>
 
@@ -51,7 +51,7 @@ export const LandingView: NextPage = () => {
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 			<Card sx={{ maxWidth: 600 }}>
 				<CardContent>
-					<Typography gutterBottom variant="h5" component="div">
+					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					Immutable and Decentralized
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
@@ -68,7 +68,7 @@ export const LandingView: NextPage = () => {
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 			<Card sx={{ maxWidth: 600 }}>
 				<CardContent>
-					<Typography gutterBottom variant="h5" component="div">
+					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					NFT smart contracts
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
@@ -87,7 +87,7 @@ export const LandingView: NextPage = () => {
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 			<Card sx={{ maxWidth: 600 }}>
 				<CardContent>
-					<Typography gutterBottom variant="h5" component="div">
+					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					In app camera capability
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
@@ -104,7 +104,7 @@ export const LandingView: NextPage = () => {
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 			<Card sx={{ maxWidth: 600 }}>
 				<CardContent>
-					<Typography gutterBottom variant="h5" component="div">
+					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					Cryptocurrency benefits
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
@@ -123,7 +123,7 @@ export const LandingView: NextPage = () => {
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 			<Card sx={{ maxWidth: 600 }}>
 				<CardContent>
-					<Typography gutterBottom variant="h5" component="div">
+					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					Decentralized content moderation and on-chain governance
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
@@ -140,7 +140,7 @@ export const LandingView: NextPage = () => {
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 			<Card sx={{ maxWidth: 600 }}>
 				<CardContent>
-					<Typography gutterBottom variant="h5" component="div">
+					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					Beneficiary wallet
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
@@ -159,7 +159,7 @@ export const LandingView: NextPage = () => {
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 			<Card sx={{ maxWidth: 600 }}>
 				<CardContent>
-					<Typography gutterBottom variant="h5" component="div">
+					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					Wallet based subscriptions feature
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
@@ -176,7 +176,7 @@ export const LandingView: NextPage = () => {
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 			<Card sx={{ maxWidth: 600 }}>
 				<CardContent>
-					<Typography gutterBottom variant="h5" component="div">
+					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					Support for journalists: Funding pools and bonus payments
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
@@ -195,7 +195,7 @@ export const LandingView: NextPage = () => {
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 			<Card sx={{ maxWidth: 600 }}>
 				<CardContent>
-					<Typography gutterBottom variant="h5" component="div">
+					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					An on-chain SOS alert feature
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
@@ -212,7 +212,7 @@ export const LandingView: NextPage = () => {
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 			<Card sx={{ maxWidth: 600 }}>
 				<CardContent>
-					<Typography gutterBottom variant="h5" component="div">
+					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					Identity solutions
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
@@ -227,8 +227,127 @@ export const LandingView: NextPage = () => {
 			</Card>
 		</Grid>
 	</Grid>
+	<Grid container justifyContent="left" sm={8} style={{margin:"0 auto"}}>
+		<h1 className="font-bold" style={{fontSize:"2em", padding:"2%", color:"#01A0B0"}}>Highlights</h1>
+	</Grid>
 	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto"}}>
-		<h1 className="font-bold" style={{fontSize:"3em", padding:"2%"}}>Mint the art of journalism back to life and start publishing.</h1>
+		<Grid item sm={6} md={2} style={{padding:"1%"}}>
+			<a href="/">
+				<Card sx={{ maxWidth: 600 }} style={{padding:"5%"}}>
+					<CardContent>
+						<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
+						Ukraine
+						</Typography>
+					</CardContent>
+					<CardMedia
+						component="img"
+						style={{maxWidth:"200px", margin: "0 auto"}}
+						image="https://drive.google.com/uc?export=view&id=1oxvovcI1GvZr8KKlfiNyA1OVnEaXd_ux"
+					/>
+					<Typography gutterBottom variant="p" component="div" color="#01A0B0">
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+						</Typography>
+				</Card>
+			</a>
+		</Grid>
+		<Grid item sm={6} md={2} style={{padding:"1%"}}>
+			<a href="/">
+				<Card sx={{ maxWidth: 600 }} style={{padding:"5%"}}>
+					<CardContent>
+						<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
+						Ukraine
+						</Typography>
+					</CardContent>
+					<CardMedia
+						component="img"
+						style={{maxWidth:"200px", margin: "0 auto"}}
+						image="https://drive.google.com/uc?export=view&id=1oxvovcI1GvZr8KKlfiNyA1OVnEaXd_ux"
+					/>
+					<Typography gutterBottom variant="p" component="div" color="#01A0B0">
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+						</Typography>
+				</Card>
+			</a>
+		</Grid>
+		<Grid item sm={6} md={2}  style={{padding:"1%"}}>
+			<a href="/">
+				<Card sx={{ maxWidth: 600 }} style={{padding:"5%"}}>
+					<CardContent>
+						<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
+						Ukraine
+						</Typography>
+					</CardContent>
+					<CardMedia
+						component="img"
+						style={{maxWidth:"200px", margin: "0 auto"}}
+						image="https://drive.google.com/uc?export=view&id=1oxvovcI1GvZr8KKlfiNyA1OVnEaXd_ux"
+					/>
+					<Typography gutterBottom variant="p" component="div" color="#01A0B0">
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+						</Typography>
+				</Card>
+				</a>
+		</Grid>
+		<Grid item sm={6} md={2} style={{padding:"1%"}}>
+			<a href="/">
+				<Card sx={{ maxWidth: 600 }} style={{padding:"5%"}}>
+					<CardContent>
+						<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
+						Ukraine
+						</Typography>
+					</CardContent>
+					<CardMedia
+						component="img"
+						style={{maxWidth:"200px", margin: "0 auto"}}
+						image="https://drive.google.com/uc?export=view&id=1oxvovcI1GvZr8KKlfiNyA1OVnEaXd_ux"
+					/>
+					<Typography gutterBottom variant="p" component="div" color="#01A0B0">
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+						</Typography>
+				</Card>
+			</a>
+		</Grid>
+		<Grid item sm={6} md={2} style={{padding:"1%"}}>
+			<a href="/">
+				<Card sx={{ maxWidth: 600 }} style={{padding:"5%"}}>
+					<CardContent>
+						<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
+						Ukraine
+						</Typography>
+					</CardContent>
+					<CardMedia
+						component="img"
+						style={{maxWidth:"200px", margin: "0 auto"}}
+						image="https://drive.google.com/uc?export=view&id=1oxvovcI1GvZr8KKlfiNyA1OVnEaXd_ux"
+					/>
+					<Typography gutterBottom variant="p" component="div" color="#01A0B0">
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+						</Typography>
+				</Card>
+			</a>
+		</Grid>
+		<Grid item sm={6} md={2} style={{padding:"1%"}}>
+			<a href="/">
+				<Card sx={{ maxWidth: 600 }} style={{padding:"5%"}}>
+					<CardContent>
+						<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
+						Ukraine
+						</Typography>
+					</CardContent>
+					<CardMedia
+						component="img"
+						style={{maxWidth:"200px", margin: "0 auto"}}
+						image="https://drive.google.com/uc?export=view&id=1oxvovcI1GvZr8KKlfiNyA1OVnEaXd_ux"
+					/>
+					<Typography gutterBottom variant="p" component="div" color="#01A0B0">
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+						</Typography>
+				</Card>
+			</a>
+		</Grid>
+	</Grid>
+	<Grid container justifyContent="center" sm={12} style={{margin:"0 auto"}}>
+		<h1 className="font-bold" style={{fontSize:"3em", padding:"2%", color:"#01A0B0"}}>Mint the art of journalism back to life and start publishing.</h1>
 	</Grid>
 	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginBottom:"5%"}}>
 	<PolyButton as="button"
