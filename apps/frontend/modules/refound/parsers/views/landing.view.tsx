@@ -1,13 +1,19 @@
 import type { NextPage } from "next";
 import * as React from "react";
+import {useEffect} from "react";
 import { PolyButton } from "@components/poly-button/poly-button";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { useDiscover } from "@modules/discover/state/use-discover/discover.provider";
+import { useRefoundContracts } from "@modules/refound/hooks/use-refound-contracts";
 import NextLink from "next/link";
 import { PhotographCard } from "../../../discover/components/cards/photograph-card";
+import { TabFailed } from "../../../discover/components/discover-tabs/tab-failed";
+import { TabLoading } from "../../../discover/components/discover-tabs/tab-loading";
+import type { DiscoverTabs } from "../../../discover/state/use-discover/reducer";
+import { type DiscoverState, initialDiscoverState, discoverReducer } from "../../../discover/state/use-discover/reducer";
 import {
   Divider,
   Grid,
@@ -16,9 +22,38 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
+import { useCallback, useState } from "react";
+import { toast } from "@services/toast/toast";
+
+import { createContext, useContext, useReducer } from "react";
 
 export const LandingView: NextPage = () => {
-	const { photos } = useDiscover();
+	const [posts, setPosts] = useState<any>();
+	const { getAllImagePosts } = useRefoundContracts();
+	const [state, dispatch] = useReducer(discoverReducer, initialDiscoverState);
+
+	useEffect(() => {
+		loadImages()
+
+		if(posts){
+			console.log('posts');
+			console.log(posts);
+		}
+	}, [posts])
+
+	const loadImages = async () => {
+
+		(await getAllImagePosts()).match({
+			ok: (posts) =>
+				{
+					setPosts(posts);
+				},
+			fail: (err) => {
+				console.error(err);
+				toast.error("Could not load images.");
+			},
+		});
+	}
 
 	return (
 	<>
@@ -226,124 +261,19 @@ export const LandingView: NextPage = () => {
 			</Card>
 		</Grid>
 	</Grid>
-	<Grid container justifyContent="left" sm={8} style={{margin:"0 auto"}}>
+
+	<Grid container justifyContent="left" sm={10} style={{margin:"0 auto"}}>
 		<h1 className="font-bold" style={{fontSize:"2em", padding:"2%", color:"#01A0B0"}}>Highlights</h1>
 	</Grid>
-	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto"}}>
-		<Grid item sm={6} md={2} style={{padding:"1%"}}>
-			<a href="/">
-				<Card sx={{ maxWidth: 600 }} style={{padding:"5%"}}>
-					<CardContent>
-						<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
-						Ukraine
-						</Typography>
-					</CardContent>
-					<CardMedia
-						component="img"
-						style={{maxWidth:"200px", margin: "0 auto"}}
-						image="https://drive.google.com/uc?export=view&id=1oxvovcI1GvZr8KKlfiNyA1OVnEaXd_ux"
-					/>
-					<Typography gutterBottom variant="p" component="div" color="#01A0B0">
-					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-						</Typography>
-				</Card>
-			</a>
-		</Grid>
-		<Grid item sm={6} md={2} style={{padding:"1%"}}>
-			<a href="/">
-				<Card sx={{ maxWidth: 600 }} style={{padding:"5%"}}>
-					<CardContent>
-						<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
-						Lorem
-						</Typography>
-					</CardContent>
-					<CardMedia
-						component="img"
-						style={{maxWidth:"200px", margin: "0 auto"}}
-						image="https://drive.google.com/uc?export=view&id=1oxvovcI1GvZr8KKlfiNyA1OVnEaXd_ux"
-					/>
-					<Typography gutterBottom variant="p" component="div" color="#01A0B0">
-					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-						</Typography>
-				</Card>
-			</a>
-		</Grid>
-		<Grid item sm={6} md={2}  style={{padding:"1%"}}>
-			<a href="/">
-				<Card sx={{ maxWidth: 600 }} style={{padding:"5%"}}>
-					<CardContent>
-						<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
-						Lorem
-						</Typography>
-					</CardContent>
-					<CardMedia
-						component="img"
-						style={{maxWidth:"200px", margin: "0 auto"}}
-						image="https://drive.google.com/uc?export=view&id=1oxvovcI1GvZr8KKlfiNyA1OVnEaXd_ux"
-					/>
-					<Typography gutterBottom variant="p" component="div" color="#01A0B0">
-					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-						</Typography>
-				</Card>
+
+	<Grid container justifyContent="center" sm={12} style={{margin:"0 auto"}}>
+		{posts && posts.map((post:any) => (	
+			<Grid item sm={6} md={2} style={{padding:"1%"}} overflow="hidden">
+				<a href="/posts/"{...post.postId}>
+					<PhotographCard key={post.postId} photoData={post} />
 				</a>
-		</Grid>
-		<Grid item sm={6} md={2} style={{padding:"1%"}}>
-			<a href="/">
-				<Card sx={{ maxWidth: 600 }} style={{padding:"5%"}}>
-					<CardContent>
-						<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
-						Lorem
-						</Typography>
-					</CardContent>
-					<CardMedia
-						component="img"
-						style={{maxWidth:"200px", margin: "0 auto"}}
-						image="https://drive.google.com/uc?export=view&id=1oxvovcI1GvZr8KKlfiNyA1OVnEaXd_ux"
-					/>
-					<Typography gutterBottom variant="p" component="div" color="#01A0B0">
-					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-						</Typography>
-				</Card>
-			</a>
-		</Grid>
-		<Grid item sm={6} md={2} style={{padding:"1%"}}>
-			<a href="/">
-				<Card sx={{ maxWidth: 600 }} style={{padding:"5%"}}>
-					<CardContent>
-						<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
-						Lorem
-						</Typography>
-					</CardContent>
-					<CardMedia
-						component="img"
-						style={{maxWidth:"200px", margin: "0 auto"}}
-						image="https://drive.google.com/uc?export=view&id=1oxvovcI1GvZr8KKlfiNyA1OVnEaXd_ux"
-					/>
-					<Typography gutterBottom variant="p" component="div" color="#01A0B0">
-					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-						</Typography>
-				</Card>
-			</a>
-		</Grid>
-		<Grid item sm={6} md={2} style={{padding:"1%"}}>
-			<a href="/">
-				<Card sx={{ maxWidth: 600 }} style={{padding:"5%"}}>
-					<CardContent>
-						<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
-						Lorem
-						</Typography>
-					</CardContent>
-					<CardMedia
-						component="img"
-						style={{maxWidth:"200px", margin: "0 auto"}}
-						image="https://drive.google.com/uc?export=view&id=1oxvovcI1GvZr8KKlfiNyA1OVnEaXd_ux"
-					/>
-					<Typography gutterBottom variant="p" component="div" color="#01A0B0">
-					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-						</Typography>
-				</Card>
-			</a>
-		</Grid>
+			</Grid>
+		))}		
 	</Grid>
 	<Grid container justifyContent="center" sm={12} style={{margin:"0 auto"}}>
 		<h1 className="font-bold" style={{fontSize:"3em", padding:"2%", color:"#01A0B0"}}>Mint the art of journalism back to life and start publishing.</h1>
@@ -355,13 +285,6 @@ export const LandingView: NextPage = () => {
 					color="secondary"
 					align="center"/></a>}
 	</Grid>
-	
-	{photos.loadingState === "LOADING" && <h1>{photos.loadingState}</h1>}
-
-	{photos.loadingState === "SUCCESS" && photos.content.map((photo) => (
-		<PhotographCard key={photo.postId} photoData={photo} />
-	))}
-	{photos && console.log(photos)}
 	</>
 	);
  };
