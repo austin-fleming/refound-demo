@@ -66,7 +66,7 @@ export const LandingView: NextPage = () => {
 				</div>
 			</Grid>
 			<Grid item sm={12} md={4} style={{paddingTop:"3%"}}>
-				<img src="https://drive.google.com/uc?export=view&id=1o3Fy4e2RuLWnFJDe3H5C_RKRQjANUPOT" style={{width:"100%"}} alt="Refound iPhone Mockup"></img>
+				<img src="https://drive.google.com/uc?export=view&id=1EnP0CUBWuWRRXf2eTjuuWJ2mL7wjYqTK" style={{width:"100%"}} alt="Refound iPhone Mockup"></img>
 			</Grid>
 		</Grid>
 
@@ -153,10 +153,10 @@ export const LandingView: NextPage = () => {
 			<Card sx={{ maxWidth: 600, height: 550 }}>
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
-					Decentralized content moderation and on-chain governance
+					Decentralized content moderation
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
-					  On chain governance is utilized for content moderation which promotes credibility in a decentralized manner. Centralized platforms try to moderate content with a one size fits all approach banning users and deleting posts that only a small subsection of users find offensive. However, Refound allows users to adjust content filters so that they don't see some content rather than removing it for everyone. Refound allows users to downvote content they view as being misinformation making it less likely to be shown to others.  There is also an option to flag content which is then reviewed by community moderators to make a mulit-signatory decision as to its viability on the platform.  
+					Community governance is utilized for content moderation which promotes credibility in a decentralized manner. Centralized platforms try to moderate content with a one size fits all approach banning users and deleting posts that only a small subsection of users find offensive. However, Refound allows users to adjust content filters so that they don't see some content rather than removing it for everyone. Refound allows users to downvote content they view as being misinformation making it less likely to be shown to others.  There is also an option to flag content which is then reviewed by community moderators to make a mulit-signatory decision as to its viability on the platform.  
 					</Typography>
 				</CardContent>
 				<CardMedia
@@ -264,7 +264,7 @@ export const LandingView: NextPage = () => {
 	<Grid container justifyContent="center" sm={12} style={{margin:"0 auto"}}>
 		{posts && posts.slice(0,5).map((post:any) => (	
 			<Grid item xs={6} md={2} style={{padding:"1%"}}>
-				<a href="/posts/"{...post.postId}>
+				<a href="/posts/"{...post.postId} className="hover:animate-pulse">
 					<PhotographCard key={post.postId} photoData={post}/>
 				</a>
 			</Grid>
