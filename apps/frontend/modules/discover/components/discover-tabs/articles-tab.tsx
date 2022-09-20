@@ -1,3 +1,4 @@
+import { LoadingPage } from "@components/loading-page/loading-page";
 import { useDiscover } from "@modules/discover/state/use-discover/discover.provider";
 import { ArticlePostCard } from "@modules/posts/components/article-post/article-post-card";
 import { PhotographCard } from "@modules/posts/components/photograph-card";
@@ -10,7 +11,7 @@ import { TabLoading } from "./tab-loading";
 export const ArticlesTab = () => {
 	const { articles } = useDiscover();
 
-	if (articles.loadingState === "LOADING") return <TabLoading />;
+	if (articles.loadingState === "LOADING") return <LoadingPage />;
 	if (articles.loadingState === "FAIL") return <TabFailed />;
 	if (articles.loadingState === "SUCCESS")
 		return (
