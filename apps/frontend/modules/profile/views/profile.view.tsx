@@ -43,6 +43,8 @@ export const getStaticPaths: GetStaticPaths<{ username: string }> = async () => 
 	};
 };
 
+const prepObjectForTransfer = <T,>(obj: T): T => JSON.parse(JSON.stringify(obj));
+
 export const getStaticProps: GetStaticProps<ProfilePageContent> = async (context) => {
 	const username = context.params?.username;
 	if (isNothing(username) || !isString(username)) return { notFound: true };
@@ -61,28 +63,34 @@ export const getStaticProps: GetStaticProps<ProfilePageContent> = async (context
 		config.contracts.poolContract.address,
 	);
 
-	const profile = (await coreQueries.getProfileByUsername(coreContract, username)).unwrapOrElse(
-		(err) => {
+	const profile = (await coreQueries.getProfileByUsername(coreContract, username))
+		.mapOk(prepObjectForTransfer)
+		.unwrapOrElse((err) => {
 			throw err;
-		},
-	);
+		});
 
 	const [imagePosts, articlePosts, likes] = await Promise.all([
 		(
 			await postQueries.getImagePostsByOwner(coreContract, postContract, profile.address)
-		).unwrapOrElse((err) => {
-			throw err;
-		}),
+		)
+			.unwrapOrElse((err) => {
+				throw err;
+			})
+			.map(prepObjectForTransfer),
 		(
 			await postQueries.getArticlePostsByOwner(coreContract, postContract, profile.address)
-		).unwrapOrElse((err) => {
-			throw err;
-		}),
+		)
+			.unwrapOrElse((err) => {
+				throw err;
+			})
+			.map(prepObjectForTransfer),
 		(
 			await postQueries.getLikedPostsByAccount(coreContract, postContract, profile.address)
-		).unwrapOrElse((err) => {
-			throw err;
-		}),
+		)
+			.unwrapOrElse((err) => {
+				throw err;
+			})
+			.map(prepObjectForTransfer),
 	]);
 
 	return {
@@ -96,7 +104,7 @@ export const getStaticProps: GetStaticProps<ProfilePageContent> = async (context
 	};
 };
 
-export const ProfileView: NextPage<ProfilePageContent> = ({
+const ProfileView: NextPage<ProfilePageContent> = ({
 	profile,
 	imagePosts,
 	articlePosts,
@@ -104,6 +112,8 @@ export const ProfileView: NextPage<ProfilePageContent> = ({
 	likes,
 }) => {
 	const router = useRouter();
+
+	console.log({ profile, imagePosts, articlePosts, pools, likes });
 
 	if (router.isFallback) return <LoadingPage />;
 
@@ -136,10 +146,12 @@ export const ProfileView: NextPage<ProfilePageContent> = ({
 					<TabNav />
 
 					<div className="grid grid-cols-1 gap-4 pt-4 lg:grid-cols-2">
-						{profile && <ImagePostsTab />}
+						<ImagePostsTab imagePosts={imagePosts} />
 					</div>
 				</section>
 			</div>
 		</ProfileContextProvider>
 	);
 };
+
+export default ProfileView;

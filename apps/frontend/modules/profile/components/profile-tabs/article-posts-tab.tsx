@@ -1,14 +1,8 @@
-import { useProfile } from "@modules/profile/hooks/use-profile";
 import { useRefoundContracts } from "@modules/refound/hooks/use-refound-contracts";
-import { useEffect } from "react";
+import type { ArticlePostAggregate } from "@modules/refound/models/post.aggregate";
 
-export const ArticlePostsTab = () => {
-	const { loadArticlePosts, articlePosts, articlePostsLoadingState } = useProfile();
+export const ArticlePostsTab = ({ articlePosts }: { articlePosts: ArticlePostAggregate[] }) => {
 	const { interactWithPost } = useRefoundContracts();
-
-	useEffect(() => {
-		loadArticlePosts();
-	}, []);
 
 	return (
 		<section>

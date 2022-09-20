@@ -1,14 +1,7 @@
 import { ImagePostCard } from "@modules/posts/components/image-post/image-post-card";
-import { useProfile } from "@modules/profile/hooks/use-profile";
-import { useEffect } from "react";
+import type { ImagePostAggregate } from "@modules/refound/models/post.aggregate";
 
-export const ImagePostsTab = () => {
-	const { loadImagePosts, imagePosts, imagePostsLoadingState } = useProfile();
-
-	useEffect(() => {
-		loadImagePosts();
-	}, []);
-
+export const ImagePostsTab = ({ imagePosts }: { imagePosts: ImagePostAggregate[] }) => {
 	return (
 		<>
 			{imagePosts &&
