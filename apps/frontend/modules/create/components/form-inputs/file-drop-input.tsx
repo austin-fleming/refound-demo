@@ -207,7 +207,7 @@ export const FileDropInput = ({
 					onClick={(e) => {
 						e.stopPropagation();
 					}}
-					accept=".gif,.jpg,.jpeg,.png,.doc,.docx"
+					accept=".jpg,.jpeg,.png"
 				/>
 				{state.file && (
 					<figure className="absolute w-full h-full bg-white">
@@ -216,6 +216,7 @@ export const FileDropInput = ({
 							width={state.fileWidth}
 							height={state.fileHeight}
 							layout="fill"
+							objectFit="contain"
 							alt="image preview"
 						/>
 					</figure>
