@@ -57,7 +57,7 @@ const Inner = () => {
 						)}
 						<h1 className="text-4xl font-bold">@{profile.username}</h1>
 
-						<div className="flex flex-col w-full gap-2">
+						<div className="flex flex-col w-full gap-2 sm:mt-8">
 							<BonusButton receivingAddress={profile.address} />
 							<MessageButton />
 						</div>
