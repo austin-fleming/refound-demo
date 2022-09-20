@@ -6,7 +6,7 @@ export const TabNavigation = () => {
 
 	return (
 		<nav className="fixed left-0 right-0 z-50 w-full text-sm bg-white border-b-2 border-solid shadow top-headerTopHeight border-slate-300">
-			<div className="relative bottom-[-2px] flex flex-row gap-[2em] px-contentPadding max-w-screen-md mx-auto w-full">
+			<div className="relative bottom-[-2px] flex flex-row gap-[2em] px-contentPadding max-w-screen-lg mx-auto w-full">
 				<TabButton
 					tabName="Photos"
 					isActive={photos.isCurrentTab}
