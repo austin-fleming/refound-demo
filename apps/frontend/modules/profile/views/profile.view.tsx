@@ -26,9 +26,10 @@ import { MessageButton } from "../components/message-button/message-button";
 import { ArticlePostsTab } from "../components/profile-tabs/article-posts-tab";
 import { ImagePostsTab } from "../components/profile-tabs/image-posts-tab";
 import { TabNav } from "../components/profile-tabs/tab-nav";
+import { Tabs } from "../components/profile-tabs/tabs";
 import { ProfileContextProvider } from "../hooks/use-profile/use-profile";
 
-type ProfilePageContent = {
+export type ProfilePageContent = {
 	profile: Profile;
 	imagePosts: ImagePostAggregate[];
 	articlePosts: ArticlePostAggregate[];
@@ -113,8 +114,6 @@ const ProfileView: NextPage<ProfilePageContent> = ({
 }) => {
 	const router = useRouter();
 
-	console.log({ profile, imagePosts, articlePosts, pools, likes });
-
 	if (router.isFallback) return <LoadingPage />;
 
 	return (
@@ -144,9 +143,13 @@ const ProfileView: NextPage<ProfilePageContent> = ({
 				</section>
 				<section className="w-full">
 					<TabNav />
-
 					<div className="grid grid-cols-1 gap-4 pt-4 lg:grid-cols-2">
-						<ImagePostsTab imagePosts={imagePosts} />
+						<Tabs
+							imagePosts={imagePosts}
+							articlePosts={articlePosts}
+							pools={pools}
+							likes={likes}
+						/>
 					</div>
 				</section>
 			</div>
