@@ -1,4 +1,4 @@
-import { useCelo } from "@celo/react-celo";
+import { Alfajores, useCelo } from "@celo/react-celo";
 import type { Profile } from "@modules/refound/models/profile.model";
 import { toast } from "@services/toast/toast";
 import axios from "axios";
@@ -30,7 +30,7 @@ export const useAccount = () => useContext(AccountContext);
 
 export const InnerProvider = ({ children }: { children: ReactNode }) => {
 	const router = useRouter();
-	const { connect, disconnect, address, initialised } = useCelo();
+	const { connect, disconnect, address, initialised, updateNetwork } = useCelo();
 	const [account, dispatch] = useReducer(reducer, initialState);
 
 	const fetchProfile = useCallback(
@@ -79,6 +79,7 @@ export const InnerProvider = ({ children }: { children: ReactNode }) => {
 
 		dispatch({ type: "REQUEST_LOGIN" });
 		try {
+			await updateNetwork(Alfajores);
 			await connect();
 			await loadProfile();
 		} catch (err) {
@@ -127,12 +128,10 @@ export const InnerProvider = ({ children }: { children: ReactNode }) => {
 	}, [address, initialised]);
 
 	useEffect(() => {
-		if (account.status === "CONNECTED" && account.hasProfile === false) {
+		if (account.status === "CONNECTED" && account.hasProfile !== true) {
 			router.push("/sign-up");
 		}
 	}, [account.status, account.hasProfile]);
-
-	useEffect(() => {}, [address, account]);
 
 	return (
 		<AccountContext.Provider value={{ login, logout, account, completeRegistration }}>

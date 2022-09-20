@@ -94,7 +94,7 @@ export const SignUpView: NextPage = () => {
 	};
 
 	useEffect(() => {
-		if (account.status === "CONNECTED") {
+		if (account.status === "CONNECTED" && account.hasProfile === true) {
 			router.push("/discover");
 		}
 	}, [account]);

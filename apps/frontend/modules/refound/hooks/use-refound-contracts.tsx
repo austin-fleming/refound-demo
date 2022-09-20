@@ -53,13 +53,13 @@ export const useRefoundContracts = () => {
 		!account.address
 			? result.fail(new Error("No wallet connected"))
 			: // @ts-expect-error: web3 and celo provide slightly different "Contract" types
-			  refoundCommands.createProfile(coreContract, account.address, profileData);
+			  refoundCoreCommands.createProfile(coreContract, account.address, profileData);
 
 	const updateProfile = async (profileData: ProfileCreationProperties): Promise<Result<string>> =>
 		!account.address
 			? result.fail(new Error("No wallet connected"))
 			: // @ts-expect-error: web3 and celo provide slightly different "Contract" types
-			  refoundCommands.updateProfile(coreContract, account.address, profileData);
+			  refoundCoreCommands.updateProfile(coreContract, account.address, profileData);
 
 	const createImagePost = async (
 		imageFile: File,
