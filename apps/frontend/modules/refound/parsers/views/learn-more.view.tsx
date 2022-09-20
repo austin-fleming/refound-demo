@@ -32,7 +32,7 @@ export const LearnMoreView: NextPage = () => {
 						size="md" 
 						label="Sign Up"
 						align="center"
-						color="secondary"/>
+						color="primary"/>
 						</a>
 					</div>
 				</Grid>
