@@ -17,7 +17,7 @@ import {
 
 export const LearnMoreView: NextPage = () => {
 	return (
-	<div className="sm:bg-cover bg-no-repeat" style={{backgroundPositionY:"40%", marginTop:"-1%", backgroundPositionX:"center", backgroundBlendMode:"", backgroundAttachment:"fixed", backgroundImage: "url('https://drive.google.com/uc?export=view&id=1luofxidgISHUx42aHfGYaS0T8rAPpetW')"}}>
+	<div className="sm:bg-cover bg-no-repeat" priority={true} style={{backgroundPositionY:"40%", marginTop:"-1%", backgroundPositionX:"center", backgroundBlendMode:"", backgroundAttachment:"fixed", backgroundImage: "url('https://drive.google.com/uc?export=view&id=17x666m3k2svn-L7jHODzvInlJ1vVTs_n')"}}>
 		<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", height:"100vh", color:"white"}}>
 			<Grid item sm={12}  style={{padding:"5%", fontFamily:"Andale Mono"}}>
 				<h1 className="font-bold" style={{marginTop:"15%", fontSize:"2.5em", textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>Hello! Welcome to Refound Journalism!</h1>
@@ -59,7 +59,7 @@ export const LearnMoreView: NextPage = () => {
 			<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 				<div style={{maxWidth:"300px", margin:"0 auto"}}><img src="https://bafybeihvlpctyczp3jecmnyzcimr5typ72oqzpz2tbugia4ejmu7us2pla.ipfs.w3s.link/WhyRefound-modified.png" alt="'Netting a trade and an income in northern Lebanon' by DFID - UK Department for International Development is licensed under CC BY 2.0."></img></div>
 			</Grid>
-			<Grid item sm={12}  md={6} style={{padding:"3%", marginTop:"5%"}}>
+			<Grid item sm={12}  md={6} style={{padding:"3%", marginTop:"4%"}}>
 				<h1 className="font-bold" style={{fontSize: "2em"}}>WHY SHOULD I PUBLISH ON REFOUND?</h1>
 				<p style={{marginBottom:"20px"}}>Refound allows journalists to get better compensation for their work and sell to both the news and a global audience. Journalists then have a clear path to fair compensation, licensing, and revenue for their work. A beneficiary wallet function allows revenues to be passed on to selected benefiaries. Funding pools on Refound allow for journalists to raise funds to produce integral content.</p>
 			</Grid>
