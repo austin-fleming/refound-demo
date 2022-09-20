@@ -212,6 +212,10 @@ const PostView: NextPage<{ post: PostAggregate }> = ({ post }) => {
 				</figure>
 			)}
 
+			{post.postType === PostType.ARTICLE && (
+				<div className="prose" dangerouslySetInnerHTML={{ __html: post.body }} />
+			)}
+
 			<div className="flex flex-row flex-wrap gap-8">
 				{post.tags.length > 0 && (
 					<div>
