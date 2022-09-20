@@ -264,7 +264,7 @@ export const LandingView: NextPage = () => {
 	<Grid container justifyContent="center" sm={12} style={{margin:"0 auto"}}>
 		{posts && posts.slice(0,5).map((post:any) => (	
 			<Grid item xs={6} md={2} style={{padding:"1%"}}>
-				<a href="/posts/"{...post.postId}>
+				<a href="/posts/"{...post.postId} className="hover:animate-pulse">
 					<PhotographCard key={post.postId} photoData={post}/>
 				</a>
 			</Grid>
