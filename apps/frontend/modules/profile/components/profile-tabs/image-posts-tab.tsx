@@ -10,7 +10,14 @@ export const ImagePostsTab = () => {
 
 	return (
 		<section>
-			<pre>{JSON.stringify({ imagePosts, imagePostsLoadingState })}</pre>
+			{imagePosts &&
+				imagePosts.map((post) => (
+					<article key={post.postId} className="overflow-hidden artboard artboard-demo">
+						<div className="w-full whitespace-pre-wrap">
+							<h1>{post.title}</h1>
+						</div>
+					</article>
+				))}
 		</section>
 	);
 };

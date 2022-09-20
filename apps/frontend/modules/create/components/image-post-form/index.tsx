@@ -1,22 +1,17 @@
 import { PolyButton } from "@components/poly-button/poly-button";
 import { useRefoundContracts } from "@modules/refound/hooks/use-refound-contracts";
-import type {
-	ArticlePostCreationProps,
-	ImagePostCreationProps,
-} from "@modules/refound/models/post.dto";
-import type { PostId } from "@modules/refound/models/post.model";
-import { PostType } from "@modules/refound/models/post.model";
+import type { ImagePostCreationProps } from "@modules/refound/models/post.dto";
 import { toast } from "@services/toast/toast";
 import { isString } from "@utils/data-helpers/is-string";
 import type { Result } from "@utils/monads";
 import { result } from "@utils/monads";
 import { useRouter } from "next/router";
-import type { ChangeEvent, MouseEventHandler } from "react";
-import { Reducer, useReducer } from "react";
-import { useState } from "react";
+import type { MouseEventHandler } from "react";
+import { useReducer } from "react";
 import { TagInput } from "./tag-input";
 import S from "./image-post-form.module.css";
 import { FileDropInput } from "../form-inputs/file-drop-input";
+import { cloin } from "@utils/cloin";
 
 type FormData = {
 	title?: string;
@@ -270,16 +265,18 @@ export const ImagePostForm = () => {
 				/>
 			</label>
 
-			<PolyButton
-				label="submit"
-				as="button"
-				size="lg"
-				disabled={state.submissionStatus !== "IDLE" || state.validationStatus === "FAIL"}
-				fullWidth
-				icon="rightArrow"
-				aria-label="submit"
+			<button
+				className={cloin(
+					"btn w-full",
+					state.submissionStatus === "SUBMITTING" && "loading",
+					state.submissionStatus === "SUCCESS" && "btn-success",
+					state.submissionStatus === "FAIL" && "btn-error",
+				)}
+				disabled={state.submissionStatus !== "IDLE"}
 				onClick={onSubmit}
-			/>
+			>
+				Submit
+			</button>
 			{state.validationErrors.length > 0 && (
 				<div className="flex flex-col gap-2 text-sm text-red-900">
 					{" "}

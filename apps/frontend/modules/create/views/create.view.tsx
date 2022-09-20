@@ -10,7 +10,7 @@ export const CreateView: NextPage = () => {
 
 	return (
 		<section className="flex flex-col w-full max-w-screen-md mx-auto min-h-[101vh]">
-			<div className="flex flex-row w-full text-center shadow-md justify-items-stretch">
+			<div className="fixed left-0 right-0 flex flex-row w-full text-center shadow-md top-headerTopHeight bg-white[90] backdrop-blur-lg justify-items-stretch">
 				<button
 					type="button"
 					aria-label="use image post form"

@@ -10,7 +10,14 @@ export const ArticlePostsTab = () => {
 
 	return (
 		<section>
-			<pre>{JSON.stringify({ articlePosts, articlePostsLoadingState })}</pre>
+			{articlePosts &&
+				articlePosts.map((post) => (
+					<article key={post.postId} className="overflow-hidden artboard artboard-demo">
+						<div className="w-full whitespace-pre-wrap">
+							{JSON.stringify({ articlePosts, articlePostsLoadingState })}
+						</div>
+					</article>
+				))}
 		</section>
 	);
 };

@@ -9,9 +9,9 @@ import { DiscoverContextProvider, useDiscover } from "../state/use-discover/disc
 const Inner = () => {
 	const { articles, photos, pools, creators } = useDiscover();
 	return (
-		<section className="flex flex-col w-full px-contentPadding max-w-screen-md mx-auto min-h-[101vh]">
+		<section className="flex flex-col w-full px-contentPadding max-w-screen-lg mx-auto min-h-[101vh]">
 			<TabNavigation />
-			<div className="grid grid-cols-1 gap-4 py-24 md:grid-cols-2">
+			<div className="grid grid-cols-1 gap-4 py-24 md:grid-cols-3">
 				{photos.isCurrentTab && <PhotosTab />}
 				{articles.isCurrentTab && <ArticlesTab />}
 				{creators.isCurrentTab && <CreatorsTab />}

@@ -13,6 +13,7 @@ import { useState } from "react";
 import { RichTextEditor } from "../rich-text-editor";
 import { TagInput } from "./tag-input";
 import S from "./article-post-form.module.css";
+import { cloin } from "@utils/cloin";
 
 type FormState = {
 	title?: string;
@@ -188,16 +189,19 @@ export const ArticlePostForm = () => {
 					}}
 				/>
 			</label>
-			<PolyButton
-				label="submit"
-				as="button"
-				size="lg"
-				disabled={submissionStatus !== "IDLE"}
-				fullWidth
-				icon="rightArrow"
-				aria-label="submit"
+
+			<button
+				className={cloin(
+					"btn w-full",
+					submissionStatus === "SUBMITTING" && "loading btn-disabled",
+					submissionStatus === "SUCCESS" && "btn-success btn-disabled",
+					submissionStatus === "FAIL" && "btn-error btn-disabled",
+				)}
 				onClick={onSubmit}
-			/>
+			>
+				Submit
+			</button>
+
 			{validationErrors.length > 0 && (
 				<div className="flex flex-col gap-2 text-sm text-red-900">
 					{" "}

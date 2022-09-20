@@ -1,13 +1,12 @@
 import type { Result } from "@utils/monads";
 import type { Contract } from "web3-eth-contract";
-import type { PostId } from "../models/post.model";
-import { Post, PostType } from "../models/post.model";
-import type { ProfileId, ProfileOwnerAddress, ProfileUsername } from "../models/profile.model";
+import type { PostId, PostInteraction } from "../models/post.model";
+import { PostType } from "../models/post.model";
+import type { ProfileOwnerAddress } from "../models/profile.model";
 import { result } from "@utils/monads";
 import { postParser } from "../parsers/post.parser";
 import { queries as ipfsQueries } from "./ipfs.repo";
-import { License, LicenseType } from "../models/license.model";
-import { valueToBigNumber } from "@celo/contractkit/lib/wrappers/BaseWrapper";
+import { LicenseType } from "../models/license.model";
 import type {
 	ArticlePostAggregate,
 	ImagePostAggregate,
@@ -18,7 +17,7 @@ import type { LicenseAggregate } from "../models/license.aggregate";
 import { unixTimestamp } from "@utils/unix-timestamp";
 import { throwFieldError } from "../parsers/utils/throw-field-error";
 import { isString } from "@utils/data-helpers/is-string";
-import type { ImagePostContractSchema } from "../models/post.dto";
+import { interactionParser } from "../parsers/interaction.parser";
 
 /* 
 ----------------
@@ -294,18 +293,39 @@ COMMANDS
 ----------------
 */
 const purchaseLicense = async (
-	contract: Contract,
+	postContract: Contract,
 	walletAddress: ProfileOwnerAddress,
 	postId: PostId,
 	licenseType: LicenseType,
 ): Promise<Result<true>> => {
 	try {
-		const receipt = contract.methods
+		const receipt = postContract.methods
 			.purchaseLicense(postId, licenseType)
 			.send({ from: walletAddress });
 
 		if (!receipt)
 			throw new Error(`Purchase of post ${postId} by "${walletAddress}" likely failed.`);
+
+		return result.ok(true);
+	} catch (err) {
+		return result.fail(err as Error);
+	}
+};
+
+const interactWithPost = async (
+	postContract: Contract,
+	walletAddress: ProfileOwnerAddress,
+	postId: PostId,
+	interaction: PostInteraction,
+): Promise<Result<true>> => {
+	try {
+		const interactionCode = interactionParser.valueToCode(interaction).unwrapOrElse((err) => {
+			throw err;
+		});
+
+		await postContract.methods
+			.interactWithContent(postId, interactionCode)
+			.send({ from: walletAddress });
 
 		return result.ok(true);
 	} catch (err) {
@@ -327,4 +347,5 @@ export const queries = {
 
 export const commands = {
 	purchaseLicense,
+	interactWithPost,
 };
