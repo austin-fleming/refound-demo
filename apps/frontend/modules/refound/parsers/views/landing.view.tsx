@@ -57,7 +57,7 @@ export const LandingView: NextPage = () => {
 				<h1 className="font-bold" style={{fontSize: "3em", color:"#01A0B0"}}>Your platform for empowering journalism on the blockchain</h1>
 				<p>Refound is an NFT marketplace and publishing platform where journalists and photographers can share first person, creative content from the frontlines swiftly, raise awareness, and sell directly to businesses, with sale proceeds going to customizable beneficiaries. Refound uses decentralization to offer groundbreaking protections for free speech, with content always protected by a censorship-resistant design.</p>
 				<div className="flex flex-row items-center justify-left w-full gap-2" style={{marginTop:"20px"}}>
-					<a href="/sign-up" className="bg-[#01A0B0] hover:bg-[#017984]" style={{padding: "8px 30px", borderRadius:"5px", color:"white"}} ><div>Sign Up</div></a>
+					<a href="/sign-up" className="bg-[#01A0B0] hover:bg-[#017984]" style={{padding: "8px 35px", borderRadius:"5px", color:"white"}} ><div>Sign Up</div></a>
 					<a href="/learn-more"><PolyButton 
 					as="button"
 					size="lg" 
@@ -66,7 +66,7 @@ export const LandingView: NextPage = () => {
 				</div>
 			</Grid>
 			<Grid item sm={12} md={4} style={{paddingTop:"3%"}}>
-				<img src="https://drive.google.com/uc?export=view&id=1o3Fy4e2RuLWnFJDe3H5C_RKRQjANUPOT" style={{width:"75%"}} alt="Refound iPhone Mockup"></img>
+				<img src="https://drive.google.com/uc?export=view&id=1o3Fy4e2RuLWnFJDe3H5C_RKRQjANUPOT" style={{width:"100%"}} alt="Refound iPhone Mockup"></img>
 			</Grid>
 		</Grid>
 
@@ -271,7 +271,7 @@ export const LandingView: NextPage = () => {
 		))}		
 	</Grid>
 	<Grid container justifyContent="center" sm={12} style={{margin:"0 auto"}}>
-		<h1 className="font-bold" style={{fontSize:"3em", padding:"2%", color:"#01A0B0"}}>Mint the art of journalism back to life and start publishing.</h1>
+		<h1 className="font-bold" style={{fontSize:"3em", padding:"2%", color:"#01A0B0", textAlign:"center"}}>Mint the art of journalism back to life and start publishing.</h1>
 	</Grid>
 	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginBottom:"5%"}}>
 	{<a href="/sign-up"><PolyButton as="button"
