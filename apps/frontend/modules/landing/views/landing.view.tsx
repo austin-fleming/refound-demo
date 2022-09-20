@@ -3,15 +3,12 @@ import * as React from "react";
 import { useEffect } from "react";
 import { PolyButton } from "@components/poly-button/poly-button";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import { useDiscover } from "@modules/discover/state/use-discover/discover.provider";
 import { useRefoundContracts } from "@modules/refound/hooks/use-refound-contracts";
-import NextLink from "next/link";
-import { PhotographCard } from "../../../discover/components/cards/photograph-card";
-import { Divider, Grid, Typography, ButtonGroup, Button, CircularProgress } from "@mui/material";
-import { useCallback, useState } from "react";
+import { PhotographCard } from "../../discover/components/cards/photograph-card";
+import { Grid, Typography } from "@mui/material";
+import { useState } from "react";
 import { toast } from "@services/toast/toast";
 
 export const LandingView: NextPage = () => {
@@ -204,7 +201,7 @@ export const LandingView: NextPage = () => {
 								platforms try to moderate content with a one size fits all approach
 								banning users and deleting posts that only a small subsection of
 								users find offensive. However, Refound allows users to adjust
-								content filters so that they don't see some content rather than
+								content filters so that they don&apos;t see some content rather than
 								removing it for everyone. Refound allows users to downvote content
 								they view as being misinformation making it less likely to be shown
 								to others. There is also an option to flag content which is then
@@ -351,12 +348,7 @@ export const LandingView: NextPage = () => {
 					))}
 			</Grid>
 
-			<Grid
-				container
-				justifyContent="center"
-				sm={12}
-				style={{ margin: "0 auto" }}
-			>
+			<Grid container justifyContent="center" sm={12} style={{ margin: "0 auto" }}>
 				<h1
 					className="font-bold"
 					style={{
@@ -378,7 +370,7 @@ export const LandingView: NextPage = () => {
 				<a href="/sign-up">
 					<PolyButton
 						as="button"
-						size="md"
+						size="base"
 						label="Connect Wallet"
 						color="secondary"
 						align="center"

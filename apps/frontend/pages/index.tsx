@@ -1,3 +1,3 @@
-import { LandingView } from "@modules/refound/parsers/views/landing.view";
+import { LandingView } from "@modules/landing/views/landing.view";
 
 export default LandingView;
