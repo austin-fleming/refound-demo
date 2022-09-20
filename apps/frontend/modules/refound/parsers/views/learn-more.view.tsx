@@ -51,7 +51,7 @@ export const LearnMoreView: NextPage = () => {
 		<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginTop:"5%", color:"white"}}>
 			<Grid item sm={12}  style={{padding:"5%"}}>
 				<h1 className="font-bold" style={{fontSize: "2em", textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>HOW DO I JOIN?</h1>
-				<p style={{textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>It's very simple.</p>
+				<p style={{textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>It is amazingly simple!</p>
 				<p style={{textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>You sign up on the sign-up tab, connect to the Celo wallet , and upload your photos or articles to be made into NFTs.</p>
 			</Grid>
 		</Grid>
@@ -80,7 +80,7 @@ export const LearnMoreView: NextPage = () => {
 			</Grid>
 			<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 				<h1 className="font-bold" style={{fontSize: "2em"}}>WHAT ARE THE BENEFITS OF MAKING MY WORK INTO AN NFT?</h1>
-				<p style={{marginBottom:"20px"}}>Content minted as a non-fungible token (NFT) benefits from the utility of the NFT smart contracts: journalists who publish their work wrapped in an NFT have full control of their intellectual property and greater revenue visibility from licensing NFTs. An NFT is like a digital fingerprint and contract for the use for your photo. Journalists can also reduce the emails and contractual back and forth required for selling their content and have a seamless smart contract to protect their intellectual property and revenue streams.  When your NFT is created it is called minting, basically the process of the NFT contract being created and recorded in the blockchain, making it non-fungible (i.e. it cannot be replaced or duplicated).</p>
+				<p>When your NFT is created it is called minting, basically the process of the NFT contract being created and recorded in the blockchain, making it non-fungible (i.e. it cannot be replaced or duplicated).</p>
 				<p>Content minted as a non-fungible token (NFT) benefits from the utility of the NFT smart contracts: journalists who publish their work wrapped in an NFT have full control of their intellectual property and greater revenue visibility from licensing NFTs. An NFT is token which functions like a digital fingerprint and contract for the use for your photo (the asset). Journalists can also reduce the emails and contractual back and forth required for selling their content and have a seamless smart contract to protect their intellectual property and revenue streams.</p>
 			</Grid>
 		</Grid>
