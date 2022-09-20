@@ -102,7 +102,7 @@ export const LearnMoreView: NextPage = () => {
 			</Grid>
 			<Grid container justifyContent="center" sm={12} style={{margin:"0 auto", marginTop:"5%", backgroundColor:"#E7E5E4"}}>
 				<Grid item sm={12}  md={6} style={{padding:"3%"}}>
-					<div style={{maxWidth:"300px", margin:"0 auto"}}><img src="https://drive.google.com/uc?export=view&id=1SEWGU4NKSAlQhSkLE9ICz76YmD1Hna1X" alt="Dude, where is my rainforest? #Melbourneclimatestrike IMG_5389 by John Englart (Takver) is licensed under CC BY-SA 2.0."></img></div>
+					<div style={{maxWidth:"300px", margin:"0 auto"}}><img src="https://drive.google.com/uc?export=view&id=1aY4X3gtm8SFV6xshVRKfNXraKCe4Jeh7" alt="323 Child Observing Sanaa Ruins by Felton Davis is licensed under CC BY 2.0."></img></div>
 				</Grid>
 				<Grid item sm={12}  md={6} style={{padding:"3%", marginTop:"5%"}}>
 					<h1 className="font-bold" style={{fontSize: "2em"}}>SUBMITTING CONTENT - LEGAL</h1>
@@ -117,7 +117,7 @@ export const LearnMoreView: NextPage = () => {
 			</Grid>
 			<Grid container justifyContent="center" sm={12} style={{margin:"0 auto", marginTop:"5%", backgroundColor:"#E7E5E4"}}>
 				<Grid item sm={12}  md={6} style={{padding:"3%"}}>
-					<div style={{maxWidth:"300px", margin:"0 auto"}}><img src="https://drive.google.com/uc?export=view&id=15adYUl63SfqSg_yvWH_7mrA9n-o-oP9W" alt="Dude, where is my rainforest? #Melbourneclimatestrike IMG_5389 by John Englart (Takver) is licensed under CC BY-SA 2.0."></img></div>
+					<div style={{maxWidth:"300px", margin:"0 auto"}}><img src="https://drive.google.com/uc?export=view&id=1xsgn9s3JLfdF7S16Z3d7RQ0wdNGphs6z" alt="Anti-War Rally Chicago Illinois 4-21-18 0960 by www.cemillerphotography.com is licensed under CC BY-SA 2.0."></img></div>
 				</Grid>
 				<Grid item sm={12}  md={6} style={{padding:"3%", marginTop:"5%"}}>
 					<h1 className="font-bold" style={{fontSize: "2em"}}>DO I RETAIN COPYRIGHT OF MY WORK?</h1>
