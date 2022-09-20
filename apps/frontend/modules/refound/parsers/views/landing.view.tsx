@@ -114,7 +114,7 @@ export const LandingView: NextPage = () => {
 	</Grid>
 	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto"}}>
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
-			<Card sx={{ maxWidth: 600, height: 350 }}>
+			<Card sx={{ maxWidth: 600, height: 400 }}>
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					In app camera capability
@@ -131,7 +131,7 @@ export const LandingView: NextPage = () => {
 			</Card>
 		</Grid>
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
-			<Card sx={{ maxWidth: 600, height: 350 }}>
+			<Card sx={{ maxWidth: 600, height: 400 }}>
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					Cryptocurrency benefits
@@ -150,7 +150,7 @@ export const LandingView: NextPage = () => {
 	</Grid>
 	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto"}}>
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
-			<Card sx={{ maxWidth: 600, height: 450 }}>
+			<Card sx={{ maxWidth: 600, height: 550 }}>
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					Decentralized content moderation and on-chain governance
@@ -167,7 +167,7 @@ export const LandingView: NextPage = () => {
 			</Card>
 		</Grid>
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
-			<Card sx={{ maxWidth: 600, height: 450  }}>
+			<Card sx={{ maxWidth: 600, height: 550  }}>
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					Beneficiary wallet
@@ -186,7 +186,7 @@ export const LandingView: NextPage = () => {
 	</Grid>
 	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto"}}>
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
-			<Card sx={{ maxWidth: 600, height: 400 }}>
+			<Card sx={{ maxWidth: 600, height: 450 }}>
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					Wallet based subscriptions feature
@@ -203,7 +203,7 @@ export const LandingView: NextPage = () => {
 			</Card>
 		</Grid>
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
-			<Card sx={{ maxWidth: 600, height: 400 }}>
+			<Card sx={{ maxWidth: 600, height: 450 }}>
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					Support for journalists: Funding pools and bonus payments
@@ -222,7 +222,7 @@ export const LandingView: NextPage = () => {
 	</Grid>
 	<Grid container justifyContent="center" sm={8} style={{margin:"0 auto"}}>
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
-			<Card sx={{ maxWidth: 600, height: 350 }}>
+			<Card sx={{ maxWidth: 600, height: 400 }}>
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					An on-chain SOS alert feature
@@ -239,7 +239,7 @@ export const LandingView: NextPage = () => {
 			</Card>
 		</Grid>
 		<Grid item sm={12}  md={6} style={{padding:"3%"}}>
-			<Card sx={{ maxWidth: 600, height: 350 }}>
+			<Card sx={{ maxWidth: 600, height: 400 }}>
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="div" color="#01A0B0">
 					Identity solutions
