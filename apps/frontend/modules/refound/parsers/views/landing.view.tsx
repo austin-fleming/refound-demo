@@ -66,7 +66,7 @@ export const LandingView: NextPage = () => {
 				</div>
 			</Grid>
 			<Grid item sm={12} md={4} style={{paddingTop:"3%"}}>
-				<img src="https://drive.google.com/uc?export=view&id=1vnk1E57BEYwquCBZj3N-wmWKXWbepmy8" style={{width:"100%"}} alt="Refound iPhone Mockup"></img>
+				<img src="https://drive.google.com/uc?export=view&id=1EnP0CUBWuWRRXf2eTjuuWJ2mL7wjYqTK" style={{width:"100%"}} alt="Refound iPhone Mockup"></img>
 			</Grid>
 		</Grid>
 
