@@ -16,13 +16,20 @@ const nextConfig = {
     },
     reactStrictMode: true,
     swcMinify: true,
-    images: {
-        domains: ['images.unsplash.com'],
-        remotePatterns: [{
-            protocol: 'https',
-            port: '',
-            hostname: '**.ipfs.dweb.link'
-        }]
+    experimental: {
+        images: {
+            // domains: ['images.unsplash.com'],
+            remotePatterns: [
+                {
+                    protocol: 'https',
+                    hostname: 'images.unsplash.com',
+                    pathname: '/**'
+                },
+                {
+                    protocol: 'https',
+                    hostname: '**.w3s.link'
+                }]
+        },
     },
     /* future: {
         webpack5: true

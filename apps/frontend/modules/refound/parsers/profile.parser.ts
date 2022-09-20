@@ -18,7 +18,6 @@ import { throwFieldError } from "./utils/throw-field-error";
 const uriToModel = (profileId: string, profileUri: string): Result<Profile> => {
 	try {
 		const parsedUri = JSON.parse(profileUri);
-		console.log({ "profile.uriToModel parsedUri:": parsedUri });
 
 		if (!parsedUri || !isObject(parsedUri)) throwFieldError("parsedUri");
 
@@ -45,7 +44,6 @@ const uriToModel = (profileId: string, profileUri: string): Result<Profile> => {
 		const address = profileData.address;
 		if (!address || !isString(address)) throwFieldError("address");
 
-		console.log({ "profileParser uriToModel": { rawJoinedOn: profileData.joinedOn } });
 		// joinedOn
 		const rawJoinedOn = profileData.joinedOn;
 		if (!rawJoinedOn) throwFieldError("joinedOn");

@@ -33,4 +33,17 @@
 		font-weight: bold;
 		font-display: block;
 	}
+
+	/* 
+	DAISY OVERRIDES
+	*/
+	.btn {
+		padding-left: 1.25em !important;
+		padding-right: 1.25em !important;
+		padding-top: 0.25em;
+		padding-bottom: 0.25em;
+		line-height: 1 !important;
+		font-weight: 400 !important;
+		height: auto !important;
+	}
 }

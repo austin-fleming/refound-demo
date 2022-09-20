@@ -35,7 +35,6 @@ PARSERS
 */
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const contractDataToDto = (contractData: string): Result<PostContractDTO> => {
-	console.log({ contractDataToDto: contractData });
 	try {
 		if (!contractData || !isString(contractData)) throw new Error("contractData is invalid");
 
@@ -293,18 +292,22 @@ const dtoToAggregate = async (
 			throw err;
 		});
 
-		console.log({ "postParser dtoToAggregate": postModel });
-
 		const profile = (
 			await refoundQueries.getProfileById(baseContract, postModel.creatorId)
 		).unwrapOrElse((err) => {
 			throw err;
 		});
 
-		console.log({ "postParser dtoToAggregate:": profile });
+		const interactions = (
+			await refoundPostQueries.getPostInteractions(postContract, postModel.postId)
+		).unwrapOrElse((err) => {
+			throw err;
+		});
+
 		const postAggregate: PostAggregate = {
 			...postModel,
 			creator: profile,
+			interactions,
 		};
 
 		return result.ok(postAggregate);

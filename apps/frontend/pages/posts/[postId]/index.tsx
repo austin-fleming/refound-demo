@@ -1,3 +1,1 @@
-import { PostView } from "@modules/posts/views/post.view";
-
-export default PostView;
+export { default, getStaticProps, getStaticPaths } from "@modules/posts/views/post.view";

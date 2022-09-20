@@ -42,6 +42,3 @@ export type ArticlePost = {
 } & BasePost;
 
 export type Post = ImagePost | ArticlePost;
-
-/* ADDITIONAL */
-export type PostInteraction = "None" | "UpVote" | "DownVote" | "Report";

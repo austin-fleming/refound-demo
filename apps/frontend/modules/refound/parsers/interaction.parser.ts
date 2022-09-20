@@ -1,5 +1,5 @@
 import { type Result, result, isNothing } from "@utils/monads";
-import type { PostInteraction } from "../models/post.model";
+import type { PostInteraction } from "../models/interactions.model";
 
 const codeToValueTable: Record<number, PostInteraction> = {
 	0: "None",
@@ -17,6 +17,7 @@ const valueToCodeTable: Record<PostInteraction, number> = {
 
 const codeToValue = (code: number): Result<PostInteraction> => {
 	const outcome = codeToValueTable[code];
+	console.log({ code });
 
 	if (isNothing(outcome)) return result.fail(new Error(`Unknown interaction code: ${code}`));
 
@@ -25,6 +26,7 @@ const codeToValue = (code: number): Result<PostInteraction> => {
 
 const valueToCode = (value: PostInteraction): Result<number> => {
 	const outcome = valueToCodeTable[value];
+	console.log({ value });
 
 	if (isNothing(outcome)) return result.fail(new Error(`Unknown interaction value: ${value}`));
 

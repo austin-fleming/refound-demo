@@ -16,7 +16,7 @@ import { ProfileContextProvider, useProfile } from "../hooks/use-profile";
 
 const Inner = () => {
 	const { loadProfile, profile } = useProfile();
-	const { sendBonus } = useRefoundContracts();
+	const { sendBonus, getLikedPostsByAccount } = useRefoundContracts();
 	const router = useRouter();
 
 	const { username } = router.query;
@@ -27,10 +27,21 @@ const Inner = () => {
 		loadProfile(username as string);
 	}, [username]);
 
+	useEffect(() => {
+		if (!profile?.address) return;
+
+		getLikedPostsByAccount(profile.address).then((posts) => {
+			posts.match({
+				ok: (value) => console.log({ likedPosts: value }),
+				fail: (err) => console.error(err),
+			});
+		});
+	}, [profile]);
+
 	return profile ? (
 		<>
-			<div className="grid w-full max-w-screen-lg grid-cols-3 gap-8 mx-auto px-contentPadding">
-				<section className="grid w-full h-auto grid-cols-1 col-span-1 gap-8">
+			<div className="grid grid-cols-[30%_1fr] grid-rows-1 w-full max-w-screen-lg gap-8 mx-auto px-contentPadding">
+				<section className="flex flex-col w-full gap-8">
 					<div className="w-full">
 						<figure className="avatar">
 							<div className="rounded">
@@ -48,15 +59,18 @@ const Inner = () => {
 						</div>
 					</div>
 				</section>
-				<section className="w-full col-start-2 col-end-3">
+				<section className="w-full">
 					<div className="tabs tabs-boxed">
-						<a className="tab">Tab 1</a>
-						<a className="tab tab-active">Tab 2</a>
-						<a className="tab">Tab 3</a>
+						<a className="tab">Photos</a>
+						<a className="tab tab-active">Articles</a>
+						<a className="tab">Pools</a>
+						<a className="tab">Likes</a>
 					</div>
 
-					{profile && <ImagePostsTab />}
-					{profile && <ArticlePostsTab />}
+					<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+						{profile && <ImagePostsTab />}
+						{/* {profile && <ArticlePostsTab />} */}
+					</div>
 				</section>
 			</div>
 		</>

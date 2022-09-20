@@ -1,4 +1,5 @@
 import { useDiscover } from "@modules/discover/state/use-discover/discover.provider";
+import { ImagePostCard } from "@modules/posts/components/image-post/image-post-card";
 import NextLink from "next/link";
 import { PhotographCard } from "../cards/photograph-card";
 import { TabFailed } from "./tab-failed";
@@ -12,8 +13,8 @@ export const PhotosTab = () => {
 	if (photos.loadingState === "SUCCESS")
 		return (
 			<>
-				{photos.content.map((photo) => (
-					<PhotographCard key={photo.postId} photoData={photo} />
+				{photos.content.map((post) => (
+					<ImagePostCard key={post.postId} imagePost={post} />
 				))}
 			</>
 		);

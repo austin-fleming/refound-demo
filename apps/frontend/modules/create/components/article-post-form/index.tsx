@@ -133,7 +133,6 @@ export const ArticlePostForm = () => {
 
 	const textInputOnChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setSubmissionStatus("IDLE");
-		console.log({ formData });
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
 	return (
@@ -193,10 +192,11 @@ export const ArticlePostForm = () => {
 			<button
 				className={cloin(
 					"btn w-full",
-					submissionStatus === "SUBMITTING" && "loading btn-disabled",
-					submissionStatus === "SUCCESS" && "btn-success btn-disabled",
-					submissionStatus === "FAIL" && "btn-error btn-disabled",
+					submissionStatus === "SUBMITTING" && "loading",
+					submissionStatus === "SUCCESS" && "btn-success",
+					submissionStatus === "FAIL" && "btn-error",
 				)}
+				disabled={submissionStatus !== "IDLE"}
 				onClick={onSubmit}
 			>
 				Submit

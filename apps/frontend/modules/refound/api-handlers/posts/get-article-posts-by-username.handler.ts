@@ -15,8 +15,6 @@ export async function getArticlePostsByUsernameHandler(
 	try {
 		const { username, requester } = req.query;
 
-		console.log({ getPostsByProfileHandler: { username, requester } });
-
 		if (!isString(username) || !username) return res.status(400).end();
 		// if (!isString(requester) || !requester) return res.status(403).end();
 
@@ -35,8 +33,6 @@ export async function getArticlePostsByUsernameHandler(
 		).unwrapOrElse((err) => {
 			throw err;
 		});
-
-		console.log({ getPostsByProfileHandler: { profile } });
 
 		const posts = (
 			await refoundPostQueries.getArticlePostsByOwner(

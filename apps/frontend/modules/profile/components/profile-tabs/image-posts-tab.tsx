@@ -1,3 +1,4 @@
+import { ImagePostCard } from "@modules/posts/components/image-post/image-post-card";
 import { useProfile } from "@modules/profile/hooks/use-profile";
 import { useEffect } from "react";
 
@@ -9,15 +10,9 @@ export const ImagePostsTab = () => {
 	}, []);
 
 	return (
-		<section>
+		<>
 			{imagePosts &&
-				imagePosts.map((post) => (
-					<article key={post.postId} className="overflow-hidden artboard artboard-demo">
-						<div className="w-full whitespace-pre-wrap">
-							<h1>{post.title}</h1>
-						</div>
-					</article>
-				))}
-		</section>
+				imagePosts.map((post) => <ImagePostCard imagePost={post} key={post.postId} />)}
+		</>
 	);
 };

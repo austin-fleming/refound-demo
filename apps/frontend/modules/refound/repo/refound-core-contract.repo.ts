@@ -31,7 +31,6 @@ const getProfileByUsername = async (
 	try {
 		const profileId = await contract.methods.getProfileIdbyHandle(username).call();
 		const rawUri = await contract.methods.tokenURI(profileId).call();
-		console.log({ rawUri });
 		return profileParser.uriToModel(profileId, rawUri);
 	} catch (err) {
 		return result.fail(err as Error);
@@ -46,7 +45,6 @@ const getProfileByAddress = async (
 		const profileId = await contract.methods.ProfileIdByAddress(address).call();
 		const profileUri = await contract.methods.tokenURI(profileId).call();
 
-		console.log({ profileUri });
 		if (!profileUri || !isString(profileUri))
 			throw new Error("getProfileByAddress did not return profileUri");
 
@@ -90,7 +88,7 @@ const getProfileById = async (
 		const profileUri = await contract.methods.tokenURI(profileId).call();
 
 		if (!profileId) throw new Error(`Profile with profileId "${profileId}" does not exist`);
-		console.log({ "refoundContractRepo  getProfileById": profileUri });
+
 		return profileParser.uriToModel(profileId, profileUri);
 	} catch (err) {
 		return result.fail(err as Error);
@@ -198,7 +196,6 @@ const createPost = async (
 				throw err;
 			});
 
-		console.log({ postCreationData: { profileId, contractSchema } });
 		// write to contract
 		const postId = await contract.methods
 			.makeRefoundPost(Number.parseInt(profileId), contractSchema)

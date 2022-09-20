@@ -1,4 +1,5 @@
 import { useDiscover } from "@modules/discover/state/use-discover/discover.provider";
+import { ArticlePostCard } from "@modules/posts/components/article-post/article-post-card";
 import { PhotographCard } from "@modules/posts/components/photograph-card";
 import { PostCard } from "@modules/posts/components/post-card/post-card";
 import NextLink from "next/link";
@@ -15,7 +16,7 @@ export const ArticlesTab = () => {
 		return (
 			<>
 				{articles.content.map((article) => (
-					<ArticleCard key={article.postId} data={article} />
+					<ArticlePostCard key={article.postId} articlePost={article} />
 				))}
 			</>
 		);

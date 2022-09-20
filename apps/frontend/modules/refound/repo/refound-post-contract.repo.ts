@@ -1,6 +1,7 @@
 import type { Result } from "@utils/monads";
 import type { Contract } from "web3-eth-contract";
-import type { PostId, PostInteraction } from "../models/post.model";
+import type { PostId } from "../models/post.model";
+import type { PostInteraction, PostInteractionList } from "../models/interactions.model";
 import { PostType } from "../models/post.model";
 import type { ProfileOwnerAddress } from "../models/profile.model";
 import { result } from "@utils/monads";
@@ -24,13 +25,52 @@ import { interactionParser } from "../parsers/interaction.parser";
 QUERIES
 ----------------
 */
+const getPostInteractions = async (
+	postContract: Contract,
+	postId: PostId,
+): Promise<Result<PostInteractionList>> => {
+	try {
+		// 1. get everyone who has interacted
+		const interactionAddress: string[] = await postContract.methods
+			.getContentInteractionAddresses(postId)
+			.call();
+		console.log({ interactionAddress, postId });
+		// 2. get interactions for each address
+		const interactions = result
+			.sequence(
+				await Promise.all(
+					interactionAddress.map(async (address) => {
+						const interactionCode = await postContract.methods
+							.getContentInteractions(postId, address)
+							.call();
+						return interactionParser.codeToValue(interactionCode);
+					}),
+				),
+			)
+			.unwrapOrElse((err) => {
+				throw err;
+			});
+		console.log({ interactions });
+		// 3. reduce into interactions list
+		const interactionList: PostInteractionList = interactions.reduce(
+			(last, current) => ({
+				...last,
+				[current]: last[current] + 1,
+			}),
+			{ None: 0, UpVote: 0, DownVote: 0, Report: 0 },
+		);
+
+		return result.ok(interactionList);
+	} catch (error) {
+		return result.fail(error as Error);
+	}
+};
 const getPost = async (
 	coreContract: Contract,
 	postContract: Contract,
 	postId: PostId,
 ): Promise<Result<PostAggregate>> => {
 	try {
-		console.log({ getPost: postId });
 		const rawUri = await postContract.methods.tokenURI(postId).call();
 
 		if (!rawUri) throw new Error(`No uri returned for postId "${postId}"`);
@@ -164,10 +204,7 @@ const getPostsByProfile = async (
 	address: ProfileOwnerAddress,
 ): Promise<Result<PostAggregate[]>> => {
 	try {
-		console.log({ getPostsByProfile: address });
 		const postIds = await postContract.methods.getPostIDs(address).call();
-
-		console.log({ postIds });
 
 		if (!Array.isArray(postIds)) throw new Error("Expected array from contract");
 
@@ -287,6 +324,56 @@ const getLicensePrices = async (contract: Contract) => {
 	}
 };
 
+const getLikedPostsByAccount = async (
+	coreContract: Contract,
+	postContract: Contract,
+	accountAddress: ProfileOwnerAddress,
+): Promise<Result<PostAggregate[]>> => {
+	try {
+		// 1. Get all posts to start
+		const allPostUris: string[] = await postContract.methods.getAllPosts().call();
+
+		// 2. Find posts with a like interaction
+		const dtosWithIsLiked = await Promise.all(
+			allPostUris.map(async (uri) => {
+				// parse from string to dto object
+				const dto = postParser.contractDataToDto(uri).unwrapOrElse((err) => {
+					throw err;
+				});
+				// find interactions by the user
+				const interaction: number = await postContract.methods
+					.getContentInteractions(dto.postId, accountAddress)
+					.call();
+				// see if it's a like
+				const isLiked = interactionParser.codeToValue(interaction).extract() === "UpVote";
+
+				return { ...dto, isLiked };
+			}),
+		);
+
+		// 3. filter out only liked posts
+		const likedDtos = dtosWithIsLiked.filter(({ isLiked }) => isLiked);
+
+		// 4. convert to aggregates
+		const aggregates = await Promise.all(
+			likedDtos.map(async ({ isLiked, ...dto }) => {
+				const metadata = (
+					await ipfsQueries.getPostMetadata(dto.postData.cid, dto.postData.metadataPath)
+				).unwrapOrElse((err) => {
+					throw err;
+				});
+
+				return await postParser.dtoToAggregate(coreContract, postContract, dto, metadata);
+			}),
+		);
+
+		// 5. clean up
+		return result.sequence(aggregates);
+	} catch (err) {
+		return result.fail(err as Error);
+	}
+};
+
 /* 
 ----------------
 COMMANDS
@@ -318,11 +405,12 @@ const interactWithPost = async (
 	postId: PostId,
 	interaction: PostInteraction,
 ): Promise<Result<true>> => {
+	console.log({ interaction });
 	try {
 		const interactionCode = interactionParser.valueToCode(interaction).unwrapOrElse((err) => {
 			throw err;
 		});
-
+		console.log({ interactionCode });
 		await postContract.methods
 			.interactWithContent(postId, interactionCode)
 			.send({ from: walletAddress });
@@ -343,6 +431,8 @@ export const queries = {
 	getLicensePrices,
 	getImagePostsByOwner,
 	getArticlePostsByOwner,
+	getLikedPostsByAccount,
+	getPostInteractions,
 };
 
 export const commands = {

@@ -207,11 +207,15 @@ export const useRefoundContracts = () => {
 	): Promise<Result<PoolAggregate[]>> =>
 		fetchWithAddress<PoolAggregate[]>(`/api/users/${username}/pools`, account.address);
 
+	const getLikedPostsByAccount = async (accountAddress: ProfileOwnerAddress) =>
+		fetchWithAddress(`/api/users/account/${accountAddress}/likes`, account.address);
+
 	const getLicensesByProfile = async (
 		profileAddress: ProfileOwnerAddress,
 	): Promise<Result<LicenseAggregate[]>> => {};
 
 	return {
+		getLikedPostsByAccount,
 		getPool,
 		getPools,
 		getPoolsByAccount,

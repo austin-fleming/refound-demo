@@ -6,7 +6,6 @@ export const PhotosTab = () => {
 	const { loadPhotographs, photographs } = useProfileContext();
 
 	useEffect(() => {
-		console.log("photos tab");
 		loadPhotographs();
 	}, []);
 

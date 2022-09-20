@@ -6,7 +6,6 @@ export const PoolsTab = () => {
 	const { pools, loadPools } = useProfileContext();
 
 	useEffect(() => {
-		console.log("pools tab");
 		loadPools();
 	}, []);
 

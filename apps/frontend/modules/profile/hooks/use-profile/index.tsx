@@ -1,6 +1,9 @@
 import { useRefoundContracts } from "@modules/refound/hooks/use-refound-contracts";
 import type { Pool } from "@modules/refound/models/pool.model";
-import type { PostAggregate } from "@modules/refound/models/post.aggregate";
+import type {
+	ArticlePostAggregate,
+	ImagePostAggregate,
+} from "@modules/refound/models/post.aggregate";
 import type { Profile, ProfileUsername } from "@modules/refound/models/profile.model";
 import { toast } from "@services/toast/toast";
 import type { Nullable } from "@utils/monads";
@@ -12,9 +15,9 @@ type LoadingState = "IDLE" | "LOADING" | "SUCCESS" | "FAIL";
 type State = {
 	profile?: Profile;
 	profileLoadingState: LoadingState;
-	imagePosts?: PostAggregate[];
+	imagePosts?: ImagePostAggregate[];
 	imagePostsLoadingState: LoadingState;
-	articlePosts?: PostAggregate[];
+	articlePosts?: ArticlePostAggregate[];
 	articlePostsLoadingState: LoadingState;
 	pools?: Pool[];
 	poolsLoadingState: LoadingState;

@@ -26,13 +26,15 @@ export const BonusButton = ({ receivingAddress }: { receivingAddress: ProfileOwn
 			onClick={clickHandler}
 			disabled={state === "SUBMITTING" || state === "SUCCESS"}
 			className={cloin(
-				"btn w-full text-left",
+				"btn btn-sm w-full text-left justify-start",
 				state === "SUBMITTING" && "loading",
 				state === "SUCCESS" && "btn-success",
 				state === "FAIL" && "btn-error",
 			)}
 		>
-			{state === "SUCCESS" ? "Sent!" : "Send Bonus"}
+			{(state === "IDLE" || state === "SUBMITTING") && "Send Bonus"}
+			{state === "SUCCESS" && "Sent!"}
+			{state === "FAIL" && "Something went wrong"}
 		</button>
 	);
 };

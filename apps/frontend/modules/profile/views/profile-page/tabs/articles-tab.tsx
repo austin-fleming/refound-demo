@@ -5,7 +5,6 @@ export const ArticlesTab = () => {
 	const { textPosts, loadTextPosts } = useProfileContext();
 
 	useEffect(() => {
-		console.log("articles tab");
 		loadTextPosts();
 	}, []);
 

@@ -14,7 +14,6 @@ const sendBonus = async (
 
 		const cUSDContract = await kit.contracts.getStableToken();
 		const payerBalance = await cUSDContract.balanceOf(payerAddress);
-		console.log({ payerBalance: payerBalance.toString() });
 
 		if (payerBalance.toString() + 0 < cUsdAmount) throw new Error("Insufficient balance");
 

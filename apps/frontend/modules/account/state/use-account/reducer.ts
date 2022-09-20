@@ -1,6 +1,6 @@
 import type { Profile } from "@modules/refound/models/profile.model";
 
-type ConnectionStatus = "NOT_CONNECTED" | "CONNECTING" | "CONNECTED";
+export type ConnectionStatus = "NOT_CONNECTED" | "CONNECTING" | "CONNECTED";
 
 export type State = {
 	address?: string;

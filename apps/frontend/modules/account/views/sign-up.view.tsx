@@ -11,11 +11,13 @@ import { useRefoundContracts } from "@modules/refound/hooks/use-refound-contract
 import { useAccount } from "../state/use-account";
 import { useRouter } from "next/router";
 
+const rxIsHandle = /^[a-z0-9_-]{3,15}$/i;
+
 export const SignUpView: NextPage = () => {
 	const { login, account } = useAccount();
 	const router = useRouter();
 
-	const { createProfile, updateProfile, getAllProfiles } = useRefoundContracts();
+	const { createProfile, getProfileByUsername } = useRefoundContracts();
 
 	const [formState, setFormState] = useState<Partial<ProfileCreationProperties>>({});
 	const [formStatus, setFormStatus] = useState<
@@ -23,15 +25,23 @@ export const SignUpView: NextPage = () => {
 	>("NONE");
 	const [formError, setFormError] = useState<string | undefined>();
 
-	const validateForm = (
+	const validateForm = async (
 		unvalidated: Partial<ProfileCreationProperties>,
-	): Result<ProfileCreationProperties> => {
+	): Promise<Result<ProfileCreationProperties>> => {
 		try {
 			const { username, avatarUrl, bio } = unvalidated;
 			if (!username) throw new Error("username is missing");
+			const trimmedUsername = username.toLowerCase().trim();
+			if (trimmedUsername.length > 15 || trimmedUsername.length < 3)
+				throw new Error("username must be 3-15 characters long.");
+			if (!rxIsHandle.test(trimmedUsername))
+				throw new Error("username can use a-z, 0-9, _, and -");
+
+			const alreadyExists = (await getProfileByUsername(trimmedUsername)).isOk();
+			if (alreadyExists) throw new Error("username already exists");
 
 			const profile: ProfileCreationProperties = {
-				username,
+				username: trimmedUsername,
 				avatarUrl,
 				bio,
 			};
@@ -60,25 +70,27 @@ export const SignUpView: NextPage = () => {
 
 		setFormStatus("SUBMITTING");
 
-		validateForm(formState).match({
-			ok: (validProfile) => {
-				createProfile(validProfile).then((profileId) => {
-					profileId.match({
-						ok: (profileId) => {
-							setFormStatus("DONE");
-							toast.success("Profile Created!");
-						},
-						fail: (err) => {
-							console.error(err);
-							setFormStatus("ERROR");
-							setFormError("Failed to create profile");
-							toast.error("Failed to create profile");
-						},
+		validateForm(formState).then((validProfile) =>
+			validProfile.match({
+				ok: (validProfile) => {
+					createProfile(validProfile).then((profileId) => {
+						profileId.match({
+							ok: (profileId) => {
+								setFormStatus("DONE");
+								toast.success("Profile Created!");
+							},
+							fail: (err) => {
+								console.error(err);
+								setFormStatus("ERROR");
+								setFormError("Failed to create profile");
+								toast.error("Failed to create profile");
+							},
+						});
 					});
-				});
-			},
-			fail: () => {},
-		});
+				},
+				fail: () => {},
+			}),
+		);
 	};
 
 	useEffect(() => {

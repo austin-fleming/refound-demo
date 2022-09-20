@@ -4,6 +4,7 @@ import { useLayout } from "../hooks/use-layout";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import { useAccount } from "@modules/account/state/use-account";
+import { cloin } from "@utils/cloin";
 
 const MenuSection = ({ children, title }: { children: ReactNode; title: string }) => (
 	<div className="flex flex-col gap-2">
@@ -62,96 +63,72 @@ const Menu = () => {
 
 			<section className="flex flex-col gap-4">
 				<MenuSection title="General">
-					<PolyButton as="button" onClick={logout} label="Log Out" size="sm" fullWidth />
-					<PolyButton
-						as="button"
-						label="Notifications"
-						icon="rightArrow"
-						size="sm"
-						color="secondary"
-					/>
-					<PolyButton
-						as="button"
-						label="Saved"
-						icon="rightArrow"
-						size="sm"
-						color="secondary"
-					/>
+					<button type="button" onClick={logout} className="justify-start btn btn-sm">
+						Log Out
+					</button>
+
+					<a href="#" className="justify-start btn btn-disabled btn-sm ">
+						Notifications
+					</a>
+
+					<a href="#" className="justify-start btn btn-disabled btn-sm ">
+						Saved
+					</a>
 				</MenuSection>
 
 				<MenuSection title="Funds">
-					<PolyButton
-						as="button"
-						label="Balances"
-						icon="rightArrow"
-						size="sm"
-						color="secondary"
-					/>
-					<PolyButton
-						as="button"
-						label="Withdraw"
-						icon="rightArrow"
-						size="sm"
-						color="secondary"
-					/>
-					<PolyButton
-						as="button"
-						label="Manage Royalties"
-						icon="rightArrow"
-						size="sm"
-						color="secondary"
-					/>
-					<PolyButton
-						as="button"
-						label="Manage Beneficieries"
-						icon="rightArrow"
-						size="sm"
-						color="secondary"
-					/>
-					<PolyButton
-						as="button"
-						label="Manage Subscribers"
-						icon="rightArrow"
-						size="sm"
-						color="secondary"
-					/>
+					<a href="#" className="justify-start btn btn-disabled btn-sm ">
+						Balances
+					</a>
+					<a href="#" className="justify-start btn btn-disabled btn-sm ">
+						Withdraw
+					</a>
+					<a href="#" className="justify-start btn btn-disabled btn-sm ">
+						Manage Royalties
+					</a>
+					<a href="#" className="justify-start btn btn-disabled btn-sm ">
+						Manage Beneficieries
+					</a>
+					<a href="#" className="justify-start btn btn-disabled btn-sm ">
+						Manager Subscribers
+					</a>
 				</MenuSection>
 
 				<MenuSection title="Settings">
-					<PolyButton
-						as="button"
-						label="Profile"
-						icon="rightArrow"
-						size="sm"
-						color="secondary"
-					/>
-					<PolyButton
-						as="button"
-						label="Notifications"
-						icon="rightArrow"
-						size="sm"
-						color="secondary"
-					/>
-					<PolyButton
-						as="button"
-						label="Identity"
-						icon="rightArrow"
-						size="sm"
-						color="secondary"
-					/>
-					<PolyButton
-						as="button"
-						label="Privacy"
-						icon="rightArrow"
-						size="sm"
-						color="secondary"
-					/>
+					<a href="#" className="justify-start btn btn-disabled btn-sm ">
+						Profile
+					</a>
+					<a href="#" className="justify-start btn btn-disabled btn-sm ">
+						Content Settings
+					</a>
+					<a href="#" className="justify-start btn btn-disabled btn-sm ">
+						Notifications
+					</a>
+					<a href="#" className="justify-start btn btn-disabled btn-sm ">
+						Identity
+					</a>
+					<a href="#" className="justify-start btn btn-disabled btn-sm ">
+						Privacy
+					</a>
+					<a href="#" className="justify-start btn btn-disabled btn-sm ">
+						Manager Subscribers
+					</a>
 				</MenuSection>
 			</section>
 		</div>
 	) : (
 		<div className="flex flex-col items-center justify-center w-full h-full gap-4 p-contentPadding">
 			<p className="text-xl font-bold text-center">Let&apos;s get started</p>
+			<button
+				type="button"
+				onClick={login}
+				className={cloin(
+					"btn btn-lg tracking-wider btn-block",
+					account.status === "CONNECTING" && "loading",
+				)}
+			>
+				Log In
+			</button>
 			<PolyButton
 				as="button"
 				size="lg"

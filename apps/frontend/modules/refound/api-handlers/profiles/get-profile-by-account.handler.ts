@@ -24,7 +24,6 @@ export async function getProfileByAccountHandler(
 
 	return (await queries.getProfileByAddress(contract, accountAddress)).match({
 		ok: (profile) => {
-			console.log({ profileRoute: profile });
 			res.status(200).json(profile);
 		},
 		fail: (err) => {

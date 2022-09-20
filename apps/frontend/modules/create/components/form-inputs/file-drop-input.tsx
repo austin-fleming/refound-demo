@@ -59,7 +59,6 @@ const getImageDimensions = (file: File): Promise<{ width: number; height: number
 		const image = new Image();
 
 		image.addEventListener("load", () => {
-			console.log({ width: image.width, height: image.height });
 			resolve({ width: image.width, height: image.height });
 		});
 

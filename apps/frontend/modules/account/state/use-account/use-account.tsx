@@ -8,7 +8,7 @@ import { useCallback } from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { createContext, useReducer } from "react";
-import type { State } from "./reducer";
+import type { ConnectionStatus, State } from "./reducer";
 import { initialState, reducer } from "./reducer";
 
 interface IUseAccount {
@@ -75,11 +75,7 @@ export const InnerProvider = ({ children }: { children: ReactNode }) => {
 	}, [address, disconnect, connect]);
 
 	const login = useCallback(async () => {
-		console.log("logging in");
-		if (account.status === "CONNECTED") {
-			console.log("already logged in");
-			return;
-		}
+		if (account.status === "CONNECTED") return;
 
 		dispatch({ type: "REQUEST_LOGIN" });
 		try {
@@ -93,7 +89,6 @@ export const InnerProvider = ({ children }: { children: ReactNode }) => {
 	}, [address, account.status, connect, disconnect, fetchProfile]);
 
 	const completeRegistration = async () => {
-		console.log("completing registration");
 		try {
 			if (!address || account.status !== "CONNECTED") {
 				toast.error("Please log in to complete registration");
@@ -137,9 +132,7 @@ export const InnerProvider = ({ children }: { children: ReactNode }) => {
 		}
 	}, [account.status, account.hasProfile]);
 
-	useEffect(() => {
-		console.log(`status: ${account.status} | address: ${address}`);
-	}, [address, account]);
+	useEffect(() => {}, [address, account]);
 
 	return (
 		<AccountContext.Provider value={{ login, logout, account, completeRegistration }}>
