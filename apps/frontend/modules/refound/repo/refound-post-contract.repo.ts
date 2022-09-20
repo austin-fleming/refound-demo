@@ -119,7 +119,7 @@ const getAllPosts = async (
 			}),
 		);
 
-		return result.sequence(posts);
+		return result.sequence(posts.reverse());
 	} catch (err) {
 		return result.fail(err as Error);
 	}
@@ -156,7 +156,7 @@ const getAllImagePosts = async (
 			}),
 		)) as Result<ImagePostAggregate>[];
 
-		return result.sequence(posts);
+		return result.sequence(posts.reverse());
 	} catch (err) {
 		return result.fail(err as Error);
 	}
@@ -192,7 +192,7 @@ const getAllArticlePosts = async (
 			}),
 		)) as Result<ArticlePostAggregate>[];
 
-		return result.sequence(posts);
+		return result.sequence(posts.reverse());
 	} catch (err) {
 		return result.fail(err as Error);
 	}
