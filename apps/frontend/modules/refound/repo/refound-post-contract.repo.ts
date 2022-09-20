@@ -19,6 +19,7 @@ import { unixTimestamp } from "@utils/unix-timestamp";
 import { throwFieldError } from "../parsers/utils/throw-field-error";
 import { isString } from "@utils/data-helpers/is-string";
 import { interactionParser } from "../parsers/interaction.parser";
+import { licenseParser } from "../parsers/license.parser";
 
 /* 
 ----------------
@@ -386,8 +387,12 @@ const purchaseLicense = async (
 	licenseType: LicenseType,
 ): Promise<Result<true>> => {
 	try {
-		const receipt = postContract.methods
-			.purchaseLicense(postId, licenseType)
+		const licenseCode = licenseParser.valueToCode(licenseType).unwrapOrElse((err) => {
+			throw err;
+		});
+
+		const receipt = await postContract.methods
+			.purchaseLicense(postId, licenseCode)
 			.send({ from: walletAddress });
 
 		if (!receipt)

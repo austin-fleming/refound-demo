@@ -16,6 +16,7 @@ import type { PostCreationProperties } from "../models/post.dto";
 import type { PostId, PostType } from "../models/post.model";
 import { postParser } from "../parsers/post.parser";
 import { commands as ipfsCommands } from "./ipfs.repo";
+import { moderateImage } from "./moderation/moderate-image";
 import { jsonFileFromObject } from "./utils/json-file-from-object";
 
 /* 
@@ -153,6 +154,12 @@ const createPost = async (
 	imageFile?: File,
 ): Promise<Result<PostId>> => {
 	try {
+		if (imageFile) {
+			(await moderateImage(imageFile)).unwrapOrElse(() => {
+				throw new Error("This image was flagged");
+			});
+		}
+
 		const { profileId } = (await getProfileByAddress(contract, walletAddress)).unwrapOrElse(
 			(err) => {
 				throw err;
