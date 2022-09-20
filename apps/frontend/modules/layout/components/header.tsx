@@ -16,15 +16,28 @@ export const Header = () => {
 			>
 				<NextLink href="/">
 					<a>
-						<RefoundIcon className="h-[0.8em] lg:h-[0.7em] inline" /><h1 className="font-normal leading-none text-[1em]" style={{display:"inline-block", marginLeft:"10px"}}> refound</h1>
+						<RefoundIcon className="h-[0.8em] lg:h-[0.7em] inline" />
+						<h1
+							className="font-normal leading-none text-[1em]"
+							style={{ display: "inline-block", marginLeft: "10px" }}
+						>
+							{" "}
+							refound
+						</h1>
 					</a>
 				</NextLink>
-				{!account && <PolyButton onClick={login} 
-					as="button"
-					size="sm" 
-					label="Connect Wallet"
-					align="center"/>}
-					{account && <p style={{fontSize:"0.5em"}}>Hello{account.profile && "," + account.profile?.username.substr(0, 12)}</p>}
+				{!account && (
+					<PolyButton
+						onClick={login}
+						as="button"
+						size="sm"
+						label="Connect Wallet"
+						align="center"
+					/>
+				)}
+				{account.profile?.username && (
+					<p className="badge">@{account.profile.username.slice(0, 12)}</p>
+				)}
 			</div>
 
 			<BottomNav />

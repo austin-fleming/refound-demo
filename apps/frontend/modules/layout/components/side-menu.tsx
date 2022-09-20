@@ -45,9 +45,9 @@ const Menu = () => {
 					)}
 				</div>
 
-				<NextLink href="/account">
-					<a>View Account</a>
-				</NextLink>
+				<a type="button" className="btn" href={`/u/${account.profile?.username}`}>
+					View Profile
+				</a>
 			</section>
 
 			<section className="py-8">

@@ -3,7 +3,7 @@ import { PolyButton } from "@components/poly-button/poly-button";
 import { useAccount } from "@modules/account/state/use-account";
 import { useRefoundContracts } from "@modules/refound/hooks/use-refound-contracts";
 import type { Post } from "@modules/refound/models/post.model";
-import type { Profile } from "@modules/refound/models/profile.model";
+import { Profile, ProfileTrustStatus } from "@modules/refound/models/profile.model";
 import { toast } from "@services/toast/toast";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -40,8 +40,8 @@ const Inner = () => {
 
 	return profile ? (
 		<>
-			<div className="grid grid-cols-[30%_1fr] grid-rows-1 w-full max-w-screen-lg gap-8 mx-auto px-contentPadding">
-				<section className="flex flex-col w-full gap-8">
+			<div className="grid grid-cols-1 sm:grid-cols-[30%_1fr] grid-rows-1 w-full max-w-screen-lg gap-8 mx-auto px-contentPadding py-contentPadding">
+				<section className="flex w-full gap-8 sm:flex-col">
 					<div className="w-full">
 						<figure className="avatar">
 							<div className="rounded">
@@ -49,8 +49,12 @@ const Inner = () => {
 							</div>
 						</figure>
 					</div>
-					<div className="flex flex-col">
-						<span className="badge">{profile.status}</span>
+					<div className="flex flex-col justify-between">
+						{profile.status !== ProfileTrustStatus.NONE ? (
+							<span className="badge">{profile.status}</span>
+						) : (
+							<span />
+						)}
 						<h1 className="text-4xl font-bold">@{profile.username}</h1>
 
 						<div className="flex flex-col w-full gap-2">
