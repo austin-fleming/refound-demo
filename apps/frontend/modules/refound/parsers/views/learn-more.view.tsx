@@ -22,7 +22,7 @@ export const LearnMoreView: NextPage = () => {
 			<Grid item sm={12}  style={{padding:"5%", fontFamily:"Andale Mono"}}>
 				<h1 className="font-bold" style={{marginTop:"15%", fontSize:"2.5em", textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>Hello! Welcome to Refound Journalism!</h1>
 				<h1 className="font-bold" style={{fontSize:"2.5em",textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>We are glad you are here!</h1>
-				<p style={{ fontSize:"1.5em", textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>We invite you to join our global community and monetize your photographs and writing!</p>
+				<p style={{fontSize:"1.5em", textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>We invite you to join our global community and monetize your photographs and writing!</p>
 				<p style={{fontSize:"1.5em",textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>Sign up here for your unique Refound name handle!</p>
 				<div className="flex flex-row items-center justify-left w-full gap-2" style={{marginTop:"20px"}}>
 					<a href="/sign-up"><PolyButton 
@@ -59,7 +59,7 @@ export const LearnMoreView: NextPage = () => {
 			<Grid item sm={12}  md={6} style={{padding:"3%"}}>
 				<div style={{maxWidth:"300px", margin:"0 auto"}}><img src="https://bafybeihvlpctyczp3jecmnyzcimr5typ72oqzpz2tbugia4ejmu7us2pla.ipfs.w3s.link/WhyRefound-modified.png" alt="'Netting a trade and an income in northern Lebanon' by DFID - UK Department for International Development is licensed under CC BY 2.0."></img></div>
 			</Grid>
-			<Grid item sm={12}  md={6} style={{padding:"3%"}}>
+			<Grid item sm={12}  md={6} style={{padding:"3%", marginTop:"5%"}}>
 				<h1 className="font-bold" style={{fontSize: "2em"}}>WHY SHOULD I PUBLISH ON REFOUND?</h1>
 				<p style={{marginBottom:"20px"}}>Refound allows journalists to get better compensation for their work and sell to both the news and a global audience. Journalists then have a clear path to fair compensation, licensing, and revenue for their work. A beneficiary wallet function allows revenues to be passed on to selected benefiaries. Funding pools on Refound allow for journalists to raise funds to produce integral content.</p>
 			</Grid>
@@ -89,6 +89,42 @@ export const LearnMoreView: NextPage = () => {
 				<h1 className="font-bold" style={{fontSize: "2em", textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>WHAT WILL I EARN AND WILL MY CRYPTO CURRENCY EARNINGS BE STABLE?</h1>
 				<p style={{textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>As you create the NFT, you will be able to set your price as well as select licensing types.  This will allow you more clarity in how your work is setup for sale.  You will receive 99% of your NFT sale or licensing proceeds, with Refound only taking 1% as a platform fee.  Compare this to other photo and content aggregating sites in Web 2, which keep 75% to 85% of revenue proceeds for themselves and only share 15% to 25% with the creators. Refound will help regenerate your financial standing as a creator of content by giving you greater monetization proceeds of your content. You will be able to use CUSD and CEuro for earnings, which are stable coins tied to the US dollar and Euro, respectively.</p>
 			</Grid>
+		</Grid>
+		<Grid container justifyContent="center" sm={12} style={{margin:"0 auto", marginTop:"5%", backgroundColor:"#E7E5E4"}}>
+			<Grid item sm={12}  md={6} style={{padding:"3%"}}>
+				<div style={{maxWidth:"300px", margin:"0 auto"}}><img src="https://drive.google.com/uc?export=view&id=1SEWGU4NKSAlQhSkLE9ICz76YmD1Hna1X" alt="Dude, where is my rainforest? #Melbourneclimatestrike IMG_5389 by John Englart (Takver) is licensed under CC BY-SA 2.0."></img></div>
+			</Grid>
+			<Grid item sm={12}  md={6} style={{padding:"3%", marginTop:"5%"}}>
+				<h1 className="font-bold" style={{fontSize: "2em"}}>SUBMITTING CONTENT - LEGAL</h1>
+				<p style={{marginBottom:"20px"}}>All contributors must ensure that the content they submit does not contain copyrighted materials. Refound will not accept content that is a violation of the exclusive rights of a creator.</p>
+			</Grid>
+		</Grid>
+		<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginTop:"5%", color:"white"}}>
+			<Grid item sm={12}  style={{padding:"5%"}}>
+				<h1 className="font-bold" style={{fontSize: "2em", textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>Funding Pools</h1>
+				<p style={{textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>Funding pools allow the community to direct crypto tokens to commission topics they want journalists to photograph and write about and for journalists to raise funds for initiatives they want to report on.</p>
+			</Grid>
+		</Grid>
+		<Grid container justifyContent="center" sm={12} style={{margin:"0 auto", marginTop:"5%", backgroundColor:"#E7E5E4"}}>
+			<Grid item sm={12}  md={6} style={{padding:"3%"}}>
+				<div style={{maxWidth:"300px", margin:"0 auto"}}><img src="https://drive.google.com/uc?export=view&id=15adYUl63SfqSg_yvWH_7mrA9n-o-oP9W" alt="Dude, where is my rainforest? #Melbourneclimatestrike IMG_5389 by John Englart (Takver) is licensed under CC BY-SA 2.0."></img></div>
+			</Grid>
+			<Grid item sm={12}  md={6} style={{padding:"3%", marginTop:"5%"}}>
+				<h1 className="font-bold" style={{fontSize: "2em"}}>DO I RETAIN COPYRIGHT OF MY WORK?</h1>
+				<p style={{marginBottom:"20px"}}>Absolutely. Any work uploaded is fully yours and the NFT smart contracts and their immutability ensure that as well. You can register as an individual or a business as long as you are at least 18 years of age.</p>
+			</Grid>
+		</Grid>
+		<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginTop:"5%", color:"white"}}>
+			<Grid item sm={12}  style={{padding:"5%"}}>
+				<h1 className="font-bold" style={{fontSize: "2em", textShadow:"2px 4px 3px rgba(0,0,0,0.3)" ,textAlign:"center"}}>WE LOOK FORWARD TO WORKING WITH YOU!</h1>
+			</Grid>
+		</Grid>
+		<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", marginBottom:"5%"}}>
+		{<a href="/sign-up"><PolyButton as="button"
+						size="md" 
+						label="Sign Up Today"
+						color="secondary"
+						align="center"/></a>}
 		</Grid>
 		<Grid container justifyContent="center" sm={12} style={{margin:"0 auto", marginTop:"5%", backgroundColor:"#E7E5E4", paddingBottom:"5%"}}>
 			<Grid item sm={8} md={6} xs={8} style={{padding:"1%"}}>
