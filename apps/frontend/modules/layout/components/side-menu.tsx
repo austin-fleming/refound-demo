@@ -121,7 +121,10 @@ const Menu = () => {
 			<p className="text-xl font-bold text-center">Let&apos;s get started</p>
 			<button
 				type="button"
-				onClick={login}
+				onClick={() => {
+					toggleMenu();
+					login();
+				}}
 				className={cloin(
 					"btn btn-lg tracking-wider btn-block",
 					account.status === "CONNECTING" && "loading",
@@ -129,17 +132,6 @@ const Menu = () => {
 			>
 				Log In
 			</button>
-			<PolyButton
-				as="button"
-				size="lg"
-				fullWidth
-				align="center"
-				onClick={() => {
-					toggleMenu();
-					login();
-				}}
-				label="Log In"
-			/>
 		</div>
 	);
 };
