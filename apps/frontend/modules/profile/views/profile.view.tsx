@@ -65,13 +65,13 @@ const Inner = () => {
 				</section>
 				<section className="w-full">
 					<div className="tabs tabs-boxed">
-						<a className="tab">Photos</a>
-						<a className="tab tab-active">Articles</a>
+						<a className="tab tab-active">Photos</a>
+						<a className="tab">Articles</a>
 						<a className="tab">Pools</a>
 						<a className="tab">Likes</a>
 					</div>
 
-					<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+					<div className="grid grid-cols-1 gap-4 pt-4 lg:grid-cols-2">
 						{profile && <ImagePostsTab />}
 						{/* {profile && <ArticlePostsTab />} */}
 					</div>
