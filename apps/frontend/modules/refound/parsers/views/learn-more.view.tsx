@@ -17,17 +17,9 @@ import {
 } from "@mui/material";
 
 export const LearnMoreView: NextPage = () => {
-	const [loaded, setLoaded] = useState<boolean>();
 
-	if(typeof window !== "undefined"){
-		window.addEventListener('load', function () {
-			setLoaded(true);
-		  })
-	}
-
-	if(loaded){
 		return (
-		<div className="sm:bg-cover bg-no-repeat" style={{backgroundPositionY:"40%", marginTop:"-1%", backgroundPositionX:"center", backgroundBlendMode:"", backgroundAttachment:"fixed", backgroundImage: "url('https://drive.google.com/uc?export=view&id=16WlGiKwH2b2P0Q-z7HEcq1W2M0L6LHSR')"}}>
+		<div className="sm:bg-cover bg-no-repeat" style={{backgroundPositionY:"20%", marginTop:"-1%", backgroundPositionX:"center", backgroundBlendMode:"", backgroundAttachment:"fixed", backgroundImage: "url('https://drive.google.com/uc?export=view&id=16WlGiKwH2b2P0Q-z7HEcq1W2M0L6LHSR')"}}>
 			<Grid container justifyContent="center" sm={8} style={{margin:"0 auto", height:"100vh", color:"white"}}>
 				<Grid item sm={12}  style={{padding:"5%", fontFamily:"Andale Mono"}}>
 					<h1 className="font-bold" style={{marginTop:"15%", fontSize:"2.5em", textShadow:"2px 4px 3px rgba(0,0,0,0.3)"}}>Hello! Welcome to Refound Journalism!</h1>
@@ -154,9 +146,4 @@ export const LearnMoreView: NextPage = () => {
 			</Grid>
 		</div>
 		);
-	}else{
-		return (
-			<></>
-		); 
-	}
  };
