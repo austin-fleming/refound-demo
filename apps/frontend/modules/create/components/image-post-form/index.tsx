@@ -267,12 +267,11 @@ export const ImagePostForm = () => {
 
 			<button
 				className={cloin(
-					"btn w-full",
-					state.submissionStatus === "SUBMITTING" && "loading",
-					state.submissionStatus === "SUCCESS" && "btn-success",
-					state.submissionStatus === "FAIL" && "btn-error",
+					"btn w-full justify-start",
+					state.submissionStatus === "SUBMITTING" && "loading pointer-events-none",
+					state.submissionStatus === "SUCCESS" && "pointer-events-none btn-success",
+					state.submissionStatus === "FAIL" && "pointer-events-none btn-error",
 				)}
-				disabled={state.submissionStatus !== "IDLE"}
 				onClick={onSubmit}
 			>
 				Submit

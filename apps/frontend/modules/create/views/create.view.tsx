@@ -4,24 +4,25 @@ import { PostType } from "@modules/refound/models/post.model";
 import { useState } from "react";
 import { ImagePostForm } from "../components/image-post-form";
 import { ArticlePostForm } from "../components/article-post-form";
+import { cloin } from "@utils/cloin";
+import { PoolForm } from "@modules/pools/components/pool-form/pool-form";
 
 export const CreateView: NextPage = () => {
-	const [postType, setPostType] = useState<PostType>(PostType.IMAGE);
+	const [currentTab, setCurrentTab] = useState<"IMAGE" | "ARTICLE" | "POOL">("IMAGE");
 
 	return (
 		<section className="flex flex-col w-full max-w-screen-md mx-auto min-h-[101vh]">
-			<div className="fixed left-0 right-0 flex flex-row w-full text-center shadow-md top-headerTopHeight bg-white[90] backdrop-blur-lg justify-items-stretch">
+			<div className="flex flex-row justify-between w-full max-w-screen-md z-[9000] px-contentPadding bg-background mx-auto tabs fixed left-0 right-0  text-center top-headerTopHeight bg-white[90] justify-items-stretch">
 				<button
 					type="button"
 					aria-label="use image post form"
-					aria-current={postType === PostType.IMAGE}
-					className={`w-full text-base font-bold tracking-wide py-[0.75em] border-b-2 border-solid ${
-						postType === PostType.IMAGE
-							? "border-black"
-							: "border-slate-200 text-slate-400"
-					}`}
+					aria-current={currentTab === "IMAGE"}
+					className={cloin(
+						"tab tab-bordered flex-grow",
+						currentTab === "IMAGE" && "tab-active",
+					)}
 					onClick={() => {
-						setPostType(PostType.IMAGE);
+						setCurrentTab("IMAGE");
 					}}
 				>
 					Image
@@ -29,22 +30,36 @@ export const CreateView: NextPage = () => {
 				<button
 					type="button"
 					aria-label="use article post form"
-					aria-current={postType === PostType.ARTICLE}
-					className={`w-full text-base font-bold tracking-wide py-[0.75em] border-b-2 border-solid ${
-						postType === PostType.ARTICLE
-							? "border-black"
-							: "border-slate-200 text-slate-400"
-					}`}
+					aria-current={currentTab === "ARTICLE"}
+					className={cloin(
+						"tab tab-bordered flex-grow",
+						currentTab === "ARTICLE" && "tab-active",
+					)}
 					onClick={() => {
-						setPostType(PostType.ARTICLE);
+						setCurrentTab("ARTICLE");
 					}}
 				>
 					Article
 				</button>
+				<button
+					type="button"
+					aria-label="use article post form"
+					aria-current={currentTab === "POOL"}
+					className={cloin(
+						"tab tab-bordered flex-grow",
+						currentTab === "POOL" && "tab-active",
+					)}
+					onClick={() => {
+						setCurrentTab("POOL");
+					}}
+				>
+					Pool
+				</button>
 			</div>
 			<div className="w-full py-16 mx-auto px-contentPadding">
-				{postType === PostType.IMAGE && <ImagePostForm />}
-				{postType === PostType.ARTICLE && <ArticlePostForm />}
+				{currentTab === "IMAGE" && <ImagePostForm />}
+				{currentTab === "ARTICLE" && <ArticlePostForm />}
+				{currentTab === "POOL" && <PoolForm />}
 			</div>
 		</section>
 	);

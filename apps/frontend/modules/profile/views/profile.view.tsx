@@ -119,7 +119,7 @@ const ProfileView: NextPage<ProfilePageContent> = ({
 	return (
 		<ProfileContextProvider>
 			<div className="grid grid-cols-1 sm:grid-cols-[30%_1fr] grid-rows-1 w-full max-w-screen-lg gap-8 mx-auto px-contentPadding py-contentPadding">
-				<section className="flex w-full gap-8 sm:flex-col">
+				<section className="grid w-full grid-cols-2 gap-8 sm:flex sm:flex-col">
 					<div className="w-full">
 						<figure className="avatar">
 							<div className="rounded">
@@ -133,7 +133,7 @@ const ProfileView: NextPage<ProfilePageContent> = ({
 						) : (
 							<span />
 						)}
-						<h1 className="text-4xl font-bold">@{profile.username}</h1>
+						<h1 className="text-2xl font-bold leading-none">@{profile.username}</h1>
 
 						<div className="flex flex-col w-full gap-2 sm:mt-8">
 							<BonusButton receivingAddress={profile.address} />

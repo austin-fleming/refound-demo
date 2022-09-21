@@ -12,3 +12,12 @@ export type PoolDTO = {
 	endAt: number; // unix timestamp
 	claimed: boolean;
 };
+
+export type PoolCreationProperties = {
+	goal: number;
+	title: string;
+	description?: string;
+	imageLink?: string;
+	startAt: Date;
+	endAt: Date;
+};

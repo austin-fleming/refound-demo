@@ -5,7 +5,7 @@ import type { ProfileOwnerAddress, ProfileUsername } from "../models/profile.mod
 import type { Contract } from "web3-eth-contract";
 import type { PoolAggregate } from "../models/pool.aggregate";
 import { queries as baseQueries } from "./refound-core-contract.repo";
-import type { PoolDTO } from "../models/pool.dto";
+import type { PoolCreationProperties, PoolDTO } from "../models/pool.dto";
 import { unixTimestamp } from "@utils/unix-timestamp";
 import { throwFieldError } from "../parsers/utils/throw-field-error";
 import { poolParser } from "../parsers/pool.parser";
@@ -58,14 +58,18 @@ QUERIES
 ----------------
 */
 
-const getPool: IRefoundPoolRepo["getPool"] = async (coreContract, poolContract, poolId) => {
+const getPool: IRefoundPoolRepo["getPool"] = async (
+	coreContract,
+	poolContract,
+	poolId,
+): Promise<Result<PoolAggregate>> => {
 	try {
 		// 1. get pool
 		const rawPool: PoolDTO = poolContract.methods.campaigns(poolId).call();
 
 		// 2. get profile
 		const profile = (
-			await baseQueries.getProfileById(coreContract, rawPool.creatorId)
+			await baseQueries.getProfileByAddress(coreContract, rawPool.creator)
 		).unwrapOrElse((err) => {
 			throw err;
 		});
@@ -162,27 +166,12 @@ COMMANDS
 const createPool = async (
 	contract: Contract,
 	walletAddress: ProfileOwnerAddress,
-	{
-		goal,
-		title,
-		description,
-		imageLink,
-		startAt,
-		endAt,
-	}: {
-		goal: number;
-		title: string;
-		description: string;
-		imageLink: string;
-		startAt: Date;
-		endAt: Date;
-	},
+	{ goal, title, description, imageLink, startAt, endAt }: PoolCreationProperties,
 ): Promise<Result<true>> => {
 	try {
 		if (!walletAddress) throwFieldError("walletAddress");
 		if (!goal) throwFieldError("goal");
 		if (!description) throwFieldError("description");
-		if (!imageLink) throwFieldError("imageLink");
 		if (!startAt) throwFieldError("startAt");
 		if (!endAt) throwFieldError("endAt");
 
@@ -191,7 +180,7 @@ const createPool = async (
 				goal,
 				title,
 				description,
-				imageLink,
+				imageLink || "",
 				unixTimestamp.fromDate(startAt),
 				unixTimestamp.fromDate(endAt),
 			)

@@ -191,12 +191,11 @@ export const ArticlePostForm = () => {
 
 			<button
 				className={cloin(
-					"btn w-full",
-					submissionStatus === "SUBMITTING" && "loading",
-					submissionStatus === "SUCCESS" && "btn-success",
-					submissionStatus === "FAIL" && "btn-error",
+					"btn w-full justify-start",
+					submissionStatus === "SUBMITTING" && "loading pointer-events-none",
+					submissionStatus === "SUCCESS" && "btn-success pointer-events-none",
+					submissionStatus === "FAIL" && "btn-error pointer-events-none",
 				)}
-				disabled={submissionStatus !== "IDLE"}
 				onClick={onSubmit}
 			>
 				Submit

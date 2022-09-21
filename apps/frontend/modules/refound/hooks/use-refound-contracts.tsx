@@ -10,6 +10,7 @@ import { result } from "@utils/monads";
 import { config } from "config/config";
 import { commands as refoundCoreCommands } from "../repo/refound-core-contract.repo";
 import { commands as refoundPostCommands } from "../repo/refound-post-contract.repo";
+import { commands as refoundPoolCommands } from "../repo/refound-pool-contract.repo";
 import { commands as celoCommands } from "../repo/celo.repo";
 import { Web3Storage } from "web3.storage";
 import type { Post, PostId, PostInteraction } from "../models/post.model";
@@ -30,6 +31,7 @@ import Web3 from "web3";
 import { valueToBigNumber } from "@celo/contractkit/lib/wrappers/BaseWrapper";
 import { toast } from "@services/toast/toast";
 import BigNumber from "bignumber.js";
+import type { PoolCreationProperties } from "../models/pool.dto";
 
 export const useRefoundContracts = () => {
 	const { kit, getConnectedKit } = useCelo();
@@ -44,6 +46,10 @@ export const useRefoundContracts = () => {
 	const postContract = new kit.connection.web3.eth.Contract(
 		config.contracts.postContract.abi,
 		config.contracts.postContract.address,
+	);
+	const poolContract = new kit.connection.web3.eth.Contract(
+		config.contracts.poolContract.abi,
+		config.contracts.poolContract.address,
 	);
 
 	/* 
@@ -144,6 +150,11 @@ export const useRefoundContracts = () => {
 		}
 	};
 
+	const createPool = async (poolCreationProps: PoolCreationProperties): Promise<Result<true>> =>
+		!account.address
+			? result.fail(new Error("No wallet connected"))
+			: refoundPoolCommands.createPool(poolContract, account.address, poolCreationProps);
+
 	/* 
 	QUERIES
 	*/
@@ -225,6 +236,7 @@ export const useRefoundContracts = () => {
 		createImagePost,
 		createArticlePost,
 		purchaseLicense,
+		createPool,
 		getProfileByUsername,
 		getProfileByAddress,
 		getAllProfiles,
