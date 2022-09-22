@@ -1,4 +1,5 @@
 import { DownArrowIcon, FlagIcon, UpArrowIcon } from "@components/icons/menu-icons";
+import { useAccount } from "@modules/account/state/use-account";
 import { useRefoundContracts } from "@modules/refound/hooks/use-refound-contracts";
 import type { PostAggregate } from "@modules/refound/models/post.aggregate";
 import { toast } from "@services/toast/toast";
@@ -7,6 +8,7 @@ import { useState } from "react";
 
 export const PostInteractions = ({ post }: { post: PostAggregate }) => {
 	const { interactWithPost } = useRefoundContracts();
+	const { account } = useAccount();
 	const [upvoteState, setUpvoteState] = useState<"IDLE" | "SUBMITTING" | "SUCCESS" | "FAIL">(
 		"IDLE",
 	);
@@ -18,7 +20,7 @@ export const PostInteractions = ({ post }: { post: PostAggregate }) => {
 	);
 
 	return (
-		<div className="flex flex-row items-start gap-2">
+		<div className="flex flex-row flex-wrap items-start gap-2">
 			<div className="tooltip" data-tip="Upvote this post">
 				<button
 					type="button"
@@ -29,6 +31,11 @@ export const PostInteractions = ({ post }: { post: PostAggregate }) => {
 						upvoteState === "FAIL" && "btn-error",
 					)}
 					onClick={() => {
+						if (!account.address) {
+							toast.warning("Sign in to upvote posts", "upvote");
+							return;
+						}
+
 						if (upvoteState !== "IDLE") return;
 						setUpvoteState("SUBMITTING");
 
@@ -61,6 +68,11 @@ export const PostInteractions = ({ post }: { post: PostAggregate }) => {
 						downvoteState === "FAIL" && "btn-error",
 					)}
 					onClick={() => {
+						if (!account.address) {
+							toast.warning("Sign in to downvote post", "downvote");
+							return;
+						}
+
 						if (downvoteState !== "IDLE") return;
 						setDownvoteState("SUBMITTING");
 
@@ -93,6 +105,11 @@ export const PostInteractions = ({ post }: { post: PostAggregate }) => {
 						reportState === "FAIL" && "btn-error",
 					)}
 					onClick={() => {
+						if (!account.address) {
+							toast.warning("Sign in to report post", "report");
+							return;
+						}
+
 						if (reportState !== "IDLE") return;
 						setReportState("SUBMITTING");
 

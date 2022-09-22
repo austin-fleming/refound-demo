@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 		<AccountContextProvider>
 			<Layout>
 				<Component {...pageProps} />
-				<Toaster position="bottom-right" />
+				<Toaster position="bottom-center" />
 			</Layout>
 		</AccountContextProvider>
 	);

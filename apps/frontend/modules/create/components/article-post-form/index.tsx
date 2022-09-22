@@ -14,6 +14,8 @@ import { RichTextEditor } from "../rich-text-editor";
 import { TagInput } from "./tag-input";
 import S from "./article-post-form.module.css";
 import { cloin } from "@utils/cloin";
+import { useAccount } from "@modules/account/state/use-account";
+import { AlertBar } from "@components/alert-bar/alert-bar";
 
 type FormState = {
 	title?: string;
@@ -24,6 +26,7 @@ type FormState = {
 
 export const ArticlePostForm = () => {
 	const router = useRouter();
+	const { account } = useAccount();
 	const [formData, setFormData] = useState<FormState>({});
 	const [bodyData, setBodyData] = useState<string>("");
 	const [validationStatus, setValidationStatus] = useState<
@@ -189,6 +192,16 @@ export const ArticlePostForm = () => {
 				/>
 			</label>
 
+			{!account.address && (
+				<AlertBar kind="warning">
+					Please{" "}
+					<a className="link" href="/sign-up">
+						sign in
+					</a>{" "}
+					to create a post.
+				</AlertBar>
+			)}
+
 			<button
 				className={cloin(
 					"btn w-full justify-start",
@@ -196,6 +209,7 @@ export const ArticlePostForm = () => {
 					submissionStatus === "SUCCESS" && "btn-success pointer-events-none",
 					submissionStatus === "FAIL" && "btn-error pointer-events-none",
 				)}
+				disabled={!account.address}
 				onClick={onSubmit}
 			>
 				Submit

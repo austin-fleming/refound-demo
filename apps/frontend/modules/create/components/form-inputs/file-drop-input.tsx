@@ -3,6 +3,7 @@ import { LegacyRef, useEffect } from "react";
 import { useReducer, useRef } from "react";
 import NextImage from "next/image";
 import { PolyButton } from "@components/poly-button/poly-button";
+import { getImageDimensions } from "./get-image-dimensions";
 
 type ReducerState = {
 	dropDepth: number;
@@ -52,28 +53,12 @@ const isAcceptableFile = (file: File): boolean => {
 	return ["jpeg", "png"].includes(fileExtension.toLowerCase());
 };
 
-const getImageDimensions = (file: File): Promise<{ width: number; height: number }> =>
-	new Promise((resolve, reject) => {
-		const url = URL.createObjectURL(file);
-
-		const image = new Image();
-
-		image.addEventListener("load", () => {
-			resolve({ width: image.width, height: image.height });
-		});
-
-		image.addEventListener("error", (event) => {
-			console.error(event.message);
-			reject();
-		});
-
-		image.src = url;
-	});
-
 export const FileDropInput = ({
 	setProps,
+	uploadedImage,
 }: {
 	setProps: (props: { image?: File; width?: number; height?: number }) => void;
+	uploadedImage?: { image: File; width: number; height: number };
 }) => {
 	const [state, dispatch] = useReducer(reducer, initialReducerState);
 	const inputRef = useRef(null);
@@ -81,6 +66,19 @@ export const FileDropInput = ({
 	useEffect(() => {
 		setProps({ image: state.file, width: state.fileWidth, height: state.fileHeight });
 	}, [state]);
+
+	useEffect(() => {
+		if (uploadedImage) {
+			dispatch({
+				type: "SET_FILE",
+				payload: {
+					file: uploadedImage.image,
+					fileWidth: uploadedImage.width,
+					fileHeight: uploadedImage.height,
+				},
+			});
+		}
+	}, [uploadedImage]);
 
 	const handleDragEnter = (e: DragEvent<HTMLElement>) => {
 		e.preventDefault();

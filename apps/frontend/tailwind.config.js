@@ -14,6 +14,7 @@ module.exports = {
         "./pages/**/*.{js,ts,jsx,tsx}",
         "./components/**/*.{js,ts,jsx,tsx}",
         "./modules/**/*.{js,ts,jsx,tsx}",
+        "./services/**/*.{js,ts,jsx,tsx}"
     ],
     theme: {
         extend: {
@@ -59,6 +60,15 @@ module.exports = {
                 headerTopHeight: 'var(--l-header-top-height)',
                 headerBottomHeight: 'var(--l-header-bottom-height)',
             },
+            keyframes: {
+                toastProgress: {
+                    '0%': { width: '0%' },
+                    '100%': { width: '100%' }
+                }
+            },
+            animation: {
+                toastProgress: 'toastProgress 5s linear infinite'
+            }
         },
     },
     daisyui: {

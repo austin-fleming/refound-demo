@@ -132,6 +132,17 @@ const Menu = () => {
 			>
 				Log In
 			</button>
+			<p>- or -</p>
+			<a
+				href="/sign-up"
+				onClick={() => {
+					toggleMenu();
+					login();
+				}}
+				className="tracking-wider btn btn-lg btn-block btn-outline"
+			>
+				Sign Up
+			</a>
 		</div>
 	);
 };

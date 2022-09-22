@@ -123,10 +123,11 @@ const ProfileView: NextPage<ProfilePageContent> = ({
 					<div className="w-full">
 						<figure className="avatar">
 							<div className="rounded">
-								<img src={profile.avatarUrl} />
+								<img src={profile.avatarUrl} alt="avatar" />
 							</div>
 						</figure>
 					</div>
+
 					<div className="flex flex-col justify-between">
 						{profile.status !== ProfileTrustStatus.NONE ? (
 							<span className="badge">{profile.status}</span>

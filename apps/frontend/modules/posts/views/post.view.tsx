@@ -75,12 +75,19 @@ const PostView: NextPage<{ post: PostAggregate }> = ({ post }) => {
 					<meta property="og:image" content={post.coverImage.imageSource} />
 				)}
 			</NextHead>
-			<section className="flex flex-col w-full max-w-screen-lg gap-8 py-8 mx-auto px-contentPadding">
-				<h1 className="text-4xl font-bold">{post.title}</h1>
+			<article className="flex flex-col w-full max-w-screen-lg gap-12 py-12 mx-auto sm:gap-16 sm:py-16 px-contentPadding">
+				<div>
+					<h1 className="text-3xl font-bold sm:text-4xl">{post.title}</h1>
 
-				<div className="flex flex-row flex-wrap justify-between w-full gap-2">
-					<PostInteractions post={post} />
-					<LicensePost post={post} />
+					<p className="text-sm font-bold mt-[1em] sm:mt-[2em]">
+						by{" "}
+						<a
+							href={`/u/${post.creator.username}`}
+							className="border-[1px] font-bold border-transparent underline border-black text-black inline-block text-sm pt-[0.25em] pb-[0.4em] leading-none mr-[0.5em]"
+						>
+							@{post.creator.username}
+						</a>
+					</p>
 				</div>
 
 				{post.postType === PostType.IMAGE && (
@@ -102,6 +109,11 @@ const PostView: NextPage<{ post: PostAggregate }> = ({ post }) => {
 				{post.postType === PostType.ARTICLE && (
 					<div className="prose" dangerouslySetInnerHTML={{ __html: post.body }} />
 				)}
+
+				<div className="flex flex-row flex-wrap justify-between w-full gap-8">
+					<PostInteractions post={post} />
+					<LicensePost post={post} />
+				</div>
 
 				<div className="flex flex-row flex-wrap gap-8">
 					{post.tags.length > 0 && (
@@ -127,17 +139,8 @@ const PostView: NextPage<{ post: PostAggregate }> = ({ post }) => {
 							</span>
 						</div>
 					)}
-					<div>
-						<p className="text-sm font-bold mb-[0.5em]">By</p>
-						<a
-							href={`/u/${post.creator.username}`}
-							className="border-[1px] font-bold border-transparent underline border-black text-black inline-block text-sm pt-[0.25em] pb-[0.4em] leading-none mr-[0.5em]"
-						>
-							@{post.creator.username}
-						</a>
-					</div>
 				</div>
-			</section>
+			</article>
 		</>
 	);
 };

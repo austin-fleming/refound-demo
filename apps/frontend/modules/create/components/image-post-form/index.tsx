@@ -7,11 +7,15 @@ import type { Result } from "@utils/monads";
 import { result } from "@utils/monads";
 import { useRouter } from "next/router";
 import type { MouseEventHandler } from "react";
+import { useState } from "react";
 import { useReducer } from "react";
 import { TagInput } from "./tag-input";
 import S from "./image-post-form.module.css";
 import { FileDropInput } from "../form-inputs/file-drop-input";
 import { cloin } from "@utils/cloin";
+import { useAccount } from "@modules/account/state/use-account";
+import { AlertBar } from "@components/alert-bar/alert-bar";
+import { CaptureModal } from "./capture-modal";
 
 type FormData = {
 	title?: string;
@@ -133,6 +137,9 @@ export const ImagePostForm = () => {
 	const router = useRouter();
 	const [state, dispatch] = useReducer(reducer, initialReducerState);
 	const { createImagePost } = useRefoundContracts();
+	const { account } = useAccount();
+	const [captureModalOpen, setCaptureModalOpen] = useState(false);
+	const [imageSource, setImageSource] = useState("");
 
 	const validateForm = async (): Promise<
 		Result<{ image: File; metadata: ImagePostCreationProps }>
@@ -206,84 +213,127 @@ export const ImagePostForm = () => {
 	};
 
 	return (
-		<form className={S.formRoot}>
-			<label className={S.fieldLabel}>
-				<span className={S.fieldLabelText}>Title*</span>
-				<input
-					className={S.fieldInput}
-					name="title"
-					type="text"
-					placeholder="Title"
-					onChange={(e) => {
-						dispatch({ type: "SET_TITLE", payload: e.target.value });
-					}}
-				/>
-			</label>
+		<>
+			<form className={S.formRoot}>
+				<label className={S.fieldLabel}>
+					<span className={S.fieldLabelText}>Title*</span>
+					<input
+						className={S.fieldInput}
+						name="title"
+						type="text"
+						placeholder="Title"
+						onChange={(e) => {
+							dispatch({ type: "SET_TITLE", payload: e.target.value });
+						}}
+					/>
+				</label>
 
-			<label className={S.fieldLabel}>
-				<span className={S.fieldLabelText}>Image*</span>
-				<FileDropInput
-					setProps={(imageData) => {
-						dispatch({ type: "SET_IMAGE", payload: imageData });
-					}}
-				/>
-			</label>
+				<label className={`${S.fieldLabel} items-start`}>
+					<span className={S.fieldLabelText}>Image*</span>
 
-			<label className={S.fieldLabel}>
-				<span className={S.fieldLabelText}>Tags</span>
-				<TagInput
-					name="tags"
-					onChange={(values) => {
-						dispatch({ type: "SET_TAGS", payload: values });
-					}}
-				/>
-			</label>
+					<FileDropInput
+						setProps={(imageData) => {
+							dispatch({ type: "SET_IMAGE", payload: imageData });
+						}}
+						uploadedImage={
+							state.image && state.width && state.height
+								? { image: state.image, width: state.width, height: state.height }
+								: undefined
+						}
+					/>
 
-			<label className={S.fieldLabel}>
-				<span className={S.fieldLabelText}>Description</span>
-				<input
-					className={S.fieldInput}
-					name="description"
-					type="text"
-					placeholder="A brief description"
-					onChange={(e) => {
-						dispatch({ type: "SET_DESCRIPTION", payload: e.target.value });
-					}}
-				/>
-			</label>
+					<button
+						type="button"
+						className="btn btn-block"
+						onClick={(e) => {
+							e.preventDefault();
 
-			<label className={S.fieldLabel}>
-				<span className={S.fieldLabelText}>Location</span>
-				<input
-					className={S.fieldInput}
-					name="location"
-					type="text"
-					onChange={(e) => {
-						dispatch({ type: "SET_LOCATION", payload: e.target.value });
-					}}
-					placeholder="Where is this about?"
-				/>
-			</label>
+							setCaptureModalOpen(true);
+						}}
+					>
+						Take a Photo
+					</button>
+				</label>
 
-			<button
-				className={cloin(
-					"btn w-full justify-start",
-					state.submissionStatus === "SUBMITTING" && "loading pointer-events-none",
-					state.submissionStatus === "SUCCESS" && "pointer-events-none btn-success",
-					state.submissionStatus === "FAIL" && "pointer-events-none btn-error",
+				<label className={S.fieldLabel}>
+					<span className={S.fieldLabelText}>Tags</span>
+					<TagInput
+						name="tags"
+						onChange={(values) => {
+							dispatch({ type: "SET_TAGS", payload: values });
+						}}
+					/>
+				</label>
+
+				<label className={S.fieldLabel}>
+					<span className={S.fieldLabelText}>Description</span>
+					<input
+						className={S.fieldInput}
+						name="description"
+						type="text"
+						placeholder="A brief description"
+						onChange={(e) => {
+							dispatch({ type: "SET_DESCRIPTION", payload: e.target.value });
+						}}
+					/>
+				</label>
+
+				<label className={S.fieldLabel}>
+					<span className={S.fieldLabelText}>Location</span>
+					<input
+						className={S.fieldInput}
+						name="location"
+						type="text"
+						onChange={(e) => {
+							dispatch({ type: "SET_LOCATION", payload: e.target.value });
+						}}
+						placeholder="Where is this about?"
+					/>
+				</label>
+
+				{!account.address && (
+					<AlertBar kind="warning">
+						Please{" "}
+						<a className="link" href="/sign-up">
+							sign in
+						</a>{" "}
+						to create a post.
+					</AlertBar>
 				)}
-				onClick={onSubmit}
-			>
-				Submit
-			</button>
-			{state.validationErrors.length > 0 && (
-				<div className="flex flex-col gap-2 text-sm text-red-900">
-					{" "}
-					{state.validationErrors.map((errorText) => (
-						<p key={errorText}>{errorText}</p>
-					))}
-				</div>
+
+				<button
+					className={cloin(
+						"btn w-full justify-start",
+						state.submissionStatus === "SUBMITTING" && "loading pointer-events-none",
+						state.submissionStatus === "SUCCESS" && "pointer-events-none btn-success",
+						state.submissionStatus === "FAIL" && "pointer-events-none btn-error",
+					)}
+					disabled={!account.address}
+					onClick={onSubmit}
+				>
+					Submit
+				</button>
+				{state.validationErrors.length > 0 && (
+					<div className="flex flex-col gap-2 text-sm text-red-900">
+						{" "}
+						{state.validationErrors.map((errorText) => (
+							<p key={errorText}>{errorText}</p>
+						))}
+					</div>
+				)}
+			</form>
+			{captureModalOpen && (
+				<CaptureModal
+					setIsOpen={setCaptureModalOpen}
+					onPhotoTaken={(imageFile, width, height) => {
+						dispatch({
+							type: "SET_IMAGE",
+							payload: { image: imageFile, width, height },
+						});
+						setCaptureModalOpen(false);
+					}}
+				/>
 			)}
-		</form>
+		</>
 	);
 };

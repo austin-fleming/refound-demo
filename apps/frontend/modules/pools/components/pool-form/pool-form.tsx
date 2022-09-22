@@ -1,3 +1,5 @@
+import { AlertBar } from "@components/alert-bar/alert-bar";
+import { useAccount } from "@modules/account/state/use-account";
 import { RichTextEditor } from "@modules/create/components/rich-text-editor";
 import { useRefoundContracts } from "@modules/refound/hooks/use-refound-contracts";
 import type { PoolCreationProperties } from "@modules/refound/models/pool.dto";
@@ -81,6 +83,7 @@ const formReducer = (state: FormState, action: FormReducerActions): FormState =>
 export const PoolForm = () => {
 	const [state, dispatch] = useReducer(formReducer, initialFormState);
 	const { createPool } = useRefoundContracts();
+	const { account } = useAccount();
 
 	const handleFieldChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		console.log(e.target);
@@ -237,6 +240,16 @@ export const PoolForm = () => {
 			</div>
 
 			<div className="flex flex-col gap-4 mt-8">
+				{!account.address && (
+					<AlertBar kind="warning">
+						Please{" "}
+						<a className="link" href="/sign-up">
+							sign in
+						</a>{" "}
+						to create a post.
+					</AlertBar>
+				)}
+
 				<button
 					type="submit"
 					className={cloin(
@@ -245,6 +258,7 @@ export const PoolForm = () => {
 						state.submissionStatus === "SUCCESS" && "btn-success pointer-events-none",
 						state.submissionStatus === "ERROR" && "btn-error pointer-events-none",
 					)}
+					disabled={!account.address}
 					onClick={handleSubmit}
 				>
 					{state.submissionStatus === "SUCCESS" ? "Created!" : "Create Pool"}
