@@ -60,6 +60,8 @@ export const DiscoverContextProvider = ({ children }: { children: ReactNode }) =
 	}, [state.currentTab]);
 
 	const loadPools = useCallback(async () => {
+		if (state.pools.loadingState === "FAIL") return;
+
 		dispatch({ type: "LOAD_TAB_START", payload: { tab: "pools" } });
 
 		(await getPools()).match({
@@ -67,7 +69,7 @@ export const DiscoverContextProvider = ({ children }: { children: ReactNode }) =
 				dispatch({ type: "LOAD_TAB_SUCCESS", payload: { tab: "pools", content: pools } }),
 			fail: (err) => {
 				console.error(err);
-				toast.error("Could not load pools.");
+				toast.message("No pools have been made yet.");
 				dispatch({ type: "LOAD_TAB_FAIL", payload: { tab: "pools" } });
 			},
 		});
