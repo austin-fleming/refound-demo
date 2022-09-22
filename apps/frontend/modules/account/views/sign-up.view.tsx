@@ -123,21 +123,43 @@ export const SignUpView: NextPage = () => {
 
 			{!account?.address ? (
 				<>
-					<PolyButton as="button" size="lg" label="Connect Your Wallet" onClick={login} />
+					<button
+						type="button"
+						className="rounded-md btn btn-lg hover:bg-violet-900"
+						onClick={login}
+					>
+						Connect Your Wallet
+					</button>
 
-					<p className="prose prose-sm max-w-[32ch] text-center text-slate-900">
-						This site is running on the Celo blockchain. Make sure you have a compatible
-						wallet such as MetaMask installed. If you need some test money, you can{" "}
-						<a
-							href="https://celo.org/developers/faucet"
-							target="_blank"
-							rel="noreferrer"
-							className="underline"
-						>
-							visit this link
-						</a>
-						.
-					</p>
+					<div className="prose prose-sm max-w-[40ch] text-center text-slate-900 leading-tight">
+						<p className="font-bold">
+							This site is running on Celo&apos;s Alfajores network.
+						</p>
+						<p>
+							Make sure you have a Celo/Alfajores compatible wallet such as MetaMask
+							or{" "}
+							<a
+								href="https://alfajores.celowallet.app/setup"
+								target="_blank"
+								rel="noreferrer"
+							>
+								the developer version
+							</a>{" "}
+							of Celo wallet installed so you can sign into this site.
+							<p>
+								If you need some free test funds, you can{" "}
+								<a
+									href="https://celo.org/developers/faucet"
+									target="_blank"
+									rel="noreferrer"
+									className="underline"
+								>
+									visit this link
+								</a>
+								.
+							</p>
+						</p>
+					</div>
 				</>
 			) : (
 				<>

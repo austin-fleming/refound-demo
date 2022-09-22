@@ -84,7 +84,7 @@ export const InnerProvider = ({ children }: { children: ReactNode }) => {
 			await loadProfile();
 		} catch (err) {
 			console.error(err);
-			toast.error("Could not log in.");
+			toast.error("Could not log in. This could be because you cancelled the process.");
 			dispatch({ type: "LOGIN_FAIL" });
 		}
 	}, [address, account.status, connect, disconnect, fetchProfile]);
