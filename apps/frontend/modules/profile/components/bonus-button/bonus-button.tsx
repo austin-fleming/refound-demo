@@ -1,13 +1,21 @@
+import { useAccount } from "@modules/account/state/use-account";
 import { useRefoundContracts } from "@modules/refound/hooks/use-refound-contracts";
 import type { ProfileOwnerAddress } from "@modules/refound/models/profile.model";
 import { cloin } from "@utils/cloin";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export const BonusButton = ({ receivingAddress }: { receivingAddress: ProfileOwnerAddress }) => {
 	const { sendBonus } = useRefoundContracts();
+	const { account } = useAccount();
 	const [state, setState] = useState<"IDLE" | "SUBMITTING" | "SUCCESS" | "FAIL">("IDLE");
 
 	const clickHandler = () => {
+		if (!account.address) {
+			toast.error("Please sign in to send a bonus.", "bonus");
+			return;
+		}
+
 		setState("SUBMITTING");
 		sendBonus(receivingAddress).then((outcome) =>
 			outcome.match({
