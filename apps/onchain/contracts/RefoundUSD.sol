@@ -7,188 +7,201 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract RefoundUSD is ERC20, Ownable {
-    //mapping(address => uint256) locked;
+	//mapping(address => uint256) locked;
 
-    IERC20 token;
+	IERC20 token;
 
-    mapping(address => address) beneficiary;
-    mapping(address => bool) fundsBeingClaimed;
-    mapping(address => uint256) beneficiaryClaimTimestamp;
+	mapping(address => address) public beneficiary;
+	mapping(address => bool) public fundsBeingClaimed;
+	mapping(address => uint256) public beneficiaryClaimTimestamp;
 
-    uint256 accountLockPeriod = 60*60*24*7;
-    uint256 subscriptionPeriod = 60*60*24*30;
-    uint256 subscriptionAmount = 5*(10**18);
-    uint256 subsciptionStartTime;
-    address[] subsciptionRecivers;
-    mapping(address => bool) subsciptionReciversMap;
-    mapping(address => address[]) subscriptions;//Reciver to payee
+	uint256 public accountLockPeriod = 60 * 60 * 24 * 7;
+	uint256 public subscriptionPeriod = 60 * 60 * 24 * 30;
+	uint256 public subscriptionAmount = 5 * (10**18);
+	uint256 public subscriptionStartTime;
+	address[] public subscriptionReceivers;
+	mapping(address => bool) public subscriptionReceiversMap;
+	mapping(address => address[]) public subscriptions; // Receiver to subscribers
 
-    uint256 subsciptionReciverInedx;
-    uint256 subscriptionsInedx;
-    bool SubsciptionsLocked;
+	uint256 subscriptionReceiverIndex;
+	uint256 subscriptionsIndex;
+	bool public SubscriptionsLocked;
 
-    modifier accountNotLocked(address user) {
-        require(!fundsBeingClaimed[user], 'this account is being claimed');
-        _;
-   }
+	event Deposit(address indexed from, uint256 amount);
+	event Withdraw(address indexed to, uint256 amount);
 
-    constructor(address _token) ERC20("RefoundUSD", "RUSD") {
-        token = IERC20(_token);
-        subsciptionStartTime = block.timestamp;
-        subsciptionReciverInedx = 0;
-        subscriptionsInedx = 0;
-        SubsciptionsLocked = false;
-    }
+	event BeneficiaryAdded(address indexed primary, address indexed beneficiary);
+	event BeneficiaryRemoved(address indexed primary, address indexed beneficiary);
+	event BeneficiaryClaimStart(
+		address indexed primary,
+		address indexed beneficiary,
+		uint256 releaseDate
+	);
+	event BeneficiaryClaimCancelled(address indexed primary, address indexed beneficiary);
+	event BeneficiaryWithdraw(address indexed primary, address indexed beneficiary, uint256 amount);
 
-    function deposit(uint256 amount) public accountNotLocked(msg.sender) {
-        token.transferFrom(msg.sender, address(this), amount);
-        _mint(msg.sender, amount);
-    }
+	event NewSubscriptionReceiver(address receiverOwner);
+	event NewSubscriber(address receiver, address subscriber, uint256 amount);
+	event SubscriberUnsubscribed(address receiver, address subscriber);
+	event UnsubscribedInsufficientFunds(address receiver, address subscriber);
+	event SubscriptionPeriodIncremented(uint256 startTime);
 
-    function withdrawal(uint256 amount) public accountNotLocked(msg.sender) {
-        _burn(msg.sender, amount);
-        token.transfer(msg.sender, amount);
-    }
+	modifier accountNotLocked(address user) {
+		require(!fundsBeingClaimed[user], "this account is being claimed");
+		_;
+	}
 
-    function setBeneficiary(address _beneficiary) public {
-        beneficiary[msg.sender] = _beneficiary;
-    }
+	constructor(address _token) ERC20("RefoundUSD", "RUSD") {
+		token = IERC20(_token);
+		subscriptionStartTime = block.timestamp;
+		subscriptionReceiverIndex = 0;
+		subscriptionsIndex = 0;
+		SubscriptionsLocked = false;
+	}
 
-    function startBeneficiaryClaimFunds(address user) public accountNotLocked(user) {
-        require(beneficiary[user] == msg.sender, 'this user has not made you his beneficiary');
+	function deposit(uint256 amount) public accountNotLocked(msg.sender) {
+		token.transferFrom(msg.sender, address(this), amount);
+		_mint(msg.sender, amount);
+		emit Deposit(msg.sender, amount);
+	}
 
-        fundsBeingClaimed[user] = true; 
-        beneficiaryClaimTimestamp[user] = block.timestamp + accountLockPeriod;
-    }
+	function withdrawal(uint256 amount) public accountNotLocked(msg.sender) {
+		_burn(msg.sender, amount);
+		token.transfer(msg.sender, amount);
+		emit Withdraw(msg.sender, amount);
+	}
 
-    function beneficiaryClaimFunds(address user) public accountNotLocked(user) {
-        require(beneficiary[user] == msg.sender, 'this user has not made you his beneficiary');
-        require(fundsBeingClaimed[user] == true, 'you need to use startBeneficiaryClaimFunds first');
-        require(beneficiaryClaimTimestamp[user] < block.timestamp, 'you need to wait till LockPeriod is over');
+	function setBeneficiary(address _beneficiary) public {
+		beneficiary[msg.sender] = _beneficiary;
+		emit BeneficiaryAdded(msg.sender, _beneficiary);
+	}
 
-        uint256 amount = balanceOf(user);
-        _burn(user, amount);
-        token.transfer(user, amount);
-    }
+	function removeBeneficiary() public {
+		require(beneficiary[msg.sender] != address(0), "No beneficiary is set");
+		emit BeneficiaryRemoved(msg.sender, beneficiary[msg.sender]);
+		delete beneficiary[msg.sender];
+	}
 
-    function cancelClaim() public {
-        fundsBeingClaimed[msg.sender] = false;
-    }
+	function startBeneficiaryClaimFunds(address user) public accountNotLocked(user) {
+		require(beneficiary[user] == msg.sender, "this user has not made you his beneficiary");
 
-    function addSubsciptionReciver(address reciver) public {
-        require(subsciptionReciversMap[msg.sender] == false);
-        require(!SubsciptionsLocked);
-        subsciptionReciversMap[msg.sender] == true;
-        subsciptionRecivers.push(reciver);
-    }
+		fundsBeingClaimed[user] = true;
+		beneficiaryClaimTimestamp[user] = block.timestamp + accountLockPeriod;
 
-    function subscribe(address reciver) public {
-        require(subsciptionReciversMap[msg.sender] == true, "this user need to call addSubsciptionReciver for you to subscribe to them");
-        require(!SubsciptionsLocked);
-        transfer(reciver, subscriptionAmount);//pay amount for this subscription period
-        subscriptions[reciver].push(msg.sender);
-    }
+		emit BeneficiaryClaimStart(user, msg.sender, beneficiaryClaimTimestamp[user]);
+	}
 
-    function unSubscribe(address reciver, uint64 index) public {
-        require(!SubsciptionsLocked);
-        require(subscriptions[reciver][index] ==  msg.sender);
-        address last = subscriptions[reciver][subscriptions[reciver].length - 1];
-        subscriptions[reciver][index] = last;
-        subscriptions[reciver].pop();
-    }
+	function beneficiaryClaimFunds(address user) public accountNotLocked(user) {
+		require(beneficiary[user] == msg.sender, "this user has not made you his beneficiary");
+		require(
+			fundsBeingClaimed[user] == true,
+			"you need to use startBeneficiaryClaimFunds first"
+		);
+		require(
+			beneficiaryClaimTimestamp[user] < block.timestamp,
+			"you need to wait till LockPeriod is over"
+		);
 
-    function incrementSubsciptionPeriod() public onlyOwner() {//once all payment are done 
-        require(SubsciptionsLocked);
-        require(subsciptionReciverInedx > subsciptionRecivers.length);
-        subsciptionStartTime += subscriptionPeriod;
-        subsciptionReciverInedx = 0;
-        SubsciptionsLocked = false;
-    }
+		uint256 amount = balanceOf(user);
+		_burn(user, amount);
+		token.transfer(user, amount);
 
-    function _incrementSubsciptionPeriod(uint8 times) public onlyOwner() {//does times number of transfers call this function till they are all done
-        require(SubsciptionsLocked);
-        uint256 subsciptionReciverInedxTmp = subsciptionReciverInedx;//for gas savings
-        uint256 subscriptionsInedxTmp = subscriptionsInedx;//for gas savings
-        require(subsciptionReciverInedxTmp < subsciptionRecivers.length, 'your done');//this will let you know when you finished all the transfers
-        address reciver = subsciptionRecivers[subsciptionReciverInedxTmp];
-        for(uint8 i = 0; i<times; i++){
-            if(subscriptionsInedxTmp >= subscriptions[reciver].length){//reached the end of this users subscriptions start on the next one
-                subscriptionsInedxTmp = 0;
-                subsciptionReciverInedxTmp++;
-                if(subsciptionReciverInedxTmp >= subsciptionRecivers.length){break;}//all transactions are done 
-                reciver = subsciptionRecivers[subsciptionReciverInedxTmp];
-            }
-            address sender = subscriptions[reciver][subscriptionsInedxTmp];
-            if(sender == address(0)){//make sure its not the 0 address
-                subscriptionsInedxTmp++;
-                continue;
-            }
-            if(balanceOf(sender) < subscriptionAmount){//force unsubscribe if user cant afford
-                subscriptions[reciver][subscriptionsInedxTmp] = address(0);
-            }else{
-                _transfer(sender, reciver, subscriptionAmount);//make subscription payment
-            }
-            subscriptionsInedxTmp++;
-            continue;
-        }  
-        subsciptionReciverInedx = subsciptionReciverInedxTmp;//for gas savings
-        subscriptionsInedx = subscriptionsInedxTmp;//for gas savings
-    }
+		emit BeneficiaryWithdraw(user, msg.sender, amount);
+	}
 
-    function lockForSubsciptionPayments() public onlyOwner() {//need to lock before we start transfering payments
-        require(block.timestamp > subsciptionStartTime + subscriptionPeriod);
-        SubsciptionsLocked = true;
-    }
+	function cancelClaim() public {
+		fundsBeingClaimed[msg.sender] = false;
 
-    /*
-    function openChannel() public {
+		emit BeneficiaryClaimCancelled(msg.sender, beneficiary[msg.sender]);
+	}
 
-    }
+	function addSubsciptionReceiver(address receiver) public {
+		require(
+			subscriptionReceiversMap[msg.sender] == false,
+			"Subscription receiver already exists."
+		);
+		require(!SubscriptionsLocked, "Subscription is locked.");
 
-    function startCancelChannel() public {
-        
-    }
+		subscriptionReceiversMap[msg.sender] == true;
+		subscriptionReceivers.push(receiver);
 
-    function cancelChannel() public {
-        
-    }
+		emit NewSubscriptionReceiver(msg.sender);
+	}
 
-    function payeeChannel() public {
-        
-    }
+	function subscribe(address receiver) public {
+		require(
+			subscriptionReceiversMap[msg.sender] == true,
+			"this user needs to call addSubsciptionReceiver for you to subscribe to them"
+		);
+		require(!SubscriptionsLocked, "Subscription is locked");
 
-    function availableOf(address account) public view retuens(uint256){
+		transfer(receiver, subscriptionAmount); //pay amount for this subscription period
+		subscriptions[receiver].push(msg.sender);
 
-    }
+		emit NewSubscriber(receiver, msg.sender, subscriptionAmount);
+	}
 
-    function _transfer(address from, address to, uint256 amount) internal virtual {
-        require(from != address(0), "ERC20: transfer from the zero address");
-        require(to != address(0), "ERC20: transfer to the zero address");
+	function unSubscribe(address receiver, uint64 index) public {
+		require(!SubscriptionsLocked);
+		require(subscriptions[receiver][index] == msg.sender);
+		address last = subscriptions[receiver][subscriptions[receiver].length - 1];
+		subscriptions[receiver][index] = last;
+		subscriptions[receiver].pop();
 
-        uint256 fromBalance = _balances[from];
-        require(fromBalance >= amount, "ERC20: transfer amount exceeds balance");
-        unchecked {
-            _balances[from] = fromBalance - amount;
-            // Overflow not possible: the sum of all balances is capped by totalSupply, and the sum is preserved by
-            // decrementing then incrementing.
-            _balances[to] += amount;
-        }
+		emit SubscriberUnsubscribed(receiver, msg.sender);
+	}
 
-        emit Transfer(from, to, amount);
-    }
+	function incrementSubscriptionPeriod() public onlyOwner {
+		//once all payment are done
+		require(SubscriptionsLocked);
+		require(subscriptionReceiverIndex > subscriptionReceivers.length);
+		subscriptionStartTime += subscriptionPeriod;
+		subscriptionReceiverIndex = 0;
+		SubscriptionsLocked = false;
 
-    function _burn(address account, uint256 amount) internal virtual {
-        require(account != address(0), "ERC20: burn from the zero address");
+		emit SubscriptionPeriodIncremented(subscriptionStartTime);
+	}
 
-        uint256 accountBalance = _balances[account];
-        require(accountBalance >= amount, "ERC20: burn amount exceeds balance");
-        unchecked {
-            _balances[account] = accountBalance - amount;
-            // Overflow not possible: amount <= accountBalance <= totalSupply.
-            _totalSupply -= amount;
-        }
+	function _incrementSubscriptionPeriod(uint8 times) public onlyOwner {
+		//does times number of transfers call this function till they are all done
+		require(SubscriptionsLocked);
+		uint256 subscriptionReceiverIndexTmp = subscriptionReceiverIndex; //for gas savings
+		uint256 subscriptionsIndexTmp = subscriptionsIndex; //for gas savings
+		require(subscriptionReceiverIndexTmp < subscriptionReceivers.length, "your done"); //this will let you know when you finished all the transfers
+		address receiver = subscriptionReceivers[subscriptionReceiverIndexTmp];
+		for (uint8 i = 0; i < times; i++) {
+			if (subscriptionsIndexTmp >= subscriptions[receiver].length) {
+				//reached the end of this users subscriptions start on the next one
+				subscriptionsIndexTmp = 0;
+				subscriptionReceiverIndexTmp++;
+				if (subscriptionReceiverIndexTmp >= subscriptionReceivers.length) {
+					break;
+				} //all transactions are done
+				receiver = subscriptionReceivers[subscriptionReceiverIndexTmp];
+			}
+			address sender = subscriptions[receiver][subscriptionsIndexTmp];
+			if (sender == address(0)) {
+				//make sure its not the 0 address
+				subscriptionsIndexTmp++;
+				continue;
+			}
+			if (balanceOf(sender) < subscriptionAmount) {
+				//force unsubscribe if user cant afford
+				subscriptions[receiver][subscriptionsIndexTmp] = address(0);
+				emit UnsubscribedInsufficientFunds(receiver, sender);
+			} else {
+				_transfer(sender, receiver, subscriptionAmount); //make subscription payment
+			}
+			subscriptionsIndexTmp++;
+			continue;
+		}
+		subscriptionReceiverIndex = subscriptionReceiverIndexTmp; //for gas savings
+		subscriptionsIndex = subscriptionsIndexTmp; //for gas savings
+	}
 
-        emit Transfer(account, address(0), amount);
-    }
-    */
+	function lockForSubsciptionPayments() public onlyOwner {
+		//need to lock before we start transfering payments
+		require(block.timestamp > subscriptionStartTime + subscriptionPeriod);
+		SubscriptionsLocked = true;
+	}
 }

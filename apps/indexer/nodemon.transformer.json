@@ -1,0 +1,8 @@
+{
+    "watch": [
+        "transformer"
+    ],
+    "ext": ".ts",
+    "ignore": [],
+    "exec": "yarn transformer:build:development && yarn transformer:serve:development"
+}

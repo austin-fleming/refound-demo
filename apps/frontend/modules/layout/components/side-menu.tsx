@@ -87,7 +87,7 @@ const Menu = () => {
 						Manage Royalties
 					</a>
 					<a href="#" className="justify-start btn btn-disabled btn-sm ">
-						Manage Beneficieries
+						Manage Beneficiaries
 					</a>
 					<a href="#" className="justify-start btn btn-disabled btn-sm ">
 						Manager Subscribers

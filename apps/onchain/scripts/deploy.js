@@ -6,6 +6,11 @@
 // global scope, and execute the script.
 const hre = require("hardhat");
 
+const monthsToMilliseconds = (months) => Math.floor(months * 2_629_746_000)
+const MAX_POOL_DURATION = monthsToMilliseconds(24)
+
+const REFOUND_METADATA_LINK = "https://refound.app/post-contract-metadata"
+
 async function main() {
 
     const [owner, otherAccount] = await ethers.getSigners();
@@ -22,10 +27,10 @@ async function main() {
 
     await refoundUSD.deployed();
     const FundingPool = await ethers.getContractFactory("FundingPool");
-    const fundingPool = await FundingPool.deploy(refoundUSD.address, 100000000);
+    const fundingPool = await FundingPool.deploy(refoundUSD.address, MAX_POOL_DURATION);
 
     const RefoundPost = await ethers.getContractFactory("RefoundPost");
-    const refoundPost = await RefoundPost.deploy(refound.address, refoundUSD.address);
+    const refoundPost = await RefoundPost.deploy(refound.address, refoundUSD.address, REFOUND_METADATA_LINK);
 
     await fundingPool.deployed();
     await refound.deployed();
@@ -36,13 +41,15 @@ async function main() {
     await refoundPost.updatePrice(2, 1000);
     await refoundPost.updatePrice(3, 20000);
 
-    console.log(
-        `    FakeUSDC contract deployed to ${fakeUSDC.address}
-    Refound contract deployed to ${refound.address}
-    RefoundUSD contract deployed to ${refoundUSD.address}
-    FundingPool contract deployed to ${fundingPool.address}
-    RefoundPost contract deployed to ${refoundPost.address}`
-    );
+    console.log(`
+    =====================================================
+    FakeUSDC contract deployed to:      ${fakeUSDC.address}
+    Refound contract deployed to:       ${refound.address}
+    RefoundUSD contract deployed to:    ${refoundUSD.address}
+    FundingPool contract deployed to:   ${fundingPool.address}
+    RefoundPost contract deployed to:   ${refoundPost.address}
+    =====================================================
+    `);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

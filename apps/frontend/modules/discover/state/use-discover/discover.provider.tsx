@@ -1,5 +1,6 @@
 import { useRefoundContracts } from "@modules/refound/hooks/use-refound-contracts";
 import { toast } from "@services/toast/toast";
+import { useRouter } from "next/router";
 import type { ReactNode } from "react";
 import { useEffect } from "react";
 import { useCallback } from "react";
@@ -20,12 +21,20 @@ const DiscoverContext = createContext<DiscoverContextState>(discoverContextIniti
 export const useDiscover = () => useContext(DiscoverContext);
 
 export const DiscoverContextProvider = ({ children }: { children: ReactNode }) => {
+	const router = useRouter();
 	const [state, dispatch] = useReducer(discoverReducer, initialDiscoverState);
 	const { getAllImagePosts, getAllArticlePosts, getAllProfiles, getPools } =
 		useRefoundContracts();
 
+	useEffect(() => {
+		const { tab } = router.query;
+		if (!tab) return;
+
+		dispatch({ type: "SET_TAB", payload: tab as DiscoverTabs });
+	}, [router.query]);
+
 	const selectTab = (tab: DiscoverTabs) => {
-		dispatch({ type: "SET_TAB", payload: tab });
+		router.push(`/discover?tab=${tab}`);
 	};
 
 	const loadImages = useCallback(async () => {

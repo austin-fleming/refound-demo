@@ -9,6 +9,7 @@
     ],
     "scripts": {
         "onchain": "yarn workspace @repo/onchain",
-        "frontend": "yarn workspace @repo/frontend"
+        "frontend": "yarn workspace @repo/frontend",
+        "indexer": "yarn workspace @repo/indexer"
     }
 }

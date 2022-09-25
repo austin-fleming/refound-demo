@@ -1,0 +1,8 @@
+{
+    "watch": [
+        "monitor"
+    ],
+    "ext": ".ts",
+    "ignore": [],
+    "exec": "yarn monitor:build:development && yarn monitor:serve:development"
+}

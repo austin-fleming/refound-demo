@@ -1,0 +1,56 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "allowSyntheticDefaultImports": false,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "checkJs": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        // enforce "import type" vs just "import"
+        "importsNotUsedAsValues": "error",
+        "incremental": true,
+        "isolatedModules": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noEmit": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "pretty": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "strict": true,
+        "target": "ES6",
+        "rootDir": ".",
+        "types": [
+            "jest",
+            "node"
+        ],
+        "outDir": "./dist",
+        "baseUrl": ".",
+        "paths": {
+            "@monitor/*": [
+                "monitor/*"
+            ],
+            "@transformer/*": [
+                "transformer/*"
+            ],
+            "@common/*": [
+                "common/*"
+            ]
+        }
+    },
+    "include": [
+        "common/**/*.ts",
+        "monitor/**/*.ts",
+        "transformer/**/*.ts",
+        "./.eslintrc.js",
+        "./jest.config.js"
+    ],
+    "exclude": [
+        "node_modules",
+        "__deprecated__",
+        ".env"
+    ]
+}
