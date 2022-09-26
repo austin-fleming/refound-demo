@@ -3,23 +3,24 @@ import type { Server as HttpServer } from "node:http";
 import { terminateServer } from "@common/utils/error-handling/terminate-server";
 import config from "./config";
 import appLoader from "./loaders/app.loader";
-import { Worker } from "bullmq";
+import { initRedis } from "./loaders/redis.loader";
+import { initEventQueue } from "./loaders/queue.loader";
+import { coreJobHandler, poolJobHandler, postJobHandler, rusdJobHandler } from "./job-handlers";
 
-const contractEventWorker = new Worker(
-	"contract-events",
-	async (job) => {
-		console.log({ "received job:": { job } });
-	},
-	{
-		connection: {
-			host: config.contractEventQueue.redisHost,
-			port: config.contractEventQueue.redisPort,
-		},
-	},
-);
-
-const startServer = () => {
+const startServer = async () => {
 	const app = express();
+
+	const redisConnection = await initRedis();
+	if (!redisConnection) throw new Error("Redis failed to connect");
+
+	const [coreQueue, postQueue, poolQueue, rusdQueue] = await Promise.all([
+		initEventQueue("core", redisConnection, coreJobHandler),
+		initEventQueue("post", redisConnection, postJobHandler),
+		initEventQueue("pool", redisConnection, poolJobHandler),
+		initEventQueue("rusd", redisConnection, rusdJobHandler),
+	]);
+
+	// await indexerLoader(eventQueue);
 
 	const server: HttpServer = appLoader(app).listen(config.port, () => {
 		console.log(

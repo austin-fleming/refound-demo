@@ -1,4 +1,4 @@
-import config from "@monitor/config";
+import config from "@transformer/config";
 import IoRedis from "ioredis";
 
 export const initRedis = async () => {

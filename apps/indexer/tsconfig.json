@@ -50,7 +50,7 @@
     ],
     "exclude": [
         "node_modules",
-        "__deprecated__",
+        "__deprecated__/**/*",
         ".env"
     ]
 }
