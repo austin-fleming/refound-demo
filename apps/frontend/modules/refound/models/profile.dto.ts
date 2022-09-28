@@ -4,20 +4,18 @@ import type { Profile } from "./profile.model";
 schema of profile data written/parsed from profileData
 */
 export type ProfileDataContractSchema = {
-	avatarUrl: string;
-	bio: string;
-	status: string;
-	address: string;
-	joinedOn: string; // unix timestamp
+	name: string;
+	description: string;
+	image: string;
+	attributes: Array<{
+		trait_type: string;
+		value: string | number;
+	}>;
 };
 
 /*
 What contract will return
 */
-export type ProfileContractDSO = {
-	handle: string;
-	profileData: string; // stringified ProfileDateContractSchema
-};
 
 /*
 For creating a post

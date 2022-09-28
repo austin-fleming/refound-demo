@@ -4,11 +4,7 @@ import type { Result } from "@utils/monads";
 import { isNothing } from "@utils/monads";
 import { result } from "@utils/monads";
 import { unixTimestamp } from "@utils/unix-timestamp";
-import type {
-	ProfileContractDSO,
-	ProfileCreationProperties,
-	ProfileDataContractSchema,
-} from "../models/profile.dto";
+import type { ProfileCreationProperties, ProfileDataContractSchema } from "../models/profile.dto";
 import type { Profile, ProfileOwnerAddress } from "../models/profile.model";
 import { ProfileTrustStatus } from "../models/profile.model";
 import { ProfileType } from "../models/profile.model";
@@ -69,14 +65,8 @@ const uriToModel = (profileId: string, profileUri: string): Result<Profile> => {
 	}
 };
 
-const creationPropsToContractDso = (
-	creatorAddress: ProfileOwnerAddress,
-	data: ProfileCreationProperties,
-): Result<ProfileContractDSO> => {
+const creationPropsToContractDso = (data: ProfileCreationProperties): Result<string> => {
 	try {
-		const address = creatorAddress;
-		if (!isString(address) || !address) throwFieldError("address");
-
 		const handle = data.username;
 		if (!isString(handle) || !handle) throwFieldError("handle");
 
@@ -86,24 +76,16 @@ const creationPropsToContractDso = (
 		const bio = data.bio || "";
 		if (!isString(bio)) throwFieldError("bio");
 
-		const status = ProfileTrustStatus.NONE;
-
-		const joinedOn = unixTimestamp.fromDate(new Date());
-
 		const schema: ProfileDataContractSchema = {
-			avatarUrl,
-			bio,
-			status,
-			address,
-			joinedOn,
+			name: handle,
+			description: bio,
+			image: avatarUrl,
+			attributes: [],
 		};
 
-		const dso: ProfileContractDSO = {
-			handle,
-			profileData: JSON.stringify(schema),
-		};
+		const dsoString = JSON.stringify(schema);
 
-		return result.ok(dso);
+		return result.ok(dsoString);
 	} catch (err) {
 		return result.fail(err as Error);
 	}

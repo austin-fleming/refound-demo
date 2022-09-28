@@ -1,0 +1,69 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "allowJs": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "checkJs": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        // enforce "import type" vs just "import"
+        "importsNotUsedAsValues": "error",
+        "incremental": true,
+        "isolatedModules": true,
+        "declaration": true,
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "pretty": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "strict": true,
+        "target": "ES6",
+        "rootDir": ".",
+        "allowSyntheticDefaultImports": true,
+        "types": [
+            "jest",
+            "node"
+        ],
+        "outDir": "./dist",
+        "baseUrl": ".",
+        "paths": {
+            "@db/*": [
+                "db/*"
+            ],
+            "@utils/*": [
+                "utils/*"
+            ],
+            "@refound-contracts/*": [
+                "refound-contracts/*"
+            ]
+        },
+        "module": "esnext",
+        "lib": [
+            "dom",
+            "esnext",
+            "dom.iterable"
+        ],
+        "jsx": "react-jsx",
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "composite": true
+    },
+    "include": [
+        "./**/*.ts",
+        "./**/*.json",
+        ".eslintrc.js",
+        "jest.config.js"
+    ],
+    "exclude": [
+        "node_modules",
+        "__deprecated__/**/*",
+        ".env",
+        "dist"
+    ]
+}

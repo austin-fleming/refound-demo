@@ -26,6 +26,9 @@
             "@components/*": [
                 "components/*"
             ],
+            "@config": [
+                "config/*"
+            ],
             "@modules/*": [
                 "modules/*"
             ],
@@ -40,6 +43,11 @@
             ]
         }
     },
+    "references": [
+        {
+            "@repo/common": "../common"
+        }
+    ],
     "include": [
         "next-env.d.ts",
         "**/*.ts",

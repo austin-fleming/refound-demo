@@ -1,7 +1,7 @@
 import { useAccount } from "@modules/account/state/use-account";
 import { useRefoundContracts } from "@modules/refound/hooks/use-refound-contracts";
 import type { ProfileOwnerAddress } from "@modules/refound/models/profile.model";
-import { cloin } from "@utils/cloin";
+import { cloin } from "@repo/common/utils/css";
 import { useState } from "react";
 import toast from "react-hot-toast";
 

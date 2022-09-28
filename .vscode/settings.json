@@ -21,6 +21,7 @@
     "cloin",
     "Datetime",
     "Exif",
+    "Falseable",
     "Falsyable",
     "Fusdc",
     "ipfs",
@@ -32,6 +33,8 @@
     "sveltejs",
     "tailwindcss",
     "timestamptz",
+    "UNPARSEABLE",
+    "unpledge",
     "Usecase",
     "Usecases",
     "VITE"

@@ -1,0 +1,29 @@
+README.md
+README.*.md
+
+.gitignore
+
+
+# DEPENDENCIES
+/node_modules
+node_modules
+node_modules/
+/.pnp
+.pnp.js
+.npm
+
+# LINTING
+.eslintcache
+
+# LOGS
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TESTING
+/coverage
+
+# TYPESCRIPT
+*.tsbuildinfo

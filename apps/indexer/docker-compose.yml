@@ -1,0 +1,29 @@
+services:
+    redis:
+        container_name: message-queue
+        image: redis
+        command: [redis-server, --maxmemory-policy, noeviction]
+        env_file:
+            - .env
+        volumes:
+            - redis_data:/data
+        ports:
+            - "${REDIS_PORT}:${REDIS_PORT}"
+    monitor:
+        container_name: monitor-service
+        build:
+            context: .
+            dockerfile: ./monitor/Dockerfile
+        env_file:
+            - .env
+        ports:
+            - "${MONITOR_PORT}:${MONITOR_PORT}"
+    transformer:
+        container_name: transformer-service
+        build:
+            context: .
+            dockerfile: ./transformer/Dockerfile
+        env_file:
+            - .env
+        ports:
+            - "${TRANSFORMER_PORT}:${TRANSFORMER_PORT}"

@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { AccessibleShortcut } from "./accessible-shortcut";
 import { Header } from "./header";
 import { LayoutContextProvider } from "../hooks/use-layout";
+import { SiteHeader } from "./site-header";
 
 export const Layout = ({ children }: { children: ReactNode }) => {
 	return (
@@ -11,10 +12,11 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 				<title>Refound</title>
 			</Head>
 
-			<AccessibleShortcut targetId="#header-bottom" label="Skip to Navigation" />
+			<SiteHeader />
+			{/* <AccessibleShortcut targetId="#header-bottom" label="Skip to Navigation" />
 			<AccessibleShortcut targetId="#main-content" label="Skip to Content" />
 		
-			<Header />
+			<Header /> */}
 
 			<main id="main-content" className="pb-headerBottomHeight pt-headerTopHeight">
 				{children}

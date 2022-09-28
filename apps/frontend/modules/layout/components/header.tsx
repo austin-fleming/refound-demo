@@ -4,6 +4,7 @@ import { BottomNav } from "./bottom-nav/bottom-nav";
 import { SideMenu } from "./side-menu";
 import { useAccount } from "../../account/state/use-account";
 import { PolyButton } from "@components/poly-button/poly-button";
+import { NavMenu } from "./nav-menu";
 
 export const Header = () => {
 	const { login, account } = useAccount();
@@ -26,18 +27,8 @@ export const Header = () => {
 						</h1>
 					</a>
 				</NextLink>
-				{!account && (
-					<PolyButton
-						onClick={login}
-						as="button"
-						size="sm"
-						label="Connect Wallet"
-						align="center"
-					/>
-				)}
-				{account.profile?.username && (
-					<p className="badge">@{account.profile.username.slice(0, 12)}</p>
-				)}
+
+				<NavMenu />
 			</div>
 
 			<BottomNav />
