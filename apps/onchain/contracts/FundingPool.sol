@@ -46,10 +46,16 @@ contract FundingPool {
 		uint32 endAt
 	);
 	event Cancel(address indexed caller, uint256 indexed poolId);
-	event Pledge(address indexed caller, uint256 indexed poolId, uint256 amount, uint256 total);
+	event Pledge(
+		address indexed caller,
+		uint256 indexed poolId,
+		uint256 amount,
+		uint256 callerTotal,
+		uint256 poolTotal
+	);
 	event Unpledge(
 		address indexed caller,
-		uint256 indexed id,
+		uint256 indexed poolId,
 		uint256 amount,
 		uint256 callerTotal,
 		uint256 poolTotal
@@ -110,7 +116,7 @@ contract FundingPool {
 		pledgedAmount[_id][msg.sender] += _amount;
 		token.transferFrom(msg.sender, address(this), _amount);
 
-		emit Pledge(msg.sender, _id, _amount, campaign.pledged);
+		emit Pledge(msg.sender, _id, _amount, pledgedAmount[_id][msg.sender], campaign.pledged);
 	}
 
 	function unPledge(uint256 _id, uint256 _amount) external {

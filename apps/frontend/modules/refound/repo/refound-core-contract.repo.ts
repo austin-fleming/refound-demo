@@ -105,19 +105,19 @@ const createProfile = async (
 	contract: Contract,
 	walletAddress: string,
 	profileData: ProfileCreationProperties,
-): Promise<Result<string>> => {
+): Promise<Result<true>> => {
 	try {
 		const storageObject = profileParser
-			.creationPropsToContractDso(walletAddress, profileData)
+			.creationPropsToContractDso(profileData)
 			.unwrapOrElse((err) => {
 				throw err;
 			});
 
-		const profileId = await contract.methods
-			.makeRefoundProfile(storageObject.handle, storageObject.profileData)
+		await contract.methods
+			.makeRefoundProfile(profileData.username, storageObject)
 			.send({ from: walletAddress });
 
-		return result.ok(profileId as string);
+		return result.ok(true);
 	} catch (err) {
 		return result.fail(err as Error);
 	}
@@ -127,24 +127,25 @@ const updateProfile = async (
 	contract: Contract,
 	walletAddress: string,
 	profileData: ProfileCreationProperties,
-): Promise<Result<string>> => {
+): Promise<Result<true>> => {
 	try {
 		const storageObject = profileParser
-			.creationPropsToContractDso(walletAddress, profileData)
+			.creationPropsToContractDso(profileData)
 			.unwrapOrElse((err) => {
 				throw err;
 			});
 
-		const profileId = await contract.methods
-			.updateRefoundProfile(storageObject.handle, storageObject.profileData)
+		await contract.methods
+			.updateRefoundProfile(profileData.username, storageObject)
 			.send({ from: walletAddress });
 
-		return result.ok(profileId as string);
+		return result.ok(true);
 	} catch (err) {
 		return result.fail(err as Error);
 	}
 };
 
+/* This needs to be reworked */
 const createPost = async (
 	contract: Contract,
 	ipfsClient: Web3Storage,

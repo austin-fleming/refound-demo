@@ -3,27 +3,34 @@ import { config } from "config/config";
 import Web3 from "web3";
 import type { Profile } from "@modules/refound/models/profile.model";
 import { queries } from "../../repo/refound-core-contract.repo";
+import { initSupabase } from "@modules/shared/repo/cache/init-supabase";
+
+/* 
+TODO: paginate
+*/
 
 // Get all profiles
 export async function getProfilesHandler(req: NextApiRequest, res: NextApiResponse<Profile[]>) {
 	res.setHeader("Cache-Control", `s-maxage=5, stale-while-revalidate`);
 	const { requester } = req.query;
 
-	// if (!isString(requester) || !requester) return res.status(403).end();
+	const cacheClient = initSupabase();
 
-	const web3 = new Web3(config.contracts.rpcUrl);
-	const contract = new web3.eth.Contract(
-		config.contracts.coreContract.abi,
-		config.contracts.coreContract.address,
-	);
+	const { data, error } = await cacheClient
+		.from<{
+			id: number;
+			walletAddress: string;
+			username: string;
+			joinedOn: string;
+			bio?: string;
+			avatarUrl?: string;
+		}>("profile")
+		.select("*");
 
-	return (await queries.getAllProfiles(contract)).match({
-		ok: (profiles) => {
-			res.status(200).json(profiles);
-		},
-		fail: (err) => {
-			console.error(err);
-			res.status(404).end();
-		},
-	});
+	if (error) {
+		console.error(error);
+		return res.status(500).end();
+	}
+
+	return res.status(200).json(data);
 }

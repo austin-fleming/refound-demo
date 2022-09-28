@@ -22,6 +22,21 @@
         "test": "jest --verbose --coverage",
         "docker": "docker build . -t austinfleming-server"
     },
+    "dependencies": {
+        "@celo/contractkit": "^2.1.0",
+        "@repo/common": "*",
+        "@supabase/supabase-js": "^1.33.3",
+        "axios": "^0.27.2",
+        "bullmq": "^2.1.0",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.0",
+        "express": "^4.17.3",
+        "helmet": "^5.0.2",
+        "is-ipfs": "^7.0.2",
+        "web3": "^1.8.0",
+        "web3.storage": "^4.4.0",
+        "yup": "^0.32.11"
+    },
     "devDependencies": {
         "@types/cors": "^2.8.12",
         "@types/express": "^4.17.13",
@@ -43,16 +58,5 @@
         "prettier": "^2.5.1",
         "ts-jest": "^27.1.4",
         "typescript": "^4.6.2"
-    },
-    "dependencies": {
-        "@celo/contractkit": "^2.1.0",
-        "@supabase/supabase-js": "^1.33.3",
-        "bullmq": "^2.1.0",
-        "cors": "^2.8.5",
-        "dotenv": "^16.0.0",
-        "express": "^4.17.3",
-        "helmet": "^5.0.2",
-        "web3": "^1.8.0",
-        "yup": "^0.32.11"
     }
 }

@@ -1,4 +1,4 @@
-import { sleep } from "@common/utils/sleep";
+import { sleep } from "@repo/common/utils/control-flow";
 import Web3 from "web3";
 import type { Queue } from "bullmq";
 import type { AbiItem } from "web3-utils";

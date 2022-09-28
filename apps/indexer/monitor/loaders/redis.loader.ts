@@ -3,10 +3,7 @@ import IoRedis from "ioredis";
 
 export const initRedis = async () => {
 	try {
-		return new IoRedis({
-			host: config.contractEventQueue.redisHost,
-			port: config.contractEventQueue.redisPort,
-		})
+		return new IoRedis(config.contractEventQueue.redis.connectionString)
 			.on("error", (error) => {
 				console.error("Something went wrong with redis connection:", error);
 			})

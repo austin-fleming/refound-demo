@@ -1,4 +1,5 @@
 {
+    "extends": "../../tsconfig.json",
     "compilerOptions": {
         "allowJs": true,
         "allowSyntheticDefaultImports": false,
@@ -23,6 +24,7 @@
         "strict": true,
         "target": "ES6",
         "rootDir": ".",
+        "composite": true,
         "types": [
             "jest",
             "node"
@@ -52,5 +54,10 @@
         "node_modules",
         "__deprecated__/**/*",
         ".env"
+    ],
+    "references": [
+        {
+            "path": "../common"
+        }
     ]
 }

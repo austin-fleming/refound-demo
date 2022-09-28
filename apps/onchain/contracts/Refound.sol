@@ -57,9 +57,7 @@ contract Refound is ERC721URIStorage, Ownable {
 
 		ProfileIDByHandle[keccak256(abi.encode(handle))] = profileID;
 
-		string memory tokenURI = string(
-			abi.encodePacked('{"handle": "', handle, '", "profileData": ', profileData, "}")
-		);
+		string memory tokenURI = string(abi.encodePacked(profileData));
 
 		_safeMint(msg.sender, profileID);
 
@@ -86,9 +84,7 @@ contract Refound is ERC721URIStorage, Ownable {
 
 		ProfileIDByHandle[keccak256(abi.encode(handle))] = profileID; //for testing only
 
-		string memory tokenURI = string(
-			abi.encodePacked('{"handle": "', handle, '", "profileData": ', profileData, "}")
-		);
+		string memory tokenURI = string(abi.encodePacked(profileData));
 
 		_setTokenURI(profileID, tokenURI);
 

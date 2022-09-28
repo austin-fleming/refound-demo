@@ -1,5 +1,5 @@
 import { useProfile } from "@modules/profile/hooks/use-profile/use-profile";
-import { cloin } from "@utils/cloin";
+import { cloin } from "@repo/common/utils/css";
 
 export const TabNav = () => {
 	const { currentTab, setCurrentTab } = useProfile();

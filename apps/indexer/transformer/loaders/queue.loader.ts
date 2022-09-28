@@ -1,17 +1,20 @@
-import config from "@transformer/config";
 import { Worker } from "bullmq";
 import type { Job } from "bullmq";
-import type IoRedis from "ioredis";
 import type { EventData } from "web3-eth-contract";
+import { initRedis } from "./redis.loader";
 
 export const initEventQueue = async <EventType = EventData>(
 	queueName: string,
-	redis: IoRedis,
 	jobHandler: (job: Job<EventType>) => Promise<void>,
 ) => {
 	try {
+		const redisConnection = await initRedis();
+		if (!redisConnection) throw new Error("Redis failed to connect");
+
+		console.log(`Worker for "${queueName}" created.`);
+
 		return new Worker<EventType>(queueName, jobHandler, {
-			connection: redis,
+			connection: redisConnection,
 		}).on("error", (error) => {
 			console.error("Worker threw error:", error);
 		});

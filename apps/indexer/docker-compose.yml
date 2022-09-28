@@ -5,8 +5,10 @@ services:
         command: [redis-server, --maxmemory-policy, noeviction]
         env_file:
             - .env
+        volumes:
+            - redis_data:/data
         ports:
-            - "127.0.0.1:${REDIS_PORT}:${REDIS_PORT}"
+            - "${REDIS_PORT}:${REDIS_PORT}"
     monitor:
         container_name: monitor-service
         build:
@@ -15,7 +17,7 @@ services:
         env_file:
             - .env
         ports:
-            - "127.0.0.1:${MONITOR_PORT}:${MONITOR_PORT}"
+            - "${MONITOR_PORT}:${MONITOR_PORT}"
     transformer:
         container_name: transformer-service
         build:
@@ -24,4 +26,4 @@ services:
         env_file:
             - .env
         ports:
-            - "127.0.0.1:${TRANSFORMER_PORT}:${TRANSFORMER_PORT}"
+            - "${TRANSFORMER_PORT}:${TRANSFORMER_PORT}"

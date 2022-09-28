@@ -12,7 +12,7 @@ RUN yarn install
 # Copy everything
 COPY . .
 # build
-RUN yarn transformer:build:development
+RUN yarn transformer:build:production
 
 # don't run as root
 RUN chown -R node:node .
@@ -20,4 +20,4 @@ USER node
 
 EXPOSE 443
 
-CMD ["yarn", "transformer:serve:development"]
+CMD ["yarn", "transformer:serve:production"]

@@ -5,7 +5,12 @@ import { terminateServer } from "@common/utils/error-handling/terminate-server";
 import appLoader from "@monitor/loaders/app.loader";
 import { initRedis } from "./loaders/redis.loader";
 import { initEventQueue } from "./loaders/queue.loader";
-import type { CoreEvent, PoolEvent, PostEvent, RusdEvent } from "@common/event-types/event-types";
+import type {
+	CoreEvent,
+	PoolEvent,
+	PostEvent,
+	RusdEvent,
+} from "@repo/common/refound-contracts/event-types";
 import { initPublisher, publishPastEvents } from "./indexer/publisher";
 
 /* 

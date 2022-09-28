@@ -3,21 +3,25 @@ import type { Server as HttpServer } from "node:http";
 import { terminateServer } from "@common/utils/error-handling/terminate-server";
 import config from "./config";
 import appLoader from "./loaders/app.loader";
-import { initRedis } from "./loaders/redis.loader";
 import { initEventQueue } from "./loaders/queue.loader";
-import { coreJobHandler, poolJobHandler, postJobHandler, rusdJobHandler } from "./job-handlers";
+import {
+	makeCoreJobHandler,
+	makePoolJobHandler,
+	makePostJobHandler,
+	makeRusdJobHandler,
+} from "./job-handlers";
+import { initSupabase } from "./loaders/supabase.loader";
 
 const startServer = async () => {
 	const app = express();
 
-	const redisConnection = await initRedis();
-	if (!redisConnection) throw new Error("Redis failed to connect");
+	const supabaseClient = await initSupabase();
 
 	const [coreQueue, postQueue, poolQueue, rusdQueue] = await Promise.all([
-		initEventQueue("core", redisConnection, coreJobHandler),
-		initEventQueue("post", redisConnection, postJobHandler),
-		initEventQueue("pool", redisConnection, poolJobHandler),
-		initEventQueue("rusd", redisConnection, rusdJobHandler),
+		initEventQueue("core", makeCoreJobHandler(supabaseClient)),
+		initEventQueue("post", makePostJobHandler(supabaseClient)),
+		initEventQueue("pool", makePoolJobHandler(supabaseClient)),
+		initEventQueue("rusd", makeRusdJobHandler(supabaseClient)),
 	]);
 
 	// await indexerLoader(eventQueue);

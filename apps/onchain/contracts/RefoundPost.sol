@@ -90,17 +90,7 @@ contract RefoundPost is ERC721URIStorage, ERC2981, Ownable {
 		// Get the current tokenId, this starts at 0.
 		uint256 postID = posts++;
 
-		string memory tokenURI = string(
-			abi.encodePacked(
-				'{"profileId": ',
-				Strings.toString(profileID),
-				', "postId": ',
-				Strings.toString(postID),
-				', "postData": ',
-				postData,
-				"}"
-			)
-		);
+		string memory tokenURI = string(abi.encodePacked(postData));
 
 		_safeMint(postOwner, postID);
 		// Set the NFTs data.

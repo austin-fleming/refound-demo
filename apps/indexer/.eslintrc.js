@@ -52,6 +52,7 @@ module.exports = {
             "error",
             {
                 "allowList": {
+                    "db": true,
                     "fn": true,
                     "props": true
                 }
