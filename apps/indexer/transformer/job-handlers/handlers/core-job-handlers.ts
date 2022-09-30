@@ -45,7 +45,7 @@ export const makeCoreJobHandlers = ({
 				id: profileID,
 				joined_on: joinedOn,
 				username: handle,
-				wallet_address: caller,
+				wallet_address: caller.toLowerCase(),
 			};
 
 			console.log({ profileData });
@@ -82,7 +82,7 @@ export const makeCoreJobHandlers = ({
 				.insert({
 					balance: 0,
 					is_locked: false,
-					owner_address: profileData.wallet_address,
+					owner_address: profileData.wallet_address.toLowerCase(),
 					profile_id: profileData.id,
 				});
 
@@ -112,7 +112,7 @@ export const makeCoreJobHandlers = ({
 		const profileUpdateFields: Omit<ProfileTable, "id" | "joined_on" | "wallet_address"> = {
 			avatar_url: profileURI?.image,
 			bio: profileURI?.description,
-			username: event.returnValues.handle,
+			username: event.returnValues.handle.toLowerCase(),
 		};
 
 		const { data, error } = await supabaseClient

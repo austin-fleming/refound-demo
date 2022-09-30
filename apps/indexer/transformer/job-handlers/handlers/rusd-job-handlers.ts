@@ -26,8 +26,8 @@ export const makeRusdJobHandlers = ({
 			const { data, error } = await supabaseClient
 				.from<HoldingAccountBeneficiaryTable>("holding_account_beneficiary")
 				.upsert({
-					account: primary,
-					beneficiary,
+					account: primary.toLowerCase(),
+					beneficiary: beneficiary.toLowerCase(),
 					claim_placed: false,
 				})
 				.single();
@@ -61,11 +61,11 @@ export const makeRusdJobHandlers = ({
 			const { data: actionData, error: actionError } = await supabaseClient
 				.from<HoldingAccountActionTable>("holding_account_action")
 				.insert({
-					account: primary,
+					account: primary.toLowerCase(),
 					account_action: "BENEFICIARY_CANCEL",
 					amount: 0,
 					completion_date: completionDate,
-					performed_by: primary,
+					performed_by: primary.toLowerCase(),
 				})
 				.single();
 			if (actionError) throw actionError;
@@ -83,8 +83,8 @@ export const makeRusdJobHandlers = ({
 						release_date: undefined,
 					})
 					.match({
-						account: primary,
-						beneficiary,
+						account: primary.toLowerCase(),
+						beneficiary: beneficiary.toLowerCase(),
 					})
 					.single();
 			if (beneficiaryAccountError) throw beneficiaryAccountError;
@@ -130,11 +130,11 @@ export const makeRusdJobHandlers = ({
 			const { data: actionData, error: actionError } = await supabaseClient
 				.from<HoldingAccountActionTable>("holding_account_action")
 				.insert({
-					account: primary,
+					account: primary.toLowerCase(),
 					account_action: "BENEFICIARY_CLAIM",
 					amount: 0,
 					completion_date: completionDate,
-					performed_by: beneficiary,
+					performed_by: beneficiary.toLowerCase(),
 				})
 				.single();
 			if (actionError) throw actionError;
@@ -152,8 +152,8 @@ export const makeRusdJobHandlers = ({
 						release_date: releaseDate,
 					})
 					.match({
-						account: primary,
-						beneficiary,
+						account: primary.toLowerCase(),
+						beneficiary: beneficiary.toLowerCase(),
 					})
 					.single();
 			if (beneficiaryAccountError) throw beneficiaryAccountError;
@@ -181,8 +181,8 @@ export const makeRusdJobHandlers = ({
 						release_date: undefined,
 					})
 					.match({
-						account: primary,
-						beneficiary,
+						account: primary.toLowerCase(),
+						beneficiary: beneficiary.toLowerCase(),
 					})
 					.single();
 			if (beneficiaryAccountError) throw beneficiaryAccountError;
@@ -211,11 +211,11 @@ export const makeRusdJobHandlers = ({
 			const { data: actionData, error: actionError } = await supabaseClient
 				.from<HoldingAccountActionTable>("holding_account_action")
 				.insert({
-					account: primary,
+					account: primary.toLowerCase(),
 					account_action: "BENEFICIARY_WITHDRAW",
 					amount: amount * -1,
 					completion_date: completionDate,
-					performed_by: beneficiary,
+					performed_by: beneficiary.toLowerCase(),
 				})
 				.single();
 			if (actionError) throw actionError;
@@ -229,7 +229,7 @@ export const makeRusdJobHandlers = ({
 				.from<HoldingAccountTable>("holding_account")
 				.update({
 					balance: 0,
-					owner_address: primary,
+					owner_address: primary.toLowerCase(),
 				})
 				.single();
 			if (holdingAccountError) throw holdingAccountError;
@@ -261,11 +261,11 @@ export const makeRusdJobHandlers = ({
 			const { data: actionData, error: actionError } = await supabaseClient
 				.from<HoldingAccountActionTable>("holding_account_action")
 				.insert({
-					account: from,
+					account: from.toLowerCase(),
 					account_action: "DEPOSIT",
 					amount: amount,
 					completion_date: completionDate,
-					performed_by: from,
+					performed_by: from.toLowerCase(),
 				})
 				.single();
 			if (actionError) throw actionError;
@@ -277,7 +277,7 @@ export const makeRusdJobHandlers = ({
 				.from<HoldingAccountTable>("holding_account")
 				.update({
 					balance,
-					owner_address: from,
+					owner_address: from.toLowerCase(),
 				})
 				.single();
 			if (holdingAccountError) throw holdingAccountError;
@@ -309,11 +309,11 @@ export const makeRusdJobHandlers = ({
 			const { data: actionData, error: actionError } = await supabaseClient
 				.from<HoldingAccountActionTable>("holding_account_action")
 				.insert({
-					account: to,
+					account: to.toLowerCase(),
 					account_action: "WITHDRAW",
 					amount: amount * -1,
 					completion_date: completionDate,
-					performed_by: to,
+					performed_by: to.toLowerCase(),
 				})
 				.single();
 			if (actionError) throw actionError;
@@ -325,7 +325,7 @@ export const makeRusdJobHandlers = ({
 				.from<HoldingAccountTable>("holding_account")
 				.update({
 					balance,
-					owner_address: to,
+					owner_address: to.toLowerCase(),
 				})
 				.single();
 			if (holdingAccountError) throw holdingAccountError;

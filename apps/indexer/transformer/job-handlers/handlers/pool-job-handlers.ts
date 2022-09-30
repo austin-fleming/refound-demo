@@ -76,7 +76,7 @@ export const makePoolJobHandlers = ({
 			const { data: creatorData, error: creatorIdError } = await supabaseClient
 				.from<Pick<ProfileTable, "id" | "wallet_address">>("profile")
 				.select("id, wallet_address")
-				.eq("wallet_address", creatorAddress)
+				.eq("wallet_address", creatorAddress.toLowerCase())
 				.single();
 			if (creatorIdError) throw creatorIdError;
 			if (!creatorData?.id)
@@ -164,7 +164,7 @@ export const makePoolJobHandlers = ({
 			const { data: profiles, error: profilesError } = await supabaseClient
 				.from<Pick<ProfileTable, "id" | "wallet_address">>("profile")
 				.select("id, wallet_address")
-				.eq("wallet_address", caller);
+				.eq("wallet_address", caller.toLowerCase());
 			if (profilesError) throw profilesError;
 			if (profiles.length === 0)
 				throw new Error(
@@ -222,7 +222,7 @@ export const makePoolJobHandlers = ({
 			const { data: profiles, error: profilesError } = await supabaseClient
 				.from<Pick<ProfileTable, "id" | "wallet_address">>("profile")
 				.select("id, wallet_address")
-				.eq("wallet_address", caller);
+				.eq("wallet_address", caller.toLowerCase());
 			if (profilesError) throw profilesError;
 			if (profiles.length === 0)
 				throw new Error(
@@ -291,7 +291,7 @@ export const makePoolJobHandlers = ({
 			const { data: profiles, error: profilesError } = await supabaseClient
 				.from<Pick<ProfileTable, "id" | "wallet_address">>("profile")
 				.select("id, wallet_address")
-				.eq("wallet_address", caller);
+				.eq("wallet_address", caller.toLowerCase());
 			if (profilesError) throw profilesError;
 			if (profiles.length === 0)
 				throw new Error(

@@ -31,15 +31,15 @@ export const makePostJobHandlers = ({
 			const { interactionType, interactor, postId } = event.returnValues;
 
 			const { data: interactorProfileId, error: interactorError } = await supabaseClient
-				.from("profile")
-				.select("id")
-				.eq("wallet_address", interactor)
+				.from<{ id: number; wallet_address: string }>("profile")
+				.select("wallet_address,id")
+				.eq("wallet_address", interactor.toLowerCase())
 				.single();
 			if (interactorError) throw interactorError;
 
 			const interactionRow: PostInteractionTable = {
 				interaction_type: interactionType,
-				interactor: interactorProfileId,
+				interactor: interactorProfileId.id,
 				post_id: postId,
 			};
 
@@ -78,7 +78,7 @@ export const makePostJobHandlers = ({
 
 			const license: Omit<LicenseTable, "id"> = {
 				license_type: licenseType,
-				owner_address: to,
+				owner_address: to.toLowerCase(),
 				post_id: postId,
 				purchase_date: purchaseDate,
 				purchase_price: amount,
@@ -152,7 +152,7 @@ export const makePostJobHandlers = ({
 
 			const { data, error } = await supabaseClient
 				.from<PostTable>("post")
-				.update({ owner })
+				.update({ owner: owner.toLowerCase() })
 				.eq("id", id)
 				.single();
 

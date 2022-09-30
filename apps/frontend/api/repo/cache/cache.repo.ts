@@ -170,10 +170,12 @@ export const makeCacheRepo = (): CacheRepo => {
 	};
 
 	const getProfileByAddress: CacheRepo["getProfileByAddress"] = async (walletAddress) => {
+		console.log({ walletAddress });
 		const { data, error } = await client
 			.from<ProfileTableAggregate>("profile")
-			.select(profileAggregateQuery)
+			.select("*")
 			.eq("wallet_address", walletAddress);
+		console.log({ data, error });
 
 		if (error) {
 			console.error(error);
