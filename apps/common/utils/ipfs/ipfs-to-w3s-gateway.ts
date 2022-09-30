@@ -1,5 +1,5 @@
-import type { Result } from "@utils/monads";
-import { result } from "@utils/monads";
+import type { Result } from "../monads/result";
+import { result } from "../monads";
 import { extractCID } from "./extract-cid";
 
 export const ipfsToW3sGateway = (ipfsUrl: string): Result<string> => {

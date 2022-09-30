@@ -23,8 +23,8 @@
         "docker": "docker build . -t austinfleming-server"
     },
     "dependencies": {
-        "@celo/contractkit": "^2.1.0",
         "@repo/common": "*",
+        "@celo/contractkit": "^2.1.0",
         "@supabase/supabase-js": "^1.33.3",
         "axios": "^0.27.2",
         "bullmq": "^2.1.0",

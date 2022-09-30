@@ -1,15 +1,20 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-type IpfsUrl = string;
-type UnixTimestamp = string | number;
-type PostId = number | string;
+
+import type { IpfsUrl } from "@utils/ipfs";
+
+export type UnixTimestamp = number;
+
+export type PostId = number;
+
+export type WalletAddress = string;
 
 export type ProfileMetadataSchema = {
 	attributes: Array<{
 		trait_type: string;
 		value: string | number;
 	}>;
-	description: string;
-	image: string;
+	description?: string;
+	image?: string;
 	name: string;
 };
 

@@ -1,4 +1,5 @@
 {
+    "extends": "../../tsconfig.json",
     "compilerOptions": {
         "target": "es6",
         "lib": [
@@ -12,7 +13,7 @@
         "forceConsistentCasingInFileNames": true,
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
-        "noEmit": true,
+        // "noEmit": true,
         "esModuleInterop": true,
         "module": "esnext",
         "moduleResolution": "node",
@@ -22,30 +23,36 @@
         "jsx": "preserve",
         "incremental": true,
         "baseUrl": ".",
+        "outDir": "dist",
+        "composite": true,
         "paths": {
-            "@components/*": [
-                "components/*"
+            "@api/*": [
+                "api/*"
             ],
             "@config": [
                 "config/*"
             ],
             "@modules/*": [
-                "modules/*"
+                "src/modules/*"
+            ],
+            "@packages/*": [
+                "packages/*"
             ],
             "@services/*": [
-                "services/*"
+                "src/services/*"
             ],
             "@styles/*": [
-                "styles/*"
+                "src/styles/*"
             ],
             "@utils/*": [
-                "utils/*"
+                "src/utils/*"
             ]
-        }
+        },
+        "noEmit": true
     },
     "references": [
         {
-            "@repo/common": "../common"
+            "path": "../common"
         }
     ],
     "include": [
@@ -53,10 +60,12 @@
         "**/*.ts",
         "**/*.tsx",
         ".eslintrc.js",
-        "tailwind.config.js"
+        "tailwind.config.js",
+        "next.config.js"
     ],
     "exclude": [
         "node_modules",
-        "**/__deprecated__/**/*"
+        "**/__deprecated__/**/*",
+        "**/__deprecated2__/**/*"
     ]
 }

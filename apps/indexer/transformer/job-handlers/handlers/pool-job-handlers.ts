@@ -261,7 +261,7 @@ export const makePoolJobHandlers = ({
 				.insert({
 					amount,
 					event_type: "REFUND",
-					pledger_id: updatedPledger?.pledgerId,
+					pledger_id: updatedPledger?.pledger_id,
 					pool_id: poolId,
 					transaction_date: transactionDate,
 				});

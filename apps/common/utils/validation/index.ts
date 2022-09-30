@@ -1,4 +1,6 @@
+export * from "./is-array-with-one-item";
 export * from "./is-nothing";
+export * from "./is-empty-array";
 export * from "./is-number";
 export * from "./is-object";
 export * from "./is-strict-falsy";

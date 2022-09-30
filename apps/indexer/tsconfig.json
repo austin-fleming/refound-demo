@@ -14,7 +14,7 @@
         "isolatedModules": true,
         "module": "commonjs",
         "moduleResolution": "node",
-        "noEmit": true,
+        // "noEmit": true,
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "pretty": true,

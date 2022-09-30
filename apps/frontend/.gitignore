@@ -41,6 +41,7 @@ dump.rdb
 
 # OLD STUFF
 __deprecated__
+__deprecated2__
 
 # NextJS
 .next

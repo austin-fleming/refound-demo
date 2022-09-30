@@ -1,3 +1,5 @@
+// const withTM = require('next-transpile-modules')(['@repo/common']);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     typescript: {
@@ -31,9 +33,9 @@ const nextConfig = {
                 }]
         },
     },
-    /* future: {
+    future: {
         webpack5: true
-    }, */
+    },
     webpack: (config) => {
         config.resolve.fallback = {
             ...config.resolve.fallback,
@@ -45,6 +47,20 @@ const nextConfig = {
             child_process: false,
             readline: false */
         }
+        config.module.rules.push({
+            test: /\.(ts)x?$/, // Just `tsx?` file only
+            use: [
+                // options.defaultLoaders.babel, I don't think it's necessary to have this loader too
+                {
+                    loader: "ts-loader",
+                    options: {
+                        transpileOnly: true,
+                        experimentalWatchApi: true,
+                        onlyCompileBundledFiles: true,
+                    },
+                },
+            ],
+        });
         return config
     }
 }

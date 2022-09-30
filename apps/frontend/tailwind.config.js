@@ -11,10 +11,7 @@ const withOpacityValue = (variable) => ({ opacityValue }) => {
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
-        "./pages/**/*.{js,ts,jsx,tsx}",
-        "./components/**/*.{js,ts,jsx,tsx}",
-        "./modules/**/*.{js,ts,jsx,tsx}",
-        "./services/**/*.{js,ts,jsx,tsx}"
+        "./src/**/*.{js,ts,jsx,tsx}"
     ],
     theme: {
         extend: {
@@ -58,7 +55,7 @@ module.exports = {
                 sitepad: '2rem', // TODO: remove?
                 sitebottom: '8rem', // TODO: remove?
                 headerTopHeight: 'var(--l-header-top-height)',
-                headerBottomHeight: 'var(--l-header-bottom-height)',
+                adjustedFullHeight: 'var(--l-adjusted-full-height)',
             },
             keyframes: {
                 toastProgress: {

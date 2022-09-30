@@ -115,7 +115,7 @@ contract RefoundUSD is ERC20, Ownable {
 		emit BeneficiaryClaimCancelled(msg.sender, beneficiary[msg.sender]);
 	}
 
-	function addSubsciptionReceiver(address receiver) public {
+	function addSubscriptionReceiver(address receiver) public {
 		require(
 			subscriptionReceiversMap[msg.sender] == false,
 			"Subscription receiver already exists."

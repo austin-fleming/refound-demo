@@ -86,6 +86,15 @@ export type PostTable =
 			cover_image?: PostTable["id"];
 	  } & PostTableBase);
 
+export type PostTableImage = Extract<PostTable, { post_type: "IMAGE" }>;
+export type PostTableArticle = Extract<PostTable, { post_type: "ARTICLE" }>;
+
+/* 
+TODO: Add this table
+
+export type PostTagTable
+*/
+
 export type PostInteractionTable = {
 	post_id: PostTable["id"];
 	interactor: ProfileTable["id"];

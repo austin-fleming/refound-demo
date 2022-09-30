@@ -1,0 +1,19 @@
+@keyframes slidein {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(0%);
+	}
+}
+
+.overlay {
+	@apply fixed top-0 bottom-0 left-0 right-0 duration-150 bg-black/70;
+}
+
+.content {
+	@apply fixed top-4 right-4 bottom-4 w-full max-w-[450px] bg-white shadow-lg duration-500 transition-transform;
+	animation-name: slidein;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
+}

@@ -3,7 +3,7 @@ import type { Result } from "../result";
 import type { Nullable } from "@utils/helper-types";
 import { None } from "./none";
 import { Some } from "./some";
-import { isNothing } from "@utils/validation";
+import { isNothing } from "../../validation/is-nothing";
 
 export interface Option<T> {
 	// --------------
