@@ -1,5 +1,6 @@
 import { useRefoundContracts } from "@modules/refound/hooks/use-refound-contracts";
 import { toast } from "@services/toast/toast";
+import { config } from "config/config";
 import type { ReactNode } from "react";
 import { useEffect } from "react";
 import { useCallback } from "react";
@@ -32,8 +33,15 @@ export const DiscoverContextProvider = ({ children }: { children: ReactNode }) =
 		dispatch({ type: "LOAD_TAB_START", payload: { tab: "photos" } });
 
 		(await getAllImagePosts()).match({
-			ok: (posts) =>
-				dispatch({ type: "LOAD_TAB_SUCCESS", payload: { tab: "photos", content: posts } }),
+			ok: (posts) => {
+				const approvedPosts = posts.filter(
+					(post) => !config.post.blacklistIds.includes(`${post.postId}`),
+				);
+				dispatch({
+					type: "LOAD_TAB_SUCCESS",
+					payload: { tab: "photos", content: approvedPosts },
+				});
+			},
 			fail: (err) => {
 				console.error(err);
 				toast.error("Could not load images.");
@@ -46,11 +54,15 @@ export const DiscoverContextProvider = ({ children }: { children: ReactNode }) =
 		dispatch({ type: "LOAD_TAB_START", payload: { tab: "articles" } });
 
 		(await getAllArticlePosts()).match({
-			ok: (posts) =>
+			ok: (posts) => {
+				const approvedPosts = posts.filter(
+					(post) => !config.post.blacklistIds.includes(`${post.postId}`),
+				);
 				dispatch({
 					type: "LOAD_TAB_SUCCESS",
-					payload: { tab: "articles", content: posts },
-				}),
+					payload: { tab: "articles", content: approvedPosts },
+				});
+			},
 			fail: (err) => {
 				console.error(err);
 				toast.error("Could not load articles.");

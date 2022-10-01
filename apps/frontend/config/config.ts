@@ -37,4 +37,7 @@ export const config = {
 			maxRetries: 5,
 		},
 	},
+	post: {
+		blacklistIds: ["9"],
+	},
 } as const;
