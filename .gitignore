@@ -41,3 +41,8 @@ dump.rdb
 
 # OLD STUFF
 __deprecated__
+apps/indexer/monitor/dist/server.js
+apps/indexer/monitor/dist/server.js.map
+apps/indexer/transformer/dist/server.js
+apps/indexer/transformer/dist/server.js.map
+README.private.md

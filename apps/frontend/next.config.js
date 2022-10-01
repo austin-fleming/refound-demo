@@ -18,6 +18,9 @@ const nextConfig = {
     swcMinify: true,
     experimental: {
         images: {
+            images: {
+                domains: ['dive.google.com'],
+            },
             // domains: ['images.unsplash.com'],
             remotePatterns: [
                 {
@@ -27,10 +30,15 @@ const nextConfig = {
                 },
                 {
                     protocol: 'https',
+                    hostname: 'drive.google.com',
+                    pathname: '/**'
+                },
+                {
+                    protocol: 'https',
                     hostname: '**.w3s.link'
                 },
                 {
-                    protocol:'https',
+                    protocol: 'https',
                     hostname: '**.arweave.net'
                 }]
         },
