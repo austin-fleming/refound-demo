@@ -38,6 +38,6 @@ export const config = {
 		},
 	},
 	post: {
-		blacklistIds: ["9"],
+		blacklistIds: ["9", "11", "12"],
 	},
 } as const;
