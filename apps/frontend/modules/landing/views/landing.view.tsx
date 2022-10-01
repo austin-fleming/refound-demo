@@ -35,28 +35,19 @@ export const LandingView: NextPage = () => {
 
 	return (
 		<>
-			<Grid container justifyContent="left" sm={12} style={{ margin: "0 auto", height:"100vh", backgroundImage:'url("https://drive.google.com/uc?export=view&id=1gDdXSDh9pXB5M5PLFqa5S8410ivRz5DY")',  backgroundSize:"cover", backgroundPositionY:"10%", backgroundColor:"#e0e0e0", backgroundBlendMode:"screen" }}>
-				<Grid item sm={12} md={8} style={{ padding: "5%", paddingTop: "5%" }}>
-					<h1 className="font-bold text-8xl" style={{ color: "#01A0B0" }}>
-						Own the Stories You Share with the World
+			<Grid container justifyContent="center" sm={8} style={{ margin: "0 auto" }}>
+				<Grid item sm={12} md={8} style={{ padding: "5%", paddingTop: "2%" }}>
+					<h1 className="font-bold" style={{ fontSize: "3em", color: "#01A0B0" }}>
+						Your platform for empowering journalism on the blockchain
 					</h1>
-					{/* <p>
+					<p>
 						Refound is an NFT marketplace and publishing platform where journalists and
 						photographers can share first person, creative content from the frontlines
 						swiftly, raise awareness, and sell directly to businesses, with sale
 						proceeds going to customizable beneficiaries. Refound uses decentralization
 						to offer groundbreaking protections for free speech, with content always
 						protected by a censorship-resistant design.
-					</p> */}
-					<br></br>
-					<br></br>
-					<br></br>
-					<br></br>
-					<p>Journalists Empowered and Protected on the Blockchain.</p>
-					<br></br>
-					<br></br>
-					<br></br>
-					<br></br>
+					</p>
 					<div
 						className="flex flex-row items-center w-full gap-2 justify-left"
 						style={{ marginTop: "20px" }}
@@ -80,20 +71,20 @@ export const LandingView: NextPage = () => {
 						</a>
 					</div>
 				</Grid>
-				{/* <Grid item sm={12} md={4} style={{ paddingTop: "3%" }}>
+				<Grid item sm={12} md={4} style={{ paddingTop: "3%" }}>
 					<img
 						src="https://drive.google.com/uc?export=view&id=1o3Fy4e2RuLWnFJDe3H5C_RKRQjANUPOT"
 						style={{ width: "100%" }}
 						alt="Refound iPhone Mockup"
 					></img>
-				</Grid> */}
+				</Grid>
 			</Grid>
 
 			<Grid
 				container
 				justifyContent="center"
 				sm={8}
-				style={{ margin: "5% auto", padding: "5%", paddingTop: "2%" }}
+				style={{ margin: "0 auto", padding: "5%", paddingTop: "2%" }}
 			>
 				<h1 className="font-bold" style={{ fontSize: "3em", color: "#01A0B0" }}>
 					Mint the art of journalism back to life.
