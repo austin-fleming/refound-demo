@@ -27,6 +27,7 @@ import { ArticlePostsTab } from "../components/profile-tabs/article-posts-tab";
 import { ImagePostsTab } from "../components/profile-tabs/image-posts-tab";
 import { TabNav } from "../components/profile-tabs/tab-nav";
 import { Tabs } from "../components/profile-tabs/tabs";
+import { SubscribeButton } from "../components/subscribe-button/subscribe-button";
 import { ProfileContextProvider } from "../hooks/use-profile/use-profile";
 
 export type ProfilePageContent = {
@@ -138,6 +139,7 @@ const ProfileView: NextPage<ProfilePageContent> = ({
 
 						<div className="flex flex-col w-full gap-2 sm:mt-8">
 							<BonusButton receivingAddress={profile.address} />
+							<SubscribeButton />
 							<MessageButton />
 						</div>
 					</div>

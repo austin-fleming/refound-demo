@@ -6,6 +6,20 @@ import { toast } from "@services/toast/toast";
 import { cloin } from "@utils/cloin";
 import { useState } from "react";
 
+export enum LicenseType {
+	Outright = "Outright",
+	WebLicense = "WebLicense",
+	PrintLicense = "PrintLicense",
+	SingleUse = "SingleUse",
+}
+
+const licenseTable: Record<LicenseType, string> = {
+	Outright: "1000 usd",
+	WebLicense: "400 usd",
+	PrintLicense: "500 usd",
+	SingleUse: "300 usd",
+};
+
 export const LicensePost = ({ post }: { post: PostAggregate }) => {
 	const { account } = useAccount();
 	const { purchaseLicense } = useRefoundContracts();
@@ -50,7 +64,9 @@ export const LicensePost = ({ post }: { post: PostAggregate }) => {
 					);
 				}}
 			>
-				{submitState === "SUCCESS" ? "Purchased!" : "Purchase License"}
+				{submitState === "SUCCESS"
+					? "Purchased!"
+					: `Purchase License — ${licenseTable[selectedLicense]}`}
 			</button>
 
 			<div className="flex flex-col gap-2 w-[10em]">
