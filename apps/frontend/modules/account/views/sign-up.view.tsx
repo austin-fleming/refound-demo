@@ -16,6 +16,7 @@ const rxIsHandle = /^[a-z0-9_-]{3,15}$/i;
 export const SignUpView: NextPage = () => {
 	const { login, account } = useAccount();
 	const router = useRouter();
+	const [electBeneficiary, setElectBeneficiary] = useState<Boolean>();
 
 	const { createProfile, getProfileByUsername } = useRefoundContracts();
 
@@ -65,6 +66,16 @@ export const SignUpView: NextPage = () => {
 		validateForm(formState);
 	};
 
+	const nominateBeneficiary = (event: ChangeEvent<HTMLInputElement>) => {
+		console.log(event.target.checked);
+		var beneficiaryInput = document.getElementById("beneficiaryInput") as HTMLInputElement;
+		if(event.target.checked == true){
+			setElectBeneficiary(true);
+		}else{
+			setElectBeneficiary(false);
+		}
+	}
+
 	const submitForm: MouseEventHandler<HTMLButtonElement> = (event) => {
 		event.preventDefault();
 
@@ -108,6 +119,21 @@ export const SignUpView: NextPage = () => {
 	return (
 		<section className="flex flex-col items-center w-full max-w-screen-md gap-12 py-8 mx-auto px-contentPadding">
 			<h1 className="text-2xl font-bold">Welcome to Refound</h1>
+			
+
+			{!account?.address ? (
+				<>
+				<div className="prose prose-sm max-w-[40ch] text-center text-slate-900 leading-tight">
+				<p>To sign up with Refound, please begin by registering for a Celo wallet(<a
+								href="https://alfajores.celowallet.app/setup"
+								target="_blank"
+								rel="noreferrer"
+							>
+								the developer version for this MVP test
+							</a>).  In web3, your identity is linked to your wallet, think of it like your email address, but with the ability to hold your crypto currency and NFT assets. </p>
+				<p>To register your interest and setup a tutorial with the Refound team, please email us at hello@refound.app :)</p>
+				<p>If you already have a wallet, connect wallet below. </p>
+			</div>
 			<ul className="steps">
 				<li className={`step step-neutral`}>
 					<span className="text-xs font-bold tracking-wide px-[1em]">
@@ -120,9 +146,6 @@ export const SignUpView: NextPage = () => {
 					</span>
 				</li>
 			</ul>
-
-			{!account?.address ? (
-				<>
 					<button
 						type="button"
 						className="rounded-md btn btn-lg hover:bg-violet-900"
@@ -132,6 +155,7 @@ export const SignUpView: NextPage = () => {
 					</button>
 
 					<div className="prose prose-sm max-w-[40ch] text-center text-slate-900 leading-tight">
+						
 						<p className="font-bold">
 							This site is running on Celo&apos;s Alfajores network.
 						</p>
@@ -163,6 +187,18 @@ export const SignUpView: NextPage = () => {
 				</>
 			) : (
 				<>
+					<ul className="steps">
+						<li className={`step step-neutral`}>
+							<span className="text-xs font-bold tracking-wide px-[1em]">
+								Connect Your Wallet
+							</span>
+						</li>
+						<li className={`step ${account.address ? "step-neutral" : ""}`}>
+							<span className="text-xs font-bold tracking-wide px-[1em]">
+								Create Your Profile
+							</span>
+						</li>
+					</ul>
 					<form className="flex flex-col w-full gap-8">
 						<label className="flex flex-col">
 							<span className="text-sm font-bold">Username</span>
@@ -175,9 +211,19 @@ export const SignUpView: NextPage = () => {
 						</label>
 
 						<label className="flex flex-col">
-							<span className="text-sm font-bold">Avatar Url</span>
+							<span className="text-sm font-bold">Profile Picture Url</span>
 							<input name="avatarUrl" type="text" onChange={onChange} />
 						</label>
+
+						<label className="flex flex-col">
+							<span className="text-sm font-bold">Nominate a Beneficiary</span>
+							<input name="nominate" type="checkbox" onChange={nominateBeneficiary} />
+						</label>
+
+						{electBeneficiary && <label className="flex flex-col" id="beneficiaryInput">
+							<span className="text-sm font-bold">Beneficiary Wallet Address</span>
+							<input name="beneficiaryWalletAddrress" type="text" />
+						</label>}
 
 						{formStatus !== "DONE" && (
 							<PolyButton
