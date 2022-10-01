@@ -10,29 +10,30 @@ export const config = {
 		rpcUrl: "https://alfajores-forno.celo-testnet.org",
 		chainId: 44787,
 		coreContract: {
-			address: process.env.NEXT_PUBLIC_REFOUNDCONTRACT_CORE as string,
+			address: "0xb731F5D97116852786F39B41D30735f7a704c6eB",
 			abi: refoundCoreContract.abi as AbiItem[],
 		},
 		postContract: {
-			address: process.env.NEXT_PUBLIC_REFOUNDCONTRACT_POST as string,
+			address: "0x8031088b6d5069A7295a91a69C2bdE0F7b04fd65",
 			abi: refoundPostContract.abi as AbiItem[],
 		},
 		poolContract: {
-			address: process.env.NEXT_PUBLIC_REFOUNDCONTRACT_POOL as string,
+			address: "0x6A83d1818b18706E25D2500D4A284315D1A323Ae",
 			abi: refoundPoolContract.abi as AbiItem[],
 		},
 		refoundUsdContract: {
-			address: process.env.NEXT_PUBLIC_REFOUNDCONTRACT_RUSD as string,
+			address: "0x2909663198b9939A291280F36A4a532D79B6078A",
 			abi: refoundRusdContract.abi as AbiItem[],
 		},
 		fakeUsdcContract: {
-			address: process.env.NEXT_PUBLIC_REFOUNDCONTRACT_FUSDC as string,
+			address: "0x704F43c8C3E7E7B19C37F7E83176c2fD207078A3",
 			abi: refoundFakeUsdcContract.abi as AbiItem[],
 		},
 	},
 	storage: {
 		web3storage: {
-			apiToken: process.env.NEXT_PUBLIC_WEB3_STORAGE_API_TOKEN as string,
+			apiToken:
+				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEZiMEVjRTFFMjBFMjgwZmFBNWUxMTQ5QTI0MDhkMjU0RjQ1MDVFQ2UiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NjI4NjgxNDc4ODksIm5hbWUiOiJSZWZvdW5kV2ViM1N0b3JhZ2UifQ.CYS2krAPhgwEn5SP9lWh-kMtxiClr8Vdm6wu_eUaFr8",
 			maxRetries: 5,
 		},
 	},

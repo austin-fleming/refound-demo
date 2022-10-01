@@ -19,6 +19,7 @@ export async function getProfilesHandler(req: NextApiRequest, res: NextApiRespon
 
 	return (await queries.getAllProfiles(contract)).match({
 		ok: (profiles) => {
+			console.log({ profilesInRoute: profiles });
 			res.status(200).json(profiles);
 		},
 		fail: (err) => {

@@ -1,4 +1,4 @@
-import type { ChangeEvent, DragEvent, MouseEvent } from "react";
+import { ChangeEvent, DragEvent, MouseEvent, useCallback } from "react";
 import { LegacyRef, useEffect } from "react";
 import { useReducer, useRef } from "react";
 import NextImage from "next/image";
@@ -78,7 +78,7 @@ export const FileDropInput = ({
 				},
 			});
 		}
-	}, [uploadedImage]);
+	}, [uploadedImage?.image]);
 
 	const handleDragEnter = (e: DragEvent<HTMLElement>) => {
 		e.preventDefault();
@@ -134,7 +134,7 @@ export const FileDropInput = ({
 		inputRef.current?.click();
 	};
 
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+	const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
 		const files = [...(e.target.files || [])];
 		if (files.length > 0) {
 			const file = files[0];
@@ -157,7 +157,7 @@ export const FileDropInput = ({
 				dispatch({ type: "SET_IN_DROP_ZONE", payload: false });
 			});
 		}
-	};
+	}, []);
 
 	return (
 		<>
@@ -192,7 +192,7 @@ export const FileDropInput = ({
 							<span className="font-semibold">Click to upload</span> or drag and drop
 						</p>
 						<p className="text-xs text-gray-500 dark:text-gray-400">
-							SVG, PNG, JPG or GIF (MAX. 800x400px)
+							SVG, PNG, JPG or GIF
 						</p>
 					</div>
 				</div>

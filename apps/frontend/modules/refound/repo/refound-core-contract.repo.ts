@@ -58,11 +58,12 @@ const getProfileByAddress = async (
 const getAllProfiles = async (contract: Contract): Promise<Result<Profile[]>> => {
 	try {
 		const profileCount = await contract.methods.profiles().call(); // adjust for the offset
-
+		console.log({ profileCount });
+		console.log({ dummyArray: Array(Number.parseInt(profileCount) - 1).fill("") });
 		const profileDtos = await Promise.all(
-			[...Array.from(profileCount)].map(async (_, idx) =>
-				contract.methods.tokenURI(idx + 1).call(),
-			),
+			Array(Number.parseInt(profileCount) - 1)
+				.fill("")
+				.map(async (_, idx) => contract.methods.tokenURI(idx + 1).call()),
 		);
 
 		if (!profileDtos || !Array.isArray(profileDtos))

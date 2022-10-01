@@ -79,11 +79,13 @@ export const DiscoverContextProvider = ({ children }: { children: ReactNode }) =
 		dispatch({ type: "LOAD_TAB_START", payload: { tab: "creators" } });
 
 		(await getAllProfiles()).match({
-			ok: (profiles) =>
+			ok: (profiles) => {
+				console.log({ fetchedProfiles: profiles });
 				dispatch({
 					type: "LOAD_TAB_SUCCESS",
 					payload: { tab: "creators", content: profiles },
-				}),
+				});
+			},
 			fail: (err) => {
 				console.error(err);
 				toast.error("Could not load creators.");
