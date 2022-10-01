@@ -11,7 +11,7 @@ export const LearnMoreView: NextPage = () => {
 				backgroundPositionY: "20%",
 				marginTop: "-1%",
 				backgroundPositionX: "center",
-				backgroundColor:"black",
+				backgroundColor: "black",
 				backgroundBlendMode: "screen",
 				backgroundAttachment: "fixed",
 				backgroundImage:
@@ -83,21 +83,21 @@ export const LearnMoreView: NextPage = () => {
 					<h1 className="font-bold" style={{ fontSize: "2em" }}>
 						ABOUT REFOUND
 					</h1>
-					<p style={{ marginBottom: "20px", fontSize:"1.2em" }}>
+					<p style={{ marginBottom: "20px", fontSize: "1.2em" }}>
 						Our goal is to bring the power of storytelling back to the creators.
 						Refound’s platform solves the compensation, inheritance, freedom of
 						expression and privacy problems creators face using decentralized
 						technologies, so creators&apos; content has greater monetization potential
 						and is resistant to takedowns and censorship.
 					</p>
-					<p style={{ marginBottom: "20px", fontSize:"1.2em" }}>
+					<p style={{ marginBottom: "20px", fontSize: "1.2em" }}>
 						Refound is a decentralized NFT marketplace and publishing platform. It
 						enables a wide variety of journalists, including freelance and citizen
 						journalists, to create, publish, distribute, and monetize. Decentralization
 						allows creators to fully own their work, allowing better monetization of
 						their hard work.
 					</p>
-					<p style={{ marginBottom: "20px", fontSize:"1.2em" }}>
+					<p style={{ marginBottom: "20px", fontSize: "1.2em" }}>
 						The user experience is easy to use, allowing on-boarding of those not
 						familiar with crypto swiftly with the ease of use of the Celo wallet.
 					</p>
@@ -116,12 +116,16 @@ export const LearnMoreView: NextPage = () => {
 					>
 						HOW DO I BEGIN AND JOIN?
 					</h1>
-					<p style={{ textShadow: "2px 4px 3px rgba(0,0,0,0.3)", fontSize:"1.2em" }}>
+					<p style={{ textShadow: "2px 4px 3px rgba(0,0,0,0.3)", fontSize: "1.2em" }}>
 						It is amazingly simple!
 					</p>
-					<p style={{ textShadow: "2px 4px 3px rgba(0,0,0,0.3)", fontSize:"1.2em" }}>
-						You sign up on the <a href="/sign-up"><b>sign-up page</b></a>, connect to the Celo wallet, and upload your
-						photos or articles to be minted into NFTs.
+					<p style={{ textShadow: "2px 4px 3px rgba(0,0,0,0.3)", fontSize: "1.2em" }}>
+						You sign up on the{" "}
+						<a href="/sign-up">
+							<b>sign-up page</b>
+						</a>
+						, connect to the Celo wallet, and upload your photos or articles to be
+						minted into NFTs.
 					</p>
 				</Grid>
 			</Grid>
@@ -133,45 +137,60 @@ export const LearnMoreView: NextPage = () => {
 			>
 				<Grid item sm={12} md={6} style={{ padding: "3%" }}>
 					<div style={{ maxWidth: "300px", margin: "0 auto" }}>
-						<img
-							src="https://bafybeihvlpctyczp3jecmnyzcimr5typ72oqzpz2tbugia4ejmu7us2pla.ipfs.w3s.link/WhyRefound-modified.png"></img>
+						<img src="https://bafybeihvlpctyczp3jecmnyzcimr5typ72oqzpz2tbugia4ejmu7us2pla.ipfs.w3s.link/WhyRefound-modified.png"></img>
 					</div>
 				</Grid>
 				<Grid item sm={12} md={6} style={{ padding: "3%", marginTop: "1%" }}>
-					
-					<h1
-						className="font-bold"
-						style={{ fontSize: "2em"}}
-					>
+					<h1 className="font-bold" style={{ fontSize: "2em" }}>
 						HOW DOES IT WORK? HOW DO I SETUP A BENEFICIARY?
 					</h1>
-					<p style={{fontSize:"1.2em"}}>
-					The blockchain allows journalists to wrap their work in NFTs, giving them the ability to utilize the benefit of the smart contracts that govern the licensing and royalties of the content. Journalists on Refound benefit from the community as well which has the ability to support content creators by sending them a bonus. Refound stores all data on IPFS as decentralized storage.
+					<p style={{ fontSize: "1.2em" }}>
+						The blockchain allows journalists to wrap their work in NFTs, giving them
+						the ability to utilize the benefit of the smart contracts that govern the
+						licensing and royalties of the content. Journalists on Refound benefit from
+						the community as well which has the ability to support content creators by
+						sending them a bonus. Refound stores all data on IPFS as decentralized
+						storage.
 					</p>
 					<br></br>
-					<p style={{fontSize:"1.2em"}}>
-					The beneficiary process on Refound allows you to select a beneficiary is when creating your profile on in the sign-up section.  
+					<p style={{ fontSize: "1.2em" }}>
+						The beneficiary process on Refound allows you to nominate a beneficiary when
+						creating your profile, after logging in via "connect wallet" on the sign-up
+						page. The beneficiary setting can be managed from the side panel account
+						settings when you are logged in.
 					</p>
 				</Grid>
-				</Grid>
-				<Grid
-					container
-					justifyContent="center"
-					sm={8}
-					style={{ margin: "0 auto", marginTop: "5%" }}
-				>
-				<Grid item sm={12} md={12} style={{ color: "white", padding: '3%' }}>
-					<h1 className="font-bold" style={{ fontSize: "2em", textShadow: "2px 4px 3px rgba(0,0,0,0.3)"  }}>
+			</Grid>
+			<Grid
+				container
+				justifyContent="center"
+				sm={8}
+				style={{ margin: "0 auto", marginTop: "5%" }}
+			>
+				<Grid item sm={12} md={12} style={{ color: "white", padding: "3%" }}>
+					<h1
+						className="font-bold"
+						style={{ fontSize: "2em", textShadow: "2px 4px 3px rgba(0,0,0,0.3)" }}
+					>
 						WHAT ARE THE BENEFITS OF MAKING MY WORK INTO AN NFT?
 					</h1>
-					<p style={{ textShadow: "2px 4px 3px rgba(0,0,0,0.3)", fontSize:"1.2em" }}>
+					<p style={{ textShadow: "2px 4px 3px rgba(0,0,0,0.3)", fontSize: "1.2em" }}>
 						When your NFT is created it is called minting, basically the process of the
 						NFT contract being created and recorded in the blockchain, making it
 						non-fungible (i.e. it cannot be replaced or duplicated).
 					</p>
 					<br></br>
-					<p style={{ textShadow: "2px 4px 3px rgba(0,0,0,0.3)", fontSize:"1.2em" }}>
-					An NFT is a token which functions like a digital fingerprint and contract for the use for your photo (the asset).  Content minted as a NFT benefits from the utility of the NFT smart contracts (the mini-computer program or digital contract where the terms of the agreement between seller and buyer are set in code on the blockchain): journalists who publish their work wrapped in an NFT have full control of their intellectual property and greater revenue visibility from licensing NFTs. Journalists can also reduce the emails and contractual back and forth required for selling their content and have a seamless smart contract to protect their intellectual property and revenue streams.
+					<p style={{ textShadow: "2px 4px 3px rgba(0,0,0,0.3)", fontSize: "1.2em" }}>
+						An NFT is a token which functions like a digital fingerprint and contract
+						for the use for your photo (the asset).  Content minted as a NFT benefits
+						from the utility of the NFT smart contracts (the mini-computer program or
+						digital contract where the terms of the agreement between seller and buyer
+						are set in code on the blockchain): journalists who publish their work
+						wrapped in an NFT have full control of their intellectual property and
+						greater revenue visibility from licensing NFTs. Journalists can also reduce
+						the emails and contractual back and forth required for selling their content
+						and have a seamless smart contract to protect their intellectual property
+						and revenue streams.
 					</p>
 				</Grid>
 			</Grid>
@@ -189,14 +208,24 @@ export const LearnMoreView: NextPage = () => {
 						></img>
 					</div>
 				</Grid>
-				<Grid item sm={12} md={6} style={{ padding:"5%" }}>
+				<Grid item sm={12} md={6} style={{ padding: "5%" }}>
 					<h1 className="font-bold" style={{ fontSize: "2em" }}>
-					WHAT WILL I EARN AND WILL MY CRYPTO CURRENCY EARNINGS BE STABLE?
+						WHAT WILL I EARN AND WILL MY CRYPTO CURRENCY EARNINGS BE STABLE?
 					</h1>
-					<p style={{fontSize:"1.2em"}}>As you create the NFT, you will be able to set your price as well as select licensing types. This will allow you more clarity in how your work is setup for sale. You will receive 98% of your NFT sale or licensing proceeds, with Refound only taking 2% as a platform fee. Compare this to other photo and content aggregating sites in Web 2, which keep 75% to 85% of revenue proceeds for themselves and only share 15% to 25% with the creators. Refound will help regenerate your financial standing as a creator of content by giving you greater monetization proceeds of your content. </p>
+					<p style={{ fontSize: "1.2em" }}>
+						As you create the NFT, you will be able to set your price as well as select
+						licensing types. This will allow you more clarity in how your work is setup
+						for sale. You will receive 98% of your NFT sale or licensing proceeds, with
+						Refound only taking 2% as a platform fee. Compare this to other photo and
+						content aggregating sites in Web 2, which keep 75% to 85% of revenue
+						proceeds for themselves and only share 15% to 25% with the creators. Refound
+						will help regenerate your financial standing as a creator of content by
+						giving you greater monetization proceeds of your content.{" "}
+					</p>
 					<br></br>
-					<p style={{fontSize:"1.2em"}}>
-					You will be able to use Celo cUSD and cEuro for earnings, which are stable coins tied to the US dollar and Euro, respectively.
+					<p style={{ fontSize: "1.2em" }}>
+						You will be able to use Celo cUSD and cEuro for earnings, which are stable
+						coins tied to the US dollar and Euro, respectively.
 					</p>
 				</Grid>
 			</Grid>
@@ -213,8 +242,8 @@ export const LearnMoreView: NextPage = () => {
 					>
 						WHY SHOULD I PUBLISH ON REFOUND?
 					</h1>
-					<p style={{ textShadow: "2px 4px 3px rgba(0,0,0,0.3)", fontSize:"1.2em" }}>
-					Refound allows journalists to get better compensation for their work and
+					<p style={{ textShadow: "2px 4px 3px rgba(0,0,0,0.3)", fontSize: "1.2em" }}>
+						Refound allows journalists to get better compensation for their work and
 						sell to both the news and a global audience. Journalists then have a clear
 						path to fair compensation, licensing, and revenue for their work. A
 						beneficiary wallet function allows revenues to be passed on to selected
@@ -241,7 +270,7 @@ export const LearnMoreView: NextPage = () => {
 					<h1 className="font-bold" style={{ fontSize: "2em" }}>
 						SUBMITTING CONTENT - LEGAL
 					</h1>
-					<p style={{ marginBottom: "20px", fontSize:"1.2em" }}>
+					<p style={{ marginBottom: "20px", fontSize: "1.2em" }}>
 						All contributors must ensure that the content they submit does not contain
 						copyrighted materials. Refound will not accept content that is a violation
 						of the exclusive rights of a creator.
@@ -261,8 +290,14 @@ export const LearnMoreView: NextPage = () => {
 					>
 						FUNDING POOLS
 					</h1>
-					<p style={{ textShadow: "2px 4px 3px rgba(0,0,0,0.3)", fontSize:"1.2em" }}>
-					Funding pools allow the community to direct crypto tokens to commission topics they want journalists to photograph and write about and for journalists to raise funds for initiatives they want to report on. Journalists can also raise funds for gear to assist with their reporting. With the launch of our tokenization strategy and depending on the project, community supporters can own tokens of the published content’s final value and participate in its success.
+					<p style={{ textShadow: "2px 4px 3px rgba(0,0,0,0.3)", fontSize: "1.2em" }}>
+						Funding pools allow the community to direct crypto tokens to commission
+						topics they want journalists to photograph and write about and for
+						journalists to raise funds for initiatives they want to report on.
+						Journalists can also raise funds for gear to assist with their reporting.
+						With the launch of our tokenization strategy and depending on the project,
+						community supporters can own tokens of the published content’s final value
+						and participate in its success.
 					</p>
 				</Grid>
 			</Grid>
@@ -284,7 +319,7 @@ export const LearnMoreView: NextPage = () => {
 					<h1 className="font-bold" style={{ fontSize: "2em" }}>
 						DO I RETAIN COPYRIGHT OF MY WORK?
 					</h1>
-					<p style={{ marginBottom: "20px", fontSize:"1.2em" }}>
+					<p style={{ marginBottom: "20px", fontSize: "1.2em" }}>
 						Absolutely. Any work uploaded is fully yours and the NFT smart contracts and
 						their immutability ensure that as well. You can register as an individual or
 						a business as long as you are at least 18 years of age.
