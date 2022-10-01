@@ -11,7 +11,8 @@ export const LearnMoreView: NextPage = () => {
 				backgroundPositionY: "20%",
 				marginTop: "-1%",
 				backgroundPositionX: "center",
-				backgroundBlendMode: "",
+				backgroundColor:"black",
+				backgroundBlendMode: "screen",
 				backgroundAttachment: "fixed",
 				backgroundImage:
 					"url('https://drive.google.com/uc?export=view&id=16WlGiKwH2b2P0Q-z7HEcq1W2M0L6LHSR')",
