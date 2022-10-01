@@ -19,7 +19,7 @@ const nextConfig = {
     experimental: {
         images: {
             images: {
-                domains: ['dive.google.com'],
+                domains: ['dive.google.com', 'www.toby-binder.de'],
             },
             // domains: ['images.unsplash.com'],
             remotePatterns: [
