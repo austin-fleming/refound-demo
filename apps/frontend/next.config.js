@@ -19,7 +19,7 @@ const nextConfig = {
     experimental: {
         images: {
             images: {
-                domains: ['dive.google.com', 'www.toby-binder.de', 'www.birdlife.org', 'avatars.githubusercontent.com'],
+                domains: ['dive.google.com', 'www.birdlife.org', 'avatars.githubusercontent.com'],
             },
             // domains: ['images.unsplash.com'],
             remotePatterns: [
@@ -40,6 +40,11 @@ const nextConfig = {
                 {
                     protocol: 'https',
                     hostname: '**.arweave.net',
+                    pathname: '/**'
+                },
+                {
+                    protocol: 'https',
+                    hostname: 'www.toby-binder.de',
                     pathname: '/**'
                 }]
         },
