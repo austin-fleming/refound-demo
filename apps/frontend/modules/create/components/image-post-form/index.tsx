@@ -203,7 +203,7 @@ export const ImagePostForm = () => {
 			confirmation.match({
 				ok: () => {
 					toast.success("Post created!");
-					router.push("/account");
+					router.push("/discover");
 				},
 				fail: () => {
 					toast.error("Failed to create post.");
